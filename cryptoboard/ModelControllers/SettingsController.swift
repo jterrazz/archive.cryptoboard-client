@@ -9,27 +9,28 @@
 import UIKit
 
 class SettingsController: UIViewController {
+    
+    lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.separatorStyle = .none
+
+        return tableView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        self.view.addSubview(tableView)
+        
+        let views: [String: Any] = [
+            "tableView": tableView,
+        ]
+        let constraints = [
+            "H:|[tableView]|",
+            "V:|[tableView]|"
+        ]
+        NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

@@ -22,6 +22,7 @@
 		862319C120B2889100C6E46E /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862319C020B2889100C6E46E /* SearchController.swift */; };
 		862319C320B28A5200C6E46E /* MenuHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862319C220B28A5200C6E46E /* MenuHeaderCell.swift */; };
 		862319C520B28B8F00C6E46E /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862319C420B28B8F00C6E46E /* SettingsController.swift */; };
+		862319C720B28DB500C6E46E /* NSLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862319C620B28DB500C6E46E /* NSLayoutConstraint.swift */; };
 		FE6D13C8B0CD9AA730D59096 /* Pods_cryptoboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AECE56E8026DE6661182C9E /* Pods_cryptoboard.framework */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +45,7 @@
 		862319C020B2889100C6E46E /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		862319C220B28A5200C6E46E /* MenuHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuHeaderCell.swift; sourceTree = "<group>"; };
 		862319C420B28B8F00C6E46E /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
+		862319C620B28DB500C6E46E /* NSLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLayoutConstraint.swift; sourceTree = "<group>"; };
 		88C9C5A0BA25730005577C54 /* Pods-cryptoboard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cryptoboard.release.xcconfig"; path = "Pods/Target Support Files/Pods-cryptoboard/Pods-cryptoboard.release.xcconfig"; sourceTree = "<group>"; };
 		A485F1B7133266ACBD55CDC8 /* Pods-cryptoboard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cryptoboard.debug.xcconfig"; path = "Pods/Target Support Files/Pods-cryptoboard/Pods-cryptoboard.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -133,10 +135,11 @@
 		862319A820AFD88800C6E46E /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				862319BA20B0030C00C6E46E /* CALayer.swift */,
+				862319C620B28DB500C6E46E /* NSLayoutConstraint.swift */,
 				862319A920AFD9A100C6E46E /* UIColor.swift */,
 				862319AB20AFDC3100C6E46E /* UIImage.swift */,
 				862319AD20AFDD2C00C6E46E /* UIView.swift */,
-				862319BA20B0030C00C6E46E /* CALayer.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 				862319AE20AFDD2C00C6E46E /* UIView.swift in Sources */,
 				862319C520B28B8F00C6E46E /* SettingsController.swift in Sources */,
 				862319BB20B0030C00C6E46E /* CALayer.swift in Sources */,
+				862319C720B28DB500C6E46E /* NSLayoutConstraint.swift in Sources */,
 				862319AA20AFD9A100C6E46E /* UIColor.swift in Sources */,
 				8623199320AFD64000C6E46E /* AppDelegate.swift in Sources */,
 				862319C120B2889100C6E46E /* SearchController.swift in Sources */,

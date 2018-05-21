@@ -19,5 +19,37 @@ extension UIView {
 //        self.layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: self.layer.cornerRadius).cgPath
     }
     
+    var safeTopAnchor: NSLayoutYAxisAnchor {
+        if #available(iOS 11.0, *) {
+            return self.layoutMarginsGuide.topAnchor
+        } else {
+            return self.topAnchor
+        }
+    }
+    
+    var safeLeftAnchor: NSLayoutXAxisAnchor {
+        if #available(iOS 11.0, *){
+            return self.layoutMarginsGuide.leftAnchor
+        }else {
+            return self.leftAnchor
+        }
+    }
+    
+    var safeRightAnchor: NSLayoutXAxisAnchor {
+        if #available(iOS 11.0, *){
+            return self.layoutMarginsGuide.rightAnchor
+        }else {
+            return self.rightAnchor
+        }
+    }
+    
+    var safeBottomAnchor: NSLayoutYAxisAnchor {
+        if #available(iOS 11.0, *) {
+            return self.layoutMarginsGuide.bottomAnchor
+        } else {
+            return self.bottomAnchor
+        }
+    }
+    
     
 }

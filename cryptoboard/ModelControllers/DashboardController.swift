@@ -13,7 +13,7 @@ import Charts
 fileprivate let X_AXIS_NB_VALUES: Double = 3
 fileprivate let HOVER_CELL_ID: String = "hover-cell-id"
 
-class DashboardController: UIViewController {
+class DashboardController: UIViewController, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
     
     let titles = ["Hot list", "My wallet", "Bitcoin", "Ethereum", "Ripple", "EOS"]
     
@@ -51,39 +51,48 @@ class DashboardController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.theme.bg.value
-        setupNavBar()
-
+        navigationController?.delegate = self
+        
         // TEMP
         let months = ["Jan", "Feb", "Mar"]
         let unitsSold = [10.0, 4.0, 6.0]
-
-        setupChart(months, values: unitsSold)
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
         
+        view.backgroundColor = UIColor.theme.bg.value
         view.addSubview(chartView)
         view.addSubview(segmentView)
         view.addSubview(hoverTableView)
+        
+        setupNavBar()
+        setupChart(months, values: unitsSold)
         hoverTableView.backgroundColor = UIColor.clear
         hoverTableView.separatorStyle = .none
         hoverTableView.register(HoverWalletCell.self, forCellReuseIdentifier: HOVER_CELL_ID)
-
-        var constraints: [NSLayoutConstraint] = []
+        
         let views: [String: Any] = [
             "chart": chartView,
             "segment": segmentView,
             "hover": hoverTableView
         ]
+        let constraints = [
+            "V:|[segment(60)]-180-[chart]|",
+            "V:[segment][hover]|",
+            "H:|[chart]|",
+            "H:|[segment]|",
+            "H:|[hover]|"
+        ]
         
-        constraints += NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[segment(60)]-180-[chart]-0-|", options: [], metrics: nil, views: views)
-        constraints += NSLayoutConstraint.constraints(withVisualFormat: "V:[segment][hover]-0-|", options: [], metrics: nil, views: views)
-        constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[chart]|", options: [], metrics: nil, views: views)
-        constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[segment]|", options: [], metrics: nil, views: views)
-        constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|[hover]|", options: [], metrics: nil, views: views)
-        NSLayoutConstraint.activate(constraints)
+        NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+    }
+    
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+        navigationController.interactivePopGestureRecognizer?.isEnabled = navigationController.viewControllers.count > 1
     }
 
     private func setupNavBar() {
@@ -104,6 +113,7 @@ class DashboardController: UIViewController {
         searchButton.setImage(searchImage, for: .normal)
         searchButton.widthAnchor.constraint(equalToConstant: 22).isActive = true
         searchButton.heightAnchor.constraint(equalToConstant: 22).isActive = true
+        searchButton.addTarget(self, action: #selector(handleSearchBtn(_:)), for: .touchUpInside)
         let searchButtonItem = UIBarButtonItem(customView: searchButton)
         
 //        let listImage = UIImage(named: "list_icon")?.withRenderingMode(.alwaysTemplate)
@@ -122,6 +132,12 @@ class DashboardController: UIViewController {
         
         navigationItem.leftBarButtonItem = userButtonItem
         navigationItem.rightBarButtonItems = [searchButtonItem]
+    }
+    
+    @objc private func handleSearchBtn(_ sender: UIButton) {
+        let searchController = SearchController()
+        
+        navigationController?.pushViewController(searchController, animated: true)
     }
     
     private func setupChart(_ dataPoints: [String], values: [Double]) {
