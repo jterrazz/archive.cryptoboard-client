@@ -16,19 +16,21 @@ fileprivate let HOVER_CELL_ID: String = "hover-cell-id"
 class DashboardController: UIViewController, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
     
     let titles = ["Hot list", "My wallet", "Bitcoin", "Ethereum", "Ripple", "EOS"]
+    let hotListDataService = HotListDataService()
     
     lazy var chartView: LineChartView = {
         let chartView = LineChartView()
         chartView.translatesAutoresizingMaskIntoConstraints = false
+        
         return chartView
     }()
     
     lazy var segmentView: PinterestSegment = {
         var style = PinterestSegmentStyle()
-        
         style.indicatorColor = UIColor.theme.redClear.value
         style.selectedTitleColor = UIColor.white
-        let segmentView = PinterestSegment(frame: CGRect(x: 0, y: -8, width: view.frame.size.width, height: 60), segmentStyle: style, titles: titles)
+        
+        let segmentView = PinterestSegment(frame: CGRect.init(x: 0, y: 0, width: view.frame.width, height: 60), segmentStyle: style, titles: titles)
         segmentView.backgroundColor = UIColor.white
         segmentView.layer.addBorder(edge: .bottom, color: UIColor.theme.border.value, thickness: 1)
         segmentView.setSelectIndex(index: 1)
@@ -38,12 +40,22 @@ class DashboardController: UIViewController, UIGestureRecognizerDelegate, UINavi
         return segmentView
     }()
     
-    lazy var hoverTableView: UITableView! = {
+    lazy var hoverTableView: UITableView = {
         let tableView = UITableView()
+        
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.isOpaque = false
         tableView.delegate = self
         tableView.dataSource = self
+        
+        return tableView
+    }()
+    
+    lazy var hotTableView: UITableView = {
+        let tableView = UITableView()
+        
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.delegate = hotListDataService
+        tableView.dataSource = hotListDataService
         
         return tableView
     }()
@@ -61,6 +73,9 @@ class DashboardController: UIViewController, UIGestureRecognizerDelegate, UINavi
         view.addSubview(chartView)
         view.addSubview(segmentView)
         view.addSubview(hoverTableView)
+        view.addSubview(hotTableView)
+        
+        hotTableView.isHidden = true
         
         setupNavBar()
         setupChart(months, values: unitsSold)
@@ -68,20 +83,28 @@ class DashboardController: UIViewController, UIGestureRecognizerDelegate, UINavi
         hoverTableView.separatorStyle = .none
         hoverTableView.register(HoverWalletCell.self, forCellReuseIdentifier: HOVER_CELL_ID)
         
+        hotTableView.register(HoverWalletCell.self, forCellReuseIdentifier: "lol")
+        
         let views: [String: Any] = [
             "chart": chartView,
             "segment": segmentView,
-            "hover": hoverTableView
+            "hover": hoverTableView,
+            "hot": hotTableView
         ]
         let constraints = [
-            "V:|[segment(60)]-180-[chart]|",
+            "V:[segment(60)]-180-[chart]|",
             "V:[segment][hover]|",
+            "V:[segment][hot]|",
             "H:|[chart]|",
+            "H:|[hot]|",
             "H:|[segment]|",
             "H:|[hover]|"
         ]
         
         NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)
+        NSLayoutConstraint.activate([
+            segmentView.topAnchor.constraint(equalTo: view.topAnchor, constant: -2)
+        ])
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -111,24 +134,23 @@ class DashboardController: UIViewController, UIGestureRecognizerDelegate, UINavi
         let searchImage = UIImage(named: "search_icon")?.withRenderingMode(.alwaysTemplate)
         let searchButton = UIButton(type: .custom)
         searchButton.setImage(searchImage, for: .normal)
-        searchButton.widthAnchor.constraint(equalToConstant: 22).isActive = true
-        searchButton.heightAnchor.constraint(equalToConstant: 22).isActive = true
+        searchButton.imageView?.contentMode = .scaleAspectFit
         searchButton.addTarget(self, action: #selector(handleSearchBtn(_:)), for: .touchUpInside)
         let searchButtonItem = UIBarButtonItem(customView: searchButton)
-        
-//        let listImage = UIImage(named: "list_icon")?.withRenderingMode(.alwaysTemplate)
-//        let listButton = UIButton(type: .custom)
-//        listButton.setImage(listImage, for: .normal)
-//        listButton.widthAnchor.constraint(equalToConstant: 28).isActive = true
-//        listButton.heightAnchor.constraint(equalToConstant: 28).isActive = true
-//        let listButtonItem = UIBarButtonItem(customView: listButton)
         
         let userImage = UIImage(named: "user_icon")?.withRenderingMode(.alwaysTemplate)
         let userButton = UIButton(type: .custom)
         userButton.setImage(userImage, for: .normal)
-        userButton.widthAnchor.constraint(equalToConstant: 22).isActive = true
-        userButton.heightAnchor.constraint(equalToConstant: 22).isActive = true
+        userButton.imageView?.contentMode = .scaleAspectFit
+        userButton.addTarget(self, action: #selector(handleSettingsBtn(_:)), for: .touchUpInside)
         let userButtonItem = UIBarButtonItem(customView: userButton)
+        
+        NSLayoutConstraint.activate([
+            userButton.heightAnchor.constraint(equalToConstant: 40),
+            searchButton.heightAnchor.constraint(equalToConstant: 40),
+            userButton.widthAnchor.constraint(equalToConstant: 26),
+            searchButton.widthAnchor.constraint(equalToConstant: 26)
+        ])
         
         navigationItem.leftBarButtonItem = userButtonItem
         navigationItem.rightBarButtonItems = [searchButtonItem]
@@ -138,6 +160,12 @@ class DashboardController: UIViewController, UIGestureRecognizerDelegate, UINavi
         let searchController = SearchController()
         
         navigationController?.pushViewController(searchController, animated: true)
+    }
+    
+    @objc private func handleSettingsBtn(_ sender: UIButton) {
+        let settingsController = SettingsController()
+        
+        navigationController?.present(settingsController, animated: true, completion: nil)
     }
     
     private func setupChart(_ dataPoints: [String], values: [Double]) {
@@ -205,10 +233,11 @@ extension DashboardController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: HOVER_CELL_ID, for: indexPath) as! HoverWalletCell
-        
         let tableViewHeight = tableView.frame.height
+        
         cell.setupConstraints(topMargin: tableViewHeight - 100)
         cell.selectionStyle = .none
+        
         return cell
     }
     
@@ -218,6 +247,7 @@ extension DashboardController: UITableViewDelegate, UITableViewDataSource {
         } else {
             chartView.leftAxis.axisMinimum = -10 - Double(scrollView.contentOffset.y)
         }
+        
         chartView.notifyDataSetChanged()
     }
     
@@ -227,7 +257,11 @@ extension DashboardController: UITableViewDelegate, UITableViewDataSource {
 extension DashboardController {
     
     private func segmentViewDidSelect(index: Int) {
-        print(index)
+        if (index == 0) {
+            hotTableView.isHidden = false
+        } else {
+            hotTableView.isHidden = true
+        }
     }
     
     

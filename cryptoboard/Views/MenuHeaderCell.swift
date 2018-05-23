@@ -8,19 +8,38 @@
 
 import UIKit
 
-class MenuHeaderCell: UIView {
+class MenuHeaderCell: UITableViewHeaderFooterView {
     
-    convenience init(text: String?, width: Int, height: Int) {
-        self.init(frame: CGRect(x: 0, y: 0, width: width, height: height))
+    lazy var titleLabel: UILabel = {
+        var label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.medium)
+        label.textColor = UIColor.theme.textIntermediate.value
+
+        return label
+    }()
+    
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
         
-        if (text != nil) {
-            let label = UILabel(frame: CGRect(x: 15, y: 9, width: width - 30, height: height))
-            label.font = UIFont.boldSystemFont(ofSize: 11)
-            label.textColor = UIColor.theme.textIntermediate.value
-            label.text = text
-            self.addSubview(label)
-        }
-        self.backgroundColor = UIColor.theme.bg.value
+        let border = UIView.init(frame: CGRect.zero)
+        border.translatesAutoresizingMaskIntoConstraints = false
+        border.backgroundColor = UIColor.theme.border.value
+
+        contentView.backgroundColor = UIColor.theme.bg.value
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(border)
+        
+        let views = ["title": titleLabel, "border": border]
+        NSLayoutConstraint.visualConstraints(views: views, visualConstraints: ["H:|-18-[title]-18-|", "V:|-18-[title]-9-[border(1)]-0-|", "H:|[border]|"])
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    public func setup(title: String) {
+        titleLabel.text = title
     }
     
     

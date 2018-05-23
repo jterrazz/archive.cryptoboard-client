@@ -11,6 +11,7 @@ import UIKit
 
 extension UIView {
     
+    // Shadows
     func addShadow(opacity: Float = 0.08) {
         self.layer.masksToBounds = false
         self.layer.shadowColor = UIColor.theme.shadow.value.cgColor
@@ -19,6 +20,7 @@ extension UIView {
 //        self.layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: self.layer.cornerRadius).cgPath
     }
     
+    // Constraints
     var safeTopAnchor: NSLayoutYAxisAnchor {
         if #available(iOS 11.0, *) {
             return self.layoutMarginsGuide.topAnchor
