@@ -10,6 +10,15 @@ import Foundation
 import UIKit
 
 struct K {
+    struct APIServer {
+        static let baseURL = "https://min-api.cryptocompare.com"
+    }
+    
+    struct APIParamsKeys {
+        static let currencyFrom = "fsym"
+        static let currencyTo = "tsym"
+    }
+    
     struct Design {
         static let CornerRadius: CGFloat = 10
     }
@@ -21,4 +30,14 @@ struct K {
         Currency(id: 3, name: "EOS", diminutive: "EOS", imageName: nil),
         Currency(id: 4, name: "LOL", diminutive: "LOL", imageName: nil),
     ]
+}
+
+enum HTTPHeaderFields: String {
+    case contentType = "Content-Type"
+    case acceptType = "Accept"
+    case acceptEncoding = "Accept-Encoding"
+}
+
+enum ContentType: String {
+    case json = "application/json"
 }

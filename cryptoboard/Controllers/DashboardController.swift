@@ -12,11 +12,67 @@ import Charts
 
 fileprivate let X_AXIS_NB_VALUES: Double = 3
 fileprivate let HOVER_CELL_ID: String = "hover-cell-id"
+fileprivate let HOVER_CELL_EMPTY_ID: String = "hover-cell-empty-id"
+fileprivate let HOVER_FOLLOWED_CELL_ID: String = "hover-cell-followed-id"
+let COIN_LIST_CELL_ID: String = "coin-list-cell-id"
 
 class DashboardController: UIViewController, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
     
+    enum TableViewStatus {
+        case wallet, coin
+    }
+    
     let titles = ["Hot list", "My wallet", "Bitcoin", "Ethereum", "Ripple", "EOS"]
-    let hotListDataService = HotListDataService()
+    var hotListDataService: HotListDataService?
+    var tableViewStatus: TableViewStatus = .wallet
+    var showingHotList: Bool = false
+    var showingDetailedHover: Bool = false
+    
+    // Triggers a reload of the hoverTableView
+    var currentSegment: UInt = 1 {
+        didSet {
+            currentSegment == 0 ? showHotList() : hideHotList()
+            
+            if (currentSegment >= 1) {
+                let oldCellNb = getNumberOfHoverRows(status: tableViewStatus)
+                let newCellNb = getNumberOfRowsPerSegment(segment: currentSegment)
+                
+                let addNb = newCellNb - oldCellNb > 0 ? newCellNb - oldCellNb : 0
+                let removeNb = newCellNb - oldCellNb < 0 ? oldCellNb - newCellNb : 0
+                let updateNb = oldCellNb - removeNb
+                
+                var addArray: [IndexPath] = []
+                var removeArray: [IndexPath] = []
+                var updateArray: [IndexPath] = []
+                
+                for i in 0..<addNb {
+                    addArray.append(IndexPath(row: i + updateNb, section: 0))
+                }
+                for i in 0..<removeNb {
+                    removeArray.append(IndexPath(row: i + updateNb, section: 0))
+                }
+                for i in 0..<updateNb {
+                    updateArray.append(IndexPath(row: i, section: 0))
+                }
+                
+                if (addArray.count > 0) {
+                    hoverTableView.insertRows(at: addArray, with: .fade)
+                }
+                if (removeArray.count > 0) {
+                    hoverTableView.deleteRows(at: removeArray, with: .fade)
+                }
+                if (updateArray.count > 0) {
+                    hoverTableView.reloadRows(at: updateArray, with: .fade)
+                }
+                
+                if (currentSegment > 1) {
+                    tableViewStatus = .coin
+                } else if (currentSegment == 1) {
+                    tableViewStatus = .wallet
+                }
+            }
+        }
+    }
     
     lazy var chartView: LineChartView = {
         let chartView = LineChartView()
@@ -46,6 +102,10 @@ class DashboardController: UIViewController, UIGestureRecognizerDelegate, UINavi
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.register(HoverEmptyCell.self, forCellReuseIdentifier: HOVER_CELL_EMPTY_ID)
+        tableView.register(HoverFollowedCell.self, forCellReuseIdentifier: HOVER_FOLLOWED_CELL_ID)
+        tableView.register(HoverWalletCell.self, forCellReuseIdentifier: HOVER_CELL_ID)
+        tableView.separatorStyle = .none
         
         return tableView
     }()
@@ -56,9 +116,22 @@ class DashboardController: UIViewController, UIGestureRecognizerDelegate, UINavi
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = hotListDataService
         tableView.dataSource = hotListDataService
+        tableView.register(CoinListCell.self, forCellReuseIdentifier: COIN_LIST_CELL_ID)
+        tableView.separatorStyle = .none
         
         return tableView
     }()
+    
+    lazy var hotView: UIView = {
+        let hotView = UIView()
+        hotView.backgroundColor = UIColor.red
+        hotView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return hotView
+    }()
+    
+    var hotViewBottomConstraint: NSLayoutConstraint?
+    var hotViewHeightConstraint: NSLayoutConstraint?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,42 +142,52 @@ class DashboardController: UIViewController, UIGestureRecognizerDelegate, UINavi
         let months = ["Jan", "Feb", "Mar"]
         let unitsSold = [10.0, 4.0, 6.0]
         
+        hotListDataService = HotListDataService(navigationController: self.navigationController)
+        
         view.backgroundColor = UIColor.theme.bg.value
         view.addSubview(chartView)
-        view.addSubview(segmentView)
         view.addSubview(hoverTableView)
-        view.addSubview(hotTableView)
+        view.addSubview(hotView)
+        view.addSubview(segmentView)
         
-        hotTableView.isHidden = true
+        hotView.addSubview(hotTableView)
         
         setupNavBar()
         setupChart(months, values: unitsSold)
-        hoverTableView.backgroundColor = UIColor.clear
-        hoverTableView.separatorStyle = .none
-        hoverTableView.register(HoverWalletCell.self, forCellReuseIdentifier: HOVER_CELL_ID)
         
-        hotTableView.register(HoverWalletCell.self, forCellReuseIdentifier: "lol")
+        hoverTableView.backgroundColor = UIColor.clear
+        hotTableView.backgroundColor = UIColor.theme.bg.value
         
         let views: [String: Any] = [
             "chart": chartView,
             "segment": segmentView,
             "hover": hoverTableView,
-            "hot": hotTableView
+            "hot": hotView,
+            "HTB": hotTableView
         ]
         let constraints = [
             "V:[segment(60)]-180-[chart]|",
             "V:[segment][hover]|",
-            "V:[segment][hot]|",
+            "V:[segment][hot]",
             "H:|[chart]|",
             "H:|[hot]|",
             "H:|[segment]|",
-            "H:|[hover]|"
+            "H:|[hover]|",
+            "V:|[HTB]|",
+            "H:|[HTB]|",
         ]
         
+        hotViewBottomConstraint = hotView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
+        hotViewHeightConstraint = hotView.heightAnchor.constraint(equalToConstant: 0)
+        hotViewHeightConstraint?.isActive = true
         NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)
         NSLayoutConstraint.activate([
-            segmentView.topAnchor.constraint(equalTo: view.topAnchor, constant: -2)
+            segmentView.topAnchor.constraint(equalTo: view.topAnchor, constant: -2),
         ])
+        
+        let vc = CoinDetailController()
+        
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -168,6 +251,116 @@ class DashboardController: UIViewController, UIGestureRecognizerDelegate, UINavi
         navigationController?.present(settingsController, animated: true, completion: nil)
     }
     
+    
+}
+
+extension DashboardController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return getNumberOfRowsPerSegment(segment: currentSegment)
+    }
+    
+    private func getNumberOfRowsPerSegment(segment: UInt) -> Int {
+        if (segment == 1) {
+            return getNumberOfHoverRows(status: .wallet)
+        } else {
+            return getNumberOfHoverRows(status: .coin)
+        }
+    }
+    
+    private func getNumberOfHoverRows(status: TableViewStatus) -> Int {
+        switch status {
+        case .wallet:
+            return 5
+        default:
+            return 2
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch indexPath.row {
+        case 0:
+            let cell = tableView.dequeueReusableCell(withIdentifier: HOVER_CELL_EMPTY_ID, for: indexPath) as! HoverEmptyCell
+            cell.setup(height: getHoverCellHeight())
+            
+            return cell
+        case 1:
+            let cell = tableView.dequeueReusableCell(withIdentifier: HOVER_CELL_ID, for: indexPath) as! HoverWalletCell
+            
+            return cell
+        default:
+            let cell = tableView.dequeueReusableCell(withIdentifier: HOVER_FOLLOWED_CELL_ID, for: indexPath) as! HoverFollowedCell
+            
+            return cell
+        }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // Chart animation
+        if (scrollView.contentOffset.y < 0) {
+            chartView.leftAxis.axisMinimum = -10 + Double(abs(scrollView.contentOffset.y).squareRoot())
+        } else {
+            chartView.leftAxis.axisMinimum = -10 - Double(scrollView.contentOffset.y)
+        }
+        
+        chartView.notifyDataSetChanged()
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        let velocity = scrollView.panGestureRecognizer.velocity(in: self.view).y
+        
+        if (!showingDetailedHover && velocity < 0) { // Scrolled up when hoverTableView is hidden
+            hoverTableView.scrollToRow(at: IndexPath.init(row: 1, section: 0), at: .top, animated: true)
+            showingDetailedHover = true
+        } else if (true) { // Scrolled down when hoverTableView is close to row 1 TODO!!
+            hoverTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            showingDetailedHover = false
+        }
+    }
+    
+    private func getHoverCellHeight() -> CGFloat {
+        return hoverTableView.frame.height - 100
+    }
+    
+    
+}
+
+extension DashboardController {
+    
+    private func segmentViewDidSelect(index: Int) {
+        currentSegment = UInt(index)
+    }
+    
+    private func hideHotList(animated: Bool = true) {
+        if (self.showingHotList) {
+            UIView.animate(withDuration: 0.3) {
+                self.hotViewBottomConstraint?.isActive = false
+                self.hotViewHeightConstraint?.isActive = true
+                self.hotView.superview?.layoutIfNeeded()
+            }
+        }
+        self.showingHotList = false
+    }
+    
+    private func showHotList(animated: Bool = true) {
+        if (!self.showingHotList) {
+            UIView.animate(withDuration: 0.3) {
+                self.hotViewHeightConstraint?.isActive = false
+                self.hotViewBottomConstraint?.isActive = true
+                self.hotView.superview?.layoutIfNeeded()
+            }
+        }
+        self.showingHotList = true
+    }
+    
+    
+}
+
+extension DashboardController: ChartViewDelegate {
+    
     private func setupChart(_ dataPoints: [String], values: [Double]) {
         var dataEntries: [ChartDataEntry] = []
         dataEntries.append(ChartDataEntry(x: -1, y: 10))
@@ -222,52 +415,6 @@ class DashboardController: UIViewController, UIGestureRecognizerDelegate, UINavi
         chartView.delegate = self
     }
     
-    
-}
-
-extension DashboardController: UITableViewDelegate, UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: HOVER_CELL_ID, for: indexPath) as! HoverWalletCell
-        let tableViewHeight = tableView.frame.height
-        
-        cell.setupConstraints(topMargin: tableViewHeight - 100)
-        cell.selectionStyle = .none
-        
-        return cell
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (scrollView.contentOffset.y < 0) {
-            chartView.leftAxis.axisMinimum = -10 + Double(abs(scrollView.contentOffset.y).squareRoot())
-        } else {
-            chartView.leftAxis.axisMinimum = -10 - Double(scrollView.contentOffset.y)
-        }
-        
-        chartView.notifyDataSetChanged()
-    }
-    
-    
-}
-
-extension DashboardController {
-    
-    private func segmentViewDidSelect(index: Int) {
-        if (index == 0) {
-            hotTableView.isHidden = false
-        } else {
-            hotTableView.isHidden = true
-        }
-    }
-    
-    
-}
-
-extension DashboardController: ChartViewDelegate {
     
 }
 

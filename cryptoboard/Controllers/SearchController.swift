@@ -109,5 +109,11 @@ extension SearchController: UITableViewDelegate, UITableViewDataSource {
         searchBar.resignFirstResponder()
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = CoinDetailController()
+        
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
     
 }

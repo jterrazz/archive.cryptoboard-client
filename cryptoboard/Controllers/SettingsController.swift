@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+// Powered by News API : I promise to add an attribution link on my website or app to NewsAPI.org.
 class SettingsController: UIViewController {
     
     let MENU_TITLE_CELL_ID = "menu-title-cell-id"

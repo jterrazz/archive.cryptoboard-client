@@ -24,6 +24,7 @@ class HoverWalletCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         backgroundColor = UIColor.clear
+        selectionStyle = .none
         self.addSubview(insideView)
         
         let title = UILabel()
@@ -33,29 +34,22 @@ class HoverWalletCell: UITableViewCell {
         title.translatesAutoresizingMaskIntoConstraints = false
         insideView.addSubview(title)
         
-        var constraints: [NSLayoutConstraint] = []
         let views: [String: Any] = [
             "title": title,
+            "cell": insideView
+        ]
+        let constraints = [
+            "V:|-16-[title]-16-|",
+            "H:|-16-[title]-16-|",
+            "V:|-16-[cell]-16-|",
+            "H:|-16-[cell]-16-|"
         ]
         
-        constraints += NSLayoutConstraint.constraints(withVisualFormat: "V:|-16-[title]-16-|", options: [], metrics: nil, views: views)
-        constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|-16-[title]-16-|", options: [], metrics: nil, views: views)
-        NSLayoutConstraint.activate(constraints)
+        NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-    }
-    
-    public func setupConstraints(topMargin: CGFloat) {
-        var constraints: [NSLayoutConstraint] = []
-        let views: [String: Any] = [
-            "cell": insideView,
-        ]
-        
-        constraints += NSLayoutConstraint.constraints(withVisualFormat: "V:|-\(topMargin)-[cell]-16-|", options: [], metrics: nil, views: views)
-        constraints += NSLayoutConstraint.constraints(withVisualFormat: "H:|-16-[cell]-16-|", options: [], metrics: nil, views: views)
-        NSLayoutConstraint.activate(constraints)
     }
     
     

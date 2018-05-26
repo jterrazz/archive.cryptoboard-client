@@ -15,7 +15,6 @@ class Currency {
     var diminutive: String
     var imageName: String?
     
-    
     init(id: UInt, name: String, diminutive: String, imageName: String?) {
         self.id = id
         self.name = name

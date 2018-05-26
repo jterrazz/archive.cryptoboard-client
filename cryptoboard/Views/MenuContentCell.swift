@@ -14,7 +14,7 @@ class MenuContentCell: UITableViewCell {
     lazy var titleView: UILabel = {
         var label = UILabel()
         label.textColor = UIColor.theme.textDark.value
-        label.font = UIFont.systemFont(ofSize: 15)
+        label.font = UIFont.boldSystemFont(ofSize: 15)
         label.translatesAutoresizingMaskIntoConstraints = false
 
         return label

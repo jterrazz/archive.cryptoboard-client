@@ -42,7 +42,7 @@ extension UIColor {
             case .shadow:
                 return UIColor(hex: "#464646")
             case .topBarEl:
-                return UIColor(hex: "#212121")
+                return UIColor(hex: "#2C3D55")
             case .custom(let hexValue):
                 return UIColor(hex: hexValue)
             }

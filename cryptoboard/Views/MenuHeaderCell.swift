@@ -13,7 +13,7 @@ class MenuHeaderCell: UITableViewHeaderFooterView {
     lazy var titleLabel: UILabel = {
         var label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.medium)
+        label.font = UIFont.systemFont(ofSize: 12, weight: UIFont.Weight.semibold)
         label.textColor = UIColor.theme.textIntermediate.value
 
         return label
