@@ -12,45 +12,68 @@ import SwiftyJSON
 
 class APIClient {
     
-    static func getCurrenciesHistory(currenciesFrom: [String], currencyTo: String, callback: @escaping ([Currency]) -> Void) {
-        Alamofire.request(APIRouter.currenciesHistory(currenciesFrom: currenciesFrom, currencyTo: currencyTo)).responseJSON { (response) in
+    static func getCurrencyHistory(_ type: CurrencyHistoryType, currencyFrom: String, currencyTo: String, aggregate: UInt, points: UInt, callback: @escaping ([CurrencyPrice]) -> Void) {
+        let router: APIRouter
+        
+        switch type {
+        case .day:
+            router = APIRouter.histoDay(currencyFrom: currencyFrom, currencyTo: currencyTo, aggregate: aggregate, points: points)
+        case .hour:
+            router = APIRouter.histoHour(currencyFrom: currencyFrom, currencyTo: currencyTo, aggregate: aggregate, points: points)
+        case .minute:
+            router = APIRouter.histoMinute(currencyFrom: currencyFrom, currencyTo: currencyTo, aggregate: aggregate, points: points)
+        }
+        
+        Alamofire.request(router).responseJSON { (response) in
             guard response.error == nil else {
                 return
             }
             
-            var currencies = [Currency]()
+            var ret = [CurrencyPrice]()
             
             if (response.result.value != nil) {
                 let json = JSON(response.result.value!)
                 
-                if let data = json["Data"].array {
-                    for (currencyData): (JSON) in data {
-                        if let time = currencyData["time"].int, let open = currencyData["open"].double { // TODO
-//                            currencies.append(Currency(id: <#T##UInt#>, name: <#T##String#>, diminutive: <#T##String#>, imageName: <#T##String?#>))
-                        } else {
+                if let prices = json["Data"].array {
+                    for (priceObj) in prices {
+                        if let price = priceObj["close"].double, let volume = priceObj["volumeto"].double, let time = priceObj["time"].int64 {
+                            let newPrice = CurrencyPrice(price: price, volume: volume, timestamp: time)
                             
+                            ret.append(newPrice)
                         }
                     }
-                    callback(currencies)
                 }
             }
+            
+            callback(ret)
         }
     }
     
-    static func getCurrenciesState(currenciesFrom: [String], currencyTo: String, callback: @escaping ([Currency]) -> Void) {
+    static func getCurrenciesState(currenciesFrom: [String], currencyTo: String, callback: @escaping ([String: CurrencyLive]) -> Void) {
         Alamofire.request(APIRouter.currenciesState(currenciesFrom: currenciesFrom, currencyTo: currencyTo)).responseJSON { (response) in
             guard response.error == nil else {
                 return
             }
             
-            //            let json = JSON(response.result.value)
-            //            var error = false
-            //            var prices: [String: Double]
-            //
-            //            currenciesFrom.forEach({ (currency) in
-            //                guard let price = json[currency]
-            //            })
-            //            if let json[
+            var ret = [String: CurrencyLive]()
+            
+            if (response.result.value != nil) {
+                let json = JSON(response.result.value!)
+                
+                if let dictionary = json["RAW"].dictionary {
+                    for (symbol, toArr): (String, JSON) in dictionary {
+                        let d = toArr[currencyTo]
+                        
+                        if let price = d["PRICE"].double, let volume = d["VOLUME24HOURTO"].double, let high = d["HIGHDAY"].double,
+                            let low = d["LOWDAY"].double, let marketCap = d["MKTCAP"].double, let supply = d["SUPPLY"].double {
+                            
+                            ret[symbol] = CurrencyLive.init(price: price, volumeDay: volume, highDay: high, lowDay: low, marketCap: marketCap, supply: supply)
+                        }
+                    }
+                }
+            }
+            
+            callback(ret)
         }
     }
 }

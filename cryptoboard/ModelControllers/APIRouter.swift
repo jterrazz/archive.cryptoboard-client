@@ -11,29 +11,37 @@ import Alamofire
 
 enum APIRouter: URLRequestConvertible {
     
-    case currenciesHistory(currenciesFrom: [String], currencyTo: String)
     case currenciesState(currenciesFrom: [String], currencyTo: String)
+    case histoDay(currencyFrom: String, currencyTo: String, aggregate: UInt, points: UInt)
+    case histoHour(currencyFrom: String, currencyTo: String, aggregate: UInt, points: UInt)
+    case histoMinute(currencyFrom: String, currencyTo: String, aggregate: UInt, points: UInt)
     
     private var method: HTTPMethod {
         switch self {
-        case .currenciesHistory, .currenciesState:
+        default:
             return .get
         }
     }
     
     private var path: String {
         switch self {
-        case .currenciesHistory:
+        case .histoDay:
             return "/data/histoday"
+        case .histoHour:
+            return "/data/histohour"
+        case .histoMinute:
+            return "/data/histominute"
         case .currenciesState:
-            return "/data/pricemulti"
+            return "/data/pricemultifull"
         }
     }
     
     private var params: Parameters? {
         switch self {
-        case .currenciesState(let from, let to), .currenciesHistory(let from, let to):
-            return [K.APIParamsKeys.currencyFrom: from.joined(separator: ","), K.APIParamsKeys.currencyTo: to]
+        case .currenciesState(let from, let to):
+            return [K.APIParamsKeys.currenciesFrom: from.joined(separator: ","), K.APIParamsKeys.currenciesTo: to]
+        case .histoDay(let from, let to, let aggregate, let points), .histoHour(let from, let to, let aggregate, let points), .histoMinute(let from, let to, let aggregate, let points):
+            return [K.APIParamsKeys.currencyFrom: from, K.APIParamsKeys.currencyTo: to, K.APIParamsKeys.aggregate: aggregate, K.APIParamsKeys.limit: points]
         }
     }
     

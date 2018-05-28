@@ -15,8 +15,12 @@ struct K {
     }
     
     struct APIParamsKeys {
+        static let currenciesFrom = "fsyms"
+        static let currenciesTo = "tsyms"
         static let currencyFrom = "fsym"
         static let currencyTo = "tsym"
+        static let aggregate = "aggregate"
+        static let limit = "limit"
     }
     
     struct Design {
@@ -40,4 +44,8 @@ enum HTTPHeaderFields: String {
 
 enum ContentType: String {
     case json = "application/json"
+}
+
+enum CurrencyHistoryType {
+    case day, hour, minute
 }

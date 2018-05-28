@@ -28,48 +28,12 @@ class DashboardController: UIViewController, UIGestureRecognizerDelegate, UINavi
     var showingHotList: Bool = false
     var showingDetailedHover: Bool = false
     
-    // Triggers a reload of the hoverTableView
+    // Reload the hoverTableView
     var currentSegment: UInt = 1 {
         didSet {
-            currentSegment == 0 ? showHotList() : hideHotList()
-            
-            if (currentSegment >= 1) {
-                let oldCellNb = getNumberOfHoverRows(status: tableViewStatus)
-                let newCellNb = getNumberOfRowsPerSegment(segment: currentSegment)
-                
-                let addNb = newCellNb - oldCellNb > 0 ? newCellNb - oldCellNb : 0
-                let removeNb = newCellNb - oldCellNb < 0 ? oldCellNb - newCellNb : 0
-                let updateNb = oldCellNb - removeNb
-                
-                var addArray: [IndexPath] = []
-                var removeArray: [IndexPath] = []
-                var updateArray: [IndexPath] = []
-                
-                for i in 0..<addNb {
-                    addArray.append(IndexPath(row: i + updateNb, section: 0))
-                }
-                for i in 0..<removeNb {
-                    removeArray.append(IndexPath(row: i + updateNb, section: 0))
-                }
-                for i in 0..<updateNb {
-                    updateArray.append(IndexPath(row: i, section: 0))
-                }
-                
-                if (addArray.count > 0) {
-                    hoverTableView.insertRows(at: addArray, with: .fade)
-                }
-                if (removeArray.count > 0) {
-                    hoverTableView.deleteRows(at: removeArray, with: .fade)
-                }
-                if (updateArray.count > 0) {
-                    hoverTableView.reloadRows(at: updateArray, with: .fade)
-                }
-                
-                if (currentSegment > 1) {
-                    tableViewStatus = .coin
-                } else if (currentSegment == 1) {
-                    tableViewStatus = .wallet
-                }
+            handleSegmentChange(currentSegment: currentSegment)
+            if (currentSegment > 1) {
+                updateChartData()
             }
         }
     }
@@ -94,6 +58,14 @@ class DashboardController: UIViewController, UIGestureRecognizerDelegate, UINavi
         segmentView.translatesAutoresizingMaskIntoConstraints = false
         
         return segmentView
+    }()
+    
+    lazy var currentPriceLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 26)
+        label.text = "$ 02222222"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     lazy var hoverTableView: UITableView = {
@@ -146,6 +118,7 @@ class DashboardController: UIViewController, UIGestureRecognizerDelegate, UINavi
         
         view.backgroundColor = UIColor.theme.bg.value
         view.addSubview(chartView)
+        view.addSubview(currentPriceLabel)
         view.addSubview(hoverTableView)
         view.addSubview(hotView)
         view.addSubview(segmentView)
@@ -163,10 +136,11 @@ class DashboardController: UIViewController, UIGestureRecognizerDelegate, UINavi
             "segment": segmentView,
             "hover": hoverTableView,
             "hot": hotView,
-            "HTB": hotTableView
+            "HTB": hotTableView,
+            "price": currentPriceLabel
         ]
         let constraints = [
-            "V:[segment(60)]-180-[chart]|",
+            "V:[segment(60)]-18-[price]-150-[chart]|",
             "V:[segment][hover]|",
             "V:[segment][hot]",
             "H:|[chart]|",
@@ -183,11 +157,8 @@ class DashboardController: UIViewController, UIGestureRecognizerDelegate, UINavi
         NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)
         NSLayoutConstraint.activate([
             segmentView.topAnchor.constraint(equalTo: view.topAnchor, constant: -2),
+            currentPriceLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
-        
-        let vc = CoinDetailController()
-        
-        navigationController?.pushViewController(vc, animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -237,6 +208,63 @@ class DashboardController: UIViewController, UIGestureRecognizerDelegate, UINavi
         
         navigationItem.leftBarButtonItem = userButtonItem
         navigationItem.rightBarButtonItems = [searchButtonItem]
+    }
+    
+    // ===================
+    // ===== ACTIONS =====
+    // ===================
+    
+    private func updateChartData() { // TODO Update func
+        let currency = Currency(id: 0, name: "Bitcoin", diminutive: "BTC", imageName: nil)
+        
+        CurrencyController.getCurrencyState(currencies: [currency]) { (currencies) in
+            if (currencies.count == 1) {
+                self.currentPriceLabel.text = currencies[0].liveData?.price?.format(f: ".2")
+            }
+        }
+    }
+    
+    private func handleSegmentChange(currentSegment: UInt) {
+        currentSegment == 0 ? showHotList() : hideHotList()
+        
+        if (currentSegment >= 1) {
+            let oldCellNb = getNumberOfHoverRows(status: tableViewStatus)
+            let newCellNb = getNumberOfRowsPerSegment(segment: currentSegment)
+            
+            let addNb = newCellNb - oldCellNb > 0 ? newCellNb - oldCellNb : 0
+            let removeNb = newCellNb - oldCellNb < 0 ? oldCellNb - newCellNb : 0
+            let updateNb = oldCellNb - removeNb
+            
+            var addArray: [IndexPath] = []
+            var removeArray: [IndexPath] = []
+            var updateArray: [IndexPath] = []
+            
+            for i in 0..<addNb {
+                addArray.append(IndexPath(row: i + updateNb, section: 0))
+            }
+            for i in 0..<removeNb {
+                removeArray.append(IndexPath(row: i + updateNb, section: 0))
+            }
+            for i in 0..<updateNb {
+                updateArray.append(IndexPath(row: i, section: 0))
+            }
+            
+            if (addArray.count > 0) {
+                hoverTableView.insertRows(at: addArray, with: .fade)
+            }
+            if (removeArray.count > 0) {
+                hoverTableView.deleteRows(at: removeArray, with: .fade)
+            }
+            if (updateArray.count > 0) {
+                hoverTableView.reloadRows(at: updateArray, with: .fade)
+            }
+            
+            if (currentSegment > 1) {
+                tableViewStatus = .coin
+            } else if (currentSegment == 1) {
+                tableViewStatus = .wallet
+            }
+        }
     }
     
     @objc private func handleSearchBtn(_ sender: UIButton) {

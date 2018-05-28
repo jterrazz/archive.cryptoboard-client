@@ -34,10 +34,11 @@
 		86BD017120B8BB770065CC8B /* CoinDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD017020B8BB770065CC8B /* CoinDetailController.swift */; };
 		86BD017320B8E1FE0065CC8B /* CoinGraphCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD017220B8E1FE0065CC8B /* CoinGraphCell.swift */; };
 		86BD017520B8E2A10065CC8B /* CoinInfosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD017420B8E2A10065CC8B /* CoinInfosCell.swift */; };
-		86BD017720B91AC90065CC8B /* Tasks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD017620B91AC90065CC8B /* Tasks.swift */; };
 		86BD017920B91B330065CC8B /* APIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD017820B91B330065CC8B /* APIRouter.swift */; };
 		86BD017B20B91B4D0065CC8B /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD017A20B91B4D0065CC8B /* APIClient.swift */; };
 		86BD017D20B91C020065CC8B /* CurrencyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD017C20B91C020065CC8B /* CurrencyController.swift */; };
+		86BD017F20B9A8180065CC8B /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD017E20B9A8180065CC8B /* Double.swift */; };
+		86BD018120B9C27B0065CC8B /* StorageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD018020B9C27B0065CC8B /* StorageController.swift */; };
 		FE6D13C8B0CD9AA730D59096 /* Pods_cryptoboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AECE56E8026DE6661182C9E /* Pods_cryptoboard.framework */; };
 /* End PBXBuildFile section */
 
@@ -72,10 +73,11 @@
 		86BD017020B8BB770065CC8B /* CoinDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetailController.swift; sourceTree = "<group>"; };
 		86BD017220B8E1FE0065CC8B /* CoinGraphCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinGraphCell.swift; sourceTree = "<group>"; };
 		86BD017420B8E2A10065CC8B /* CoinInfosCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinInfosCell.swift; sourceTree = "<group>"; };
-		86BD017620B91AC90065CC8B /* Tasks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tasks.swift; sourceTree = "<group>"; };
 		86BD017820B91B330065CC8B /* APIRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRouter.swift; sourceTree = "<group>"; };
 		86BD017A20B91B4D0065CC8B /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		86BD017C20B91C020065CC8B /* CurrencyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyController.swift; sourceTree = "<group>"; };
+		86BD017E20B9A8180065CC8B /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
+		86BD018020B9C27B0065CC8B /* StorageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageController.swift; sourceTree = "<group>"; };
 		88C9C5A0BA25730005577C54 /* Pods-cryptoboard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cryptoboard.release.xcconfig"; path = "Pods/Target Support Files/Pods-cryptoboard/Pods-cryptoboard.release.xcconfig"; sourceTree = "<group>"; };
 		A485F1B7133266ACBD55CDC8 /* Pods-cryptoboard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cryptoboard.debug.xcconfig"; path = "Pods/Target Support Files/Pods-cryptoboard/Pods-cryptoboard.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -172,7 +174,7 @@
 				86BD017A20B91B4D0065CC8B /* APIClient.swift */,
 				86BD017820B91B330065CC8B /* APIRouter.swift */,
 				86BD017C20B91C020065CC8B /* CurrencyController.swift */,
-				86BD017620B91AC90065CC8B /* Tasks.swift */,
+				86BD018020B9C27B0065CC8B /* StorageController.swift */,
 			);
 			path = ModelControllers;
 			sourceTree = "<group>";
@@ -184,6 +186,7 @@
 				862319C620B28DB500C6E46E /* NSLayoutConstraint.swift */,
 				862319A920AFD9A100C6E46E /* UIColor.swift */,
 				862319AB20AFDC3100C6E46E /* UIImage.swift */,
+				86BD017E20B9A8180065CC8B /* Double.swift */,
 				862319AD20AFDD2C00C6E46E /* UIView.swift */,
 			);
 			path = Helpers;
@@ -339,6 +342,7 @@
 				86BD017520B8E2A10065CC8B /* CoinInfosCell.swift in Sources */,
 				862319D320B541EE00C6E46E /* HotListDataService.swift in Sources */,
 				862319AC20AFDC3100C6E46E /* UIImage.swift in Sources */,
+				86BD017F20B9A8180065CC8B /* Double.swift in Sources */,
 				862319BD20B070FA00C6E46E /* HoverWalletCell.swift in Sources */,
 				86BD017120B8BB770065CC8B /* CoinDetailController.swift in Sources */,
 				862319AE20AFDD2C00C6E46E /* UIView.swift in Sources */,
@@ -349,9 +353,9 @@
 				86BD016A20B56D900065CC8B /* HoverFollowedCell.swift in Sources */,
 				86BD017D20B91C020065CC8B /* CurrencyController.swift in Sources */,
 				862319BB20B0030C00C6E46E /* CALayer.swift in Sources */,
-				86BD017720B91AC90065CC8B /* Tasks.swift in Sources */,
 				862319C720B28DB500C6E46E /* NSLayoutConstraint.swift in Sources */,
 				862319C920B4171E00C6E46E /* Currency.swift in Sources */,
+				86BD018120B9C27B0065CC8B /* StorageController.swift in Sources */,
 				862319AA20AFD9A100C6E46E /* UIColor.swift in Sources */,
 				86BD016F20B849E50065CC8B /* CoinListCell.swift in Sources */,
 				862319CD20B44FDD00C6E46E /* MenuContentCell.swift in Sources */,
