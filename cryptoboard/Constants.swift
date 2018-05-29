@@ -49,3 +49,7 @@ enum ContentType: String {
 enum CurrencyHistoryType {
     case day, hour, minute
 }
+
+enum LocalCurrency: String, Codable {
+    case usd = "USD", eur = "EUR"
+}
