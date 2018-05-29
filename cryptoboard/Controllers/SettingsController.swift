@@ -41,6 +41,12 @@ class SettingsController: UIViewController {
         return tableView
     }()
     
+    lazy var gradientBorder: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     lazy var closeBtn: UIButton = {
         let image = UIImage.init(named: "cross")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
         let button = UIButton(type: UIButtonType.custom)
@@ -58,21 +64,30 @@ class SettingsController: UIViewController {
 
         view.backgroundColor = UIColor.theme.bg.value
         view.addSubview(tableView)
+        view.addSubview(gradientBorder)
         view.addSubview(closeBtn)
         
         let views: [String: Any] = [
             "tableView": tableView,
-            "close": closeBtn
+            "close": closeBtn,
+            "gradient": gradientBorder
         ]
         let constraints = [
             "H:|[tableView]|",
+            "H:|[gradient]|",
             "H:|-18-[close(26)]",
-            "V:[close(26)]-[tableView]|"
+            "V:[close(26)]-[tableView]|",
         ]
         NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)
         NSLayoutConstraint.activate([
-            closeBtn.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 9)
+            closeBtn.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 9),
+            gradientBorder.topAnchor.constraint(equalTo: tableView.topAnchor),
+            gradientBorder.heightAnchor.constraint(equalToConstant: 14)
         ])
+    }
+    
+    override func viewDidLayoutSubviews() {
+        gradientBorder.applyGradient(colours: [UIColor.theme.bg.value, UIColor.theme.bg.withAlpha(0)])
     }
     
     @objc private func handleClose(_ sender: UIButton) {

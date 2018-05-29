@@ -49,6 +49,21 @@ extension UIColor {
         }
     }
     
+    enum gradients {
+        case purple
+        
+        var cgColors: [CGColor] {
+            return self.value.map { $0.cgColor }
+        }
+        
+        var value: [UIColor] {
+            switch self {
+            case .purple:
+                return [UIColor.init(hex: "#614385"), UIColor.init(hex: "#516395")]
+            }
+        }
+    }
+    
     convenience init(red: Int, green: Int, blue: Int) {
         assert(red >= 0 && green >= 0 && blue >= 0 && red <= 255 && green <= 255 && blue <= 255, "Color value should be between 0 and 255")
         

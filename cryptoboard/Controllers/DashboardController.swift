@@ -407,7 +407,7 @@ extension DashboardController: ChartViewDelegate {
         chartDataSet.setCircleColors(UIColor.white)
         chartDataSet.circleHoleColor = UIColor.theme.redClear.value
         chartDataSet.circleHoleRadius = 5
-        let gradientColors = [UIColor.theme.redClear.value.cgColor, UIColor.theme.redDark.value.cgColor] as CFArray
+        let gradientColors = UIColor.gradients.purple.cgColors as CFArray
         let colorLocations: [CGFloat] = [1, 0]
         let gradient = CGGradient.init(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: gradientColors, locations: colorLocations)
         chartDataSet.fill = Fill.fillWithLinearGradient(gradient!, angle: 90)

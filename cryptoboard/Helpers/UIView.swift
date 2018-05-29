@@ -11,6 +11,16 @@ import UIKit
 
 extension UIView {
     
+    // Gradient
+    func applyGradient(colours: [UIColor]) {
+        clipsToBounds = true
+        let gradient = CAGradientLayer()
+        gradient.frame = self.bounds
+        gradient.colors = colours.map { $0.cgColor }
+        
+        self.layer.insertSublayer(gradient, at: 0)
+    }
+    
     // Shadows
     func addShadow(opacity: Float = 0.08) {
         self.layer.masksToBounds = false
