@@ -53,3 +53,7 @@ enum CurrencyHistoryType {
 enum LocalCurrency: String, Codable {
     case usd = "USD", eur = "EUR"
 }
+
+enum TableViewStatus {
+    case wallet, coin
+}

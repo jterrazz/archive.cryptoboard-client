@@ -66,14 +66,17 @@ class SearchCurrencyCell: UITableViewCell {
             "btn": addButton,
             "logo": logo
         ]
-
-        NSLayoutConstraint.visualConstraints(views: views, visualConstraints: ["H:|-[logo(38)]-[title]-[btn(64)]-|", "V:|-8-[logo(38)]-8-|"])
+        let cs = logo.heightAnchor.constraint(equalToConstant: 38)
+        cs.priority = UILayoutPriority.init(999)
+        
+        NSLayoutConstraint.visualConstraints(views: views, visualConstraints: ["H:|-[logo(38)]-[title]-[btn(64)]-|", "V:|-8-[logo]-8-|"])
         NSLayoutConstraint.activate([
             subtitle.leftAnchor.constraint(equalTo: title.leftAnchor, constant: 0),
             addButton.heightAnchor.constraint(equalTo: logo.heightAnchor, multiplier: 0.9),
             title.topAnchor.constraint(equalTo: logo.topAnchor),
             subtitle.bottomAnchor.constraint(equalTo: logo.bottomAnchor),
-            addButton.centerYAnchor.constraint(equalTo: logo.centerYAnchor)
+            addButton.centerYAnchor.constraint(equalTo: logo.centerYAnchor),
+            cs
         ])
     }
     

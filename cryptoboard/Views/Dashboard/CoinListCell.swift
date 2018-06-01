@@ -14,9 +14,9 @@ class CoinListCell: UITableViewCell {
     
     lazy var logo: UIImageView = {
         let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "btc")
         imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         
         return imageView
     }()
@@ -27,6 +27,7 @@ class CoinListCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = UIColor.theme.textDark.value
         label.font = UIFont.systemFont(ofSize: 14)
+        
         return label
     }()
     
@@ -36,6 +37,7 @@ class CoinListCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = UIColor.theme.textDark.value
         label.font = UIFont.boldSystemFont(ofSize: 18)
+        
         return label
     }()
     
@@ -45,6 +47,7 @@ class CoinListCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = UIColor.green
         label.font = UIFont.boldSystemFont(ofSize: 18)
+        
         return label
     }()
     
@@ -52,18 +55,22 @@ class CoinListCell: UITableViewCell {
         let chart = LineChartView()
         chart.backgroundColor = UIColor.red
         chart.translatesAutoresizingMaskIntoConstraints = false
+        
         return chart
+    }()
+    
+    lazy var separator: UIView = {
+        let separator = UIView()
+        separator.translatesAutoresizingMaskIntoConstraints = false
+        separator.backgroundColor = UIColor.theme.border.value
+        
+        return separator
     }()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         selectionStyle = .none
-        
-        let separator = UIView()
-        separator.translatesAutoresizingMaskIntoConstraints = false
-        separator.backgroundColor = UIColor.theme.border.value
-        
         contentView.addSubview(logo)
         contentView.addSubview(name)
         contentView.addSubview(price)
@@ -79,14 +86,18 @@ class CoinListCell: UITableViewCell {
             "var": variation,
             "separator": separator
         ]
+        let cs = logo.heightAnchor.constraint(equalToConstant: 36)
         
-        NSLayoutConstraint.visualConstraints(views: views, visualConstraints: ["H:|-18-[logo(36)]-[name]-9-[var(<=80)]-9-[chart(90)]-18-|", "V:|-8-[chart(50)]-8-[separator(1)]|", "V:[logo(36)]", "H:|[separator]|"])
+        cs.priority = UILayoutPriority.init(999)
+        NSLayoutConstraint.visualConstraints(views: views, visualConstraints: ["H:|-18-[logo(36)]-[name]-9-[var(<=80)]-9-[chart(90)]-18-|", "V:|-20-[logo]-20-[separator(1)]|", "H:|[separator]|"])
         NSLayoutConstraint.activate([
-            logo.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             name.topAnchor.constraint(equalTo: logo.topAnchor),
             price.topAnchor.constraint(equalTo: name.bottomAnchor),
             price.leftAnchor.constraint(equalTo: name.leftAnchor),
-            variation.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+            variation.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            chart.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            chart.heightAnchor.constraint(equalToConstant: 40),
+            cs
         ])
     }
     

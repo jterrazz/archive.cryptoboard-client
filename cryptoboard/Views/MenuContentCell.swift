@@ -20,19 +20,26 @@ class MenuContentCell: UITableViewCell {
         return label
     }()
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
+    lazy var border: UIView = {
         let border = UIView.init(frame: CGRect.zero)
         border.translatesAutoresizingMaskIntoConstraints = false
         border.backgroundColor = UIColor.theme.border.value
+        
+        return border
+    }()
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         backgroundColor = UIColor.white
         contentView.addSubview(titleView)
         contentView.addSubview(border)
         
         let views = ["title": titleView, "border": border]
-        NSLayoutConstraint.visualConstraints(views: views, visualConstraints: ["H:|-18-[title]-18-|", "V:|-14-[title]-14-[border(1)]-0-|", "H:|[border]|"])
+        let cs = border.heightAnchor.constraint(equalToConstant: 1)
+        cs.priority = UILayoutPriority.init(999)
+        cs.isActive = true
+        NSLayoutConstraint.visualConstraints(views: views, visualConstraints: ["H:|-18-[title]-18-|", "V:|-14-[title]-14-[border]-0-|", "H:|[border]|"])
     }
     
     required init?(coder aDecoder: NSCoder) {

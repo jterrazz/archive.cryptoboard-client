@@ -26,7 +26,6 @@
 		862319CB20B41A7D00C6E46E /* SearchCurrencyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862319CA20B41A7D00C6E46E /* SearchCurrencyCell.swift */; };
 		862319CD20B44FDD00C6E46E /* MenuContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862319CC20B44FDD00C6E46E /* MenuContentCell.swift */; };
 		862319CF20B4503800C6E46E /* MenuTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862319CE20B4503800C6E46E /* MenuTitleCell.swift */; };
-		862319D320B541EE00C6E46E /* HotListDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862319D220B541EE00C6E46E /* HotListDataService.swift */; };
 		86BD016A20B56D900065CC8B /* HoverFollowedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD016920B56D900065CC8B /* HoverFollowedCell.swift */; };
 		86BD016D20B830850065CC8B /* HoverEmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD016C20B830850065CC8B /* HoverEmptyCell.swift */; };
 		86BD016F20B849E50065CC8B /* CoinListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD016E20B849E50065CC8B /* CoinListCell.swift */; };
@@ -41,6 +40,8 @@
 		86BD018320BC5DD70065CC8B /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD018220BC5DD70065CC8B /* UserSettings.swift */; };
 		86BD018520BC663A0065CC8B /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD018420BC663A0065CC8B /* Array.swift */; };
 		86BD018920BC6D630065CC8B /* UserSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD018820BC6D630065CC8B /* UserSettingsController.swift */; };
+		86BD018C20BDB5380065CC8B /* DashboardChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD018B20BDB5380065CC8B /* DashboardChart.swift */; };
+		86BD018E20BDB6400065CC8B /* DashboardHotList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD018D20BDB6400065CC8B /* DashboardHotList.swift */; };
 		FE6D13C8B0CD9AA730D59096 /* Pods_cryptoboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AECE56E8026DE6661182C9E /* Pods_cryptoboard.framework */; };
 /* End PBXBuildFile section */
 
@@ -67,7 +68,6 @@
 		862319CA20B41A7D00C6E46E /* SearchCurrencyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCurrencyCell.swift; sourceTree = "<group>"; };
 		862319CC20B44FDD00C6E46E /* MenuContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuContentCell.swift; sourceTree = "<group>"; };
 		862319CE20B4503800C6E46E /* MenuTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTitleCell.swift; sourceTree = "<group>"; };
-		862319D220B541EE00C6E46E /* HotListDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotListDataService.swift; sourceTree = "<group>"; };
 		86BD016920B56D900065CC8B /* HoverFollowedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverFollowedCell.swift; sourceTree = "<group>"; };
 		86BD016C20B830850065CC8B /* HoverEmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverEmptyCell.swift; sourceTree = "<group>"; };
 		86BD016E20B849E50065CC8B /* CoinListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinListCell.swift; sourceTree = "<group>"; };
@@ -82,6 +82,8 @@
 		86BD018220BC5DD70065CC8B /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		86BD018420BC663A0065CC8B /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		86BD018820BC6D630065CC8B /* UserSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettingsController.swift; sourceTree = "<group>"; };
+		86BD018B20BDB5380065CC8B /* DashboardChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardChart.swift; sourceTree = "<group>"; };
+		86BD018D20BDB6400065CC8B /* DashboardHotList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardHotList.swift; sourceTree = "<group>"; };
 		88C9C5A0BA25730005577C54 /* Pods-cryptoboard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cryptoboard.release.xcconfig"; path = "Pods/Target Support Files/Pods-cryptoboard/Pods-cryptoboard.release.xcconfig"; sourceTree = "<group>"; };
 		A485F1B7133266ACBD55CDC8 /* Pods-cryptoboard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cryptoboard.debug.xcconfig"; path = "Pods/Target Support Files/Pods-cryptoboard/Pods-cryptoboard.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -146,9 +148,9 @@
 		862319A520AFD84C00C6E46E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				86BD018A20BDB50E0065CC8B /* Dashboard */,
 				86BD016C20B830850065CC8B /* HoverEmptyCell.swift */,
 				86BD016920B56D900065CC8B /* HoverFollowedCell.swift */,
-				86BD016E20B849E50065CC8B /* CoinListCell.swift */,
 				862319BC20B070FA00C6E46E /* HoverWalletCell.swift */,
 				86BD017220B8E1FE0065CC8B /* CoinGraphCell.swift */,
 				86BD017420B8E2A10065CC8B /* CoinInfosCell.swift */,
@@ -167,7 +169,6 @@
 				862319C420B28B8F00C6E46E /* SettingsController.swift */,
 				86BD017020B8BB770065CC8B /* CoinDetailController.swift */,
 				862319C020B2889100C6E46E /* SearchController.swift */,
-				862319D220B541EE00C6E46E /* HotListDataService.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -204,6 +205,16 @@
 				862319B820AFFAD000C6E46E /* Pacifico.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		86BD018A20BDB50E0065CC8B /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				86BD018B20BDB5380065CC8B /* DashboardChart.swift */,
+				86BD018D20BDB6400065CC8B /* DashboardHotList.swift */,
+				86BD016E20B849E50065CC8B /* CoinListCell.swift */,
+			);
+			path = Dashboard;
 			sourceTree = "<group>";
 		};
 		B1E3382975715357DA905AA8 /* Pods */ = {
@@ -346,10 +357,10 @@
 				86BD017920B91B330065CC8B /* APIRouter.swift in Sources */,
 				8623199520AFD64000C6E46E /* DashboardController.swift in Sources */,
 				86BD017520B8E2A10065CC8B /* CoinInfosCell.swift in Sources */,
-				862319D320B541EE00C6E46E /* HotListDataService.swift in Sources */,
 				862319AC20AFDC3100C6E46E /* UIImage.swift in Sources */,
 				86BD017F20B9A8180065CC8B /* Double.swift in Sources */,
 				862319BD20B070FA00C6E46E /* HoverWalletCell.swift in Sources */,
+				86BD018C20BDB5380065CC8B /* DashboardChart.swift in Sources */,
 				86BD017120B8BB770065CC8B /* CoinDetailController.swift in Sources */,
 				862319AE20AFDD2C00C6E46E /* UIView.swift in Sources */,
 				86BD017B20B91B4D0065CC8B /* APIClient.swift in Sources */,
@@ -372,6 +383,7 @@
 				8623199320AFD64000C6E46E /* AppDelegate.swift in Sources */,
 				862319C120B2889100C6E46E /* SearchController.swift in Sources */,
 				862319BF20B281E700C6E46E /* Constants.swift in Sources */,
+				86BD018E20BDB6400065CC8B /* DashboardHotList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
