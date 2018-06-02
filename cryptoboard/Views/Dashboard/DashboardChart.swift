@@ -15,7 +15,12 @@ import Charts
 class DashboardChart: UICollectionViewCell {
     
     var tableViewStatus: TableViewStatus = .wallet
+    var navigationController: UINavigationController?
+    var delegate: DashboardChartDelegate?
     
+    let CHART_WIDTH_OFFSET_CONSTANT: CGFloat = 180
+    let HOVER_LABEL_BOTTOM: CGFloat = 100
+    let TITLE_SIZE: CGFloat = 31
     let HOVER_CELL_ID: String = "hover-cell-id"
     let HOVER_CELL_EMPTY_ID: String = "hover-cell-empty-id"
     let HOVER_FOLLOWED_CELL_ID: String = "hover-cell-followed-id"
@@ -36,12 +41,59 @@ class DashboardChart: UICollectionViewCell {
         tableView.register(HoverWalletCell.self, forCellReuseIdentifier: HOVER_CELL_ID)
         tableView.separatorStyle = .none
         tableView.backgroundColor = UIColor.clear
-        tableView.contentInset = UIEdgeInsets.init(top: 100, left: 0, bottom: 200, right: 0)
+        tableView.showsVerticalScrollIndicator = false
 
         return tableView
     }()
     
-    var chartBottomConstraint: NSLayoutConstraint?
+    lazy var chartContainer: UIView = {
+        let container = UIView()
+        container.translatesAutoresizingMaskIntoConstraints = false
+        container.clipsToBounds = true
+        return container
+    }()
+    
+    lazy var subtitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Update 20 sec ago"
+        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.regular)
+        label.textColor = UIColor.white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    lazy var topTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "BITCOIN"
+        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.regular)
+        label.textColor = UIColor.white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "$ 10.000"
+        label.font = UIFont.systemFont(ofSize: TITLE_SIZE, weight: UIFont.Weight.medium)
+        label.textColor = UIColor.white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    lazy var moreLabel: UILabel = {
+        let label = UILabel()
+        label.text = "more"
+        label.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.thin)
+        label.textColor = UIColor.white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    var chartContainerBottomConstraint: NSLayoutConstraint?
+    var chartContainerFullWidthConstraint: NSLayoutConstraint?
+    var chartContainerSmallWidthConstraint: NSLayoutConstraint?
+    var chartWidthConstraint: NSLayoutConstraint?
+    var hoverLabelBottomConstraint: NSLayoutConstraint?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -49,23 +101,52 @@ class DashboardChart: UICollectionViewCell {
         hoverTableView.delegate = self
         hoverTableView.dataSource = self
         
-        contentView.addSubview(chartView)
+        contentView.addSubview(chartContainer)
         contentView.addSubview(hoverTableView)
+        chartContainer.addSubview(chartView)
+        chartContainer.addSubview(subtitleLabel)
+        chartContainer.addSubview(titleLabel)
+        chartContainer.addSubview(topTitleLabel)
+        chartContainer.addSubview(moreLabel)
         backgroundColor = UIColor.theme.bg.value
+
+        chartContainerBottomConstraint = chartContainer.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0)
+        chartContainerBottomConstraint?.priority = UILayoutPriority.init(1000)
+        chartWidthConstraint = chartView.widthAnchor.constraint(equalTo: chartContainer.widthAnchor, constant: CHART_WIDTH_OFFSET_CONSTANT)
+        chartContainerFullWidthConstraint = chartContainer.widthAnchor.constraint(equalTo: contentView.widthAnchor)
+        chartContainerSmallWidthConstraint = chartContainer.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -10)
+        hoverLabelBottomConstraint = subtitleLabel.bottomAnchor.constraint(equalTo: chartContainer.bottomAnchor, constant: -HOVER_LABEL_BOTTOM)
         
-        chartBottomConstraint = chartView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0)
-        chartBottomConstraint?.isActive = true
+        NSLayoutConstraint.activate([
+            chartContainerBottomConstraint!,
+            chartContainer.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            chartContainer.topAnchor.constraint(equalTo: contentView.topAnchor),
+            chartView.bottomAnchor.constraint(equalTo: chartContainer.bottomAnchor),
+            chartView.centerXAnchor.constraint(equalTo: chartContainer.centerXAnchor),
+            chartView.heightAnchor.constraint(equalToConstant: 400),
+            moreLabel.centerXAnchor.constraint(equalTo: chartContainer.centerXAnchor),
+            chartWidthConstraint!,
+            hoverLabelBottomConstraint!,
+            chartContainerFullWidthConstraint!
+        ])
         
         let views = [
-            "chart": chartView,
-            "hover": hoverTableView
+            "hover": hoverTableView,
+            "subtitle": subtitleLabel,
+            "title": titleLabel,
+            "topTitle": topTitleLabel,
+            "more": moreLabel
         ]
         let constraints = [
             "H:|[hover]|",
-            "H:|[chart]|",
-            "V:|-150-[chart]",
-            "V:|[hover]|"
+            "V:|[hover]|",
+            "H:|-18-[subtitle]-18-|",
+            "H:|-18-[topTitle]-18-|",
+            "H:|-18-[title]-18-|",
+            "V:[topTitle][title][subtitle]",
+            "V:[more]-18-|"
         ]
+        
         NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)
     }
     
@@ -76,8 +157,8 @@ class DashboardChart: UICollectionViewCell {
     // remove for the update one
     public func setupForCurrency(currency: Currency, animated: Bool = true) {
         // TEMP
-        let months = ["Jan", "Feb", "Mar"]
-        let unitsSold = [10.0, 4.0, 6.0]
+        let months = ["Jan", "Feb", "hkjh", "Mar"]
+        let unitsSold = [10.0, 4.0, 4.0, 6.0]
         
         setupChart(months, values: unitsSold)
     }
@@ -110,6 +191,10 @@ extension DashboardChart: UITableViewDelegate, UITableViewDataSource {
 
             return cell
         }
+    }
+    
+    public func scrollToTop() {
+        self.hoverTableView.scrollRectToVisible(CGRect.init(x: 0, y: 0, width: 1, height: 1), animated: true)
     }
     
     public func setupToWallet() {
@@ -158,74 +243,61 @@ extension DashboardChart: UITableViewDelegate, UITableViewDataSource {
     private func getNumberOfHoverRows(status: TableViewStatus) -> Int {
         switch status {
         case .wallet:
-            return 5
+            return 10
         default:
             return 2
         }
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let diff = HOVER_LABEL_BOTTOM - scrollView.contentOffset.y / 5
+        let bottomMargin = diff > 18 ? diff : 18
+        
+        hoverLabelBottomConstraint?.constant = -bottomMargin
+        chartContainerBottomConstraint?.constant = -scrollView.contentOffset.y
+        
+        self.contentView.layoutIfNeeded()
+        
+        if (scrollView.contentOffset.y < CHART_WIDTH_OFFSET_CONSTANT * 1.5) {
+            chartWidthConstraint?.constant = CHART_WIDTH_OFFSET_CONSTANT - scrollView.contentOffset.y / 3
+            
+            delegate?.changeTheme(.dark)
+            self.titleLabel.font = UIFont.boldSystemFont(ofSize: TITLE_SIZE - scrollView.contentOffset.y / 40)
+            self.contentView.layoutIfNeeded()
+            
+            self.chartContainerSmallWidthConstraint?.isActive = false
+            self.chartContainerFullWidthConstraint?.isActive = true
+            UIView.animate(withDuration: K.Design.AnimationTime) {
+                 self.moreLabel.alpha = 1
+                self.contentView.layoutIfNeeded()
+            }
+        } else {
+            delegate?.changeTheme(.clear)
+            self.chartContainerFullWidthConstraint?.isActive = false
+            self.chartContainerSmallWidthConstraint?.isActive = true
+            UIView.animate(withDuration: K.Design.AnimationTime) {
+                 self.moreLabel.alpha = 0
+                self.contentView.layoutIfNeeded()
+            }
+        }
         // Chart animation
-//        if (scrollView.contentOffset.y < 0) {
+        if (scrollView.contentOffset.y < 0) {
 //            chartView.leftAxis.axisMinimum = -10 + Double(abs(scrollView.contentOffset.y).squareRoot())
-//        } else {
+        } else {
 //            chartView.leftAxis.axisMinimum = -10 - Double(scrollView.contentOffset.y)
-//        }
+        }
 //
 //        chartView.notifyDataSetChanged()
-//        chartBottomConstraint
     }
+    
+    
 
-//    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-//        let velocity = scrollView.panGestureRecognizer.velocity(in: self.view).y
-//
-//        if (!showingDetailedHover && velocity < 0) { // Scrolled up when hoverTableView is hidden
-//            hoverTableView.scrollToRow(at: IndexPath.init(row: 1, section: 0), at: .top, animated: true)
-//            showingDetailedHover = true
-//        } else if (true) { // Scrolled down when hoverTableView is close to row 1 TODO!!
-//            hoverTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-//            showingDetailedHover = false
-//        }
-//    }
-//
     private func getHoverCellHeight() -> CGFloat {
-        return hoverTableView.frame.height - 100
+        return hoverTableView.frame.height
     }
 
 
 }
-
-//class DashboardChart: UICollectionViewCell {
-//
-//    lazy var currentPriceLabel: UILabel = {
-//        let label = UILabel()
-//        label.font = UIFont.boldSystemFont(ofSize: 26)
-//        label.text = "$ 02222222"
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
-//
-//
-//lazy var chartView: LineChartView = {
-//    let chartView = LineChartView()
-//    chartView.translatesAutoresizingMaskIntoConstraints = false
-//
-//    return chartView
-//}()
-//
-
-//
-//
-//    lazy var hotView: UIView = {
-//        let hotView = UIView()
-//        hotView.translatesAutoresizingMaskIntoConstraints = false
-//
-//        return hotView
-//    }()
-//
-//}
-//
-
 
 extension DashboardChart: ChartViewDelegate {
 
@@ -236,7 +308,7 @@ extension DashboardChart: ChartViewDelegate {
             let dataEntry = ChartDataEntry(x: Double(i), y: values[i])
             dataEntries.append(dataEntry)
         }
-        dataEntries.append(ChartDataEntry(x: 3, y: 6))
+        dataEntries.append(ChartDataEntry(x: 4, y: 6))
         let chartDataSet = LineChartDataSet(values: dataEntries, label: "")
         chartDataSet.lineCapType = .round
         chartDataSet.mode = .cubicBezier
@@ -245,7 +317,7 @@ extension DashboardChart: ChartViewDelegate {
         chartDataSet.drawValuesEnabled = false
         chartDataSet.drawFilledEnabled = true
         chartDataSet.setCircleColors(UIColor.white)
-        chartDataSet.circleHoleColor = UIColor.theme.redClear.value
+        chartDataSet.circleHoleColor = UIColor.gradients.purple.value.first
         chartDataSet.circleHoleRadius = 5
         let gradientColors = UIColor.gradients.purple.cgColors as CFArray
         let colorLocations: [CGFloat] = [1, 0]
@@ -296,4 +368,8 @@ extension DashboardChart: ChartViewDelegate {
     }
 
 
+}
+
+protocol DashboardChartDelegate {
+    func changeTheme(_ type: ThemeStatus)
 }

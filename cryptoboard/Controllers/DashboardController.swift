@@ -48,11 +48,11 @@ class DashboardController: UIViewController, UIGestureRecognizerDelegate, UINavi
     
     lazy var segmentView: PinterestSegment = {
         var style = PinterestSegmentStyle()
-        style.indicatorColor = UIColor.theme.redClear.value
-        style.selectedTitleColor = UIColor.white
+        style.indicatorColor = UIColor.white
+        style.selectedTitleColor = UIColor.gradients.purple.value.first!
         
         let segmentView = PinterestSegment(frame: CGRect.init(x: 0, y: 0, width: view.frame.width, height: 60), segmentStyle: style, titles: titles)
-        segmentView.backgroundColor = UIColor.white
+        segmentView.backgroundColor = UIColor.clear
         segmentView.layer.addBorder(edge: .bottom, color: UIColor.theme.border.value, thickness: 1)
         segmentView.setSelectIndex(index: 1)
         segmentView.valueChange = self.segmentViewDidSelect
@@ -61,41 +61,71 @@ class DashboardController: UIViewController, UIGestureRecognizerDelegate, UINavi
         return segmentView
     }()
     
+    lazy var navigationBar: UINavigationBar = {
+        let bar = UINavigationBar()
+        bar.translatesAutoresizingMaskIntoConstraints = false
+        bar.delegate = self
+        bar.isTranslucent = true
+        bar.shadowImage = UIImage()
+        bar.setBackgroundImage(UIImage(), for: .default)
+        bar.tintColor = UIColor.white
+        bar.titleTextAttributes =  [NSAttributedStringKey.foregroundColor: UIColor.white]
+        
+        return bar
+    }()
+    
+    lazy var navigationBackground: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = UIColor.gradients.purple.value.first
+        return view
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupNavBar()
         
+//        navigationController?.navigationBar.backgroundColor = UIColor.theme.textDark.value
+        
         navigationController?.delegate = self
         view.backgroundColor = UIColor.theme.bg.value
-        view.addSubview(dashboardCollectionView)
+        view.addSubview(navigationBackground)
+        view.addSubview(navigationBar)
         view.addSubview(segmentView)
+        view.addSubview(dashboardCollectionView)
         
         let views: [String: Any] = [
             "DCV": dashboardCollectionView,
             "segment": segmentView,
+            "navBar": navigationBar,
+            "bgBar": navigationBackground
         ]
         let constraints = [
-            "V:[segment(60)][DCV]|",
+            "V:[navBar]-(-2)-[segment(60)][DCV]|",
             "H:|[segment]|",
             "H:|[DCV]|",
+            "H:|[navBar]|",
+            "H:|[bgBar]|",
         ]
         
         NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)
         NSLayoutConstraint.activate([
-            segmentView.topAnchor.constraint(equalTo: view.topAnchor, constant: -2)
+            navigationBar.topAnchor.constraint(equalTo: view.safeTopAnchor),
+            navigationBackground.topAnchor.constraint(equalTo: view.topAnchor),
+            navigationBackground.bottomAnchor.constraint(equalTo: segmentView.bottomAnchor)
         ])
         
-        // I shound't need to call this
-        dashboardCollectionView.layoutIfNeeded()
-        dashboardCollectionView.reloadItems(at: [IndexPath.init(row: 0, section: 0)])
-        dashboardCollectionView.scrollToItem(at: IndexPath.init(row: 1, section: 0), at: .centeredHorizontally, animated: false)
+        view.layoutIfNeeded()
+        dashboardCollectionView.reloadData()
+        dashboardCollectionView.reloadItems(at: [IndexPath.init(row: 1, section: 0)])
+        dashboardCollectionView.scrollToItem(at: IndexPath.init(row: 1, section: 0), at: .centeredHorizontally, animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.setNavigationBarHidden(true, animated: true)
         navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
@@ -104,18 +134,20 @@ class DashboardController: UIViewController, UIGestureRecognizerDelegate, UINavi
     }
 
     private func setupNavBar() {
-        self.title = "Cryptoboard"
-        if let fontStyle = UIFont.init(name: "Pacifico", size: 23) {
-            let titleLabel = UILabel.init(frame: CGRect.zero)
-            titleLabel.text = "Cryptobboard"
-            titleLabel.font = fontStyle
-            titleLabel.textAlignment = .center
-            titleLabel.adjustsFontSizeToFitWidth = true
-            titleLabel.textColor = UIColor.theme.topBarEl.value
-            navigationItem.titleView = titleLabel
-        }
+        let navItem = UINavigationItem.init(title: "amazing")
         
-        // BarButtons
+//        self.title = "Cryptoboard"
+//        if let fontStyle = UIFont.init(name: "Pacifico", size: 23) {
+//            let titleLabel = UILabel.init(frame: CGRect.zero)
+//            titleLabel.text = "Cryptobboard"
+//            titleLabel.font = fontStyle
+//            titleLabel.textAlignment = .center
+//            titleLabel.adjustsFontSizeToFitWidth = true
+//            titleLabel.textColor = UIColor.theme.topBarEl.value
+//            navigationItem.titleView = titleLabel
+//        }
+//
+//        // BarButtons
         let searchImage = UIImage(named: "search_icon")?.withRenderingMode(.alwaysTemplate)
         let searchButton = UIButton(type: .custom)
         searchButton.setImage(searchImage, for: .normal)
@@ -123,22 +155,23 @@ class DashboardController: UIViewController, UIGestureRecognizerDelegate, UINavi
         searchButton.addTarget(self, action: #selector(handleSearchBtn(_:)), for: .touchUpInside)
         let searchButtonItem = UIBarButtonItem(customView: searchButton)
         
-        let userImage = UIImage(named: "user_icon")?.withRenderingMode(.alwaysTemplate)
+        let userImage = UIImage(named: "menu_icon")?.withRenderingMode(.alwaysTemplate)
         let userButton = UIButton(type: .custom)
         userButton.setImage(userImage, for: .normal)
         userButton.imageView?.contentMode = .scaleAspectFit
         userButton.addTarget(self, action: #selector(handleSettingsBtn(_:)), for: .touchUpInside)
         let userButtonItem = UIBarButtonItem(customView: userButton)
-        
+
         NSLayoutConstraint.activate([
             userButton.heightAnchor.constraint(equalToConstant: 40),
             searchButton.heightAnchor.constraint(equalToConstant: 40),
-            userButton.widthAnchor.constraint(equalToConstant: 26),
-            searchButton.widthAnchor.constraint(equalToConstant: 26)
+            userButton.widthAnchor.constraint(equalToConstant: 28),
+            searchButton.widthAnchor.constraint(equalToConstant: 28)
         ])
-        
-        navigationItem.leftBarButtonItem = userButtonItem
-        navigationItem.rightBarButtonItems = [searchButtonItem]
+
+        navItem.leftBarButtonItem = userButtonItem
+        navItem.rightBarButtonItem = searchButtonItem
+        navigationBar.setItems([navItem], animated: false)
     }
     
     // ===================
@@ -160,6 +193,12 @@ class DashboardController: UIViewController, UIGestureRecognizerDelegate, UINavi
     
 }
 
+extension DashboardController: UINavigationBarDelegate, UIBarPositioningDelegate {
+    func position(for bar: UIBarPositioning) -> UIBarPosition {
+        return .topAttached
+    }
+}
+
 extension DashboardController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -175,6 +214,8 @@ extension DashboardController: UICollectionViewDelegate, UICollectionViewDataSou
             return hotCell
         default:
             let chartCell = collectionView.dequeueReusableCell(withReuseIdentifier: CHART_CELL_ID, for: indexPath) as! DashboardChart
+            chartCell.navigationController = navigationController
+            chartCell.delegate = self
             chartCell.setupForCurrency(currency: Currency.init(id: 0, name: "d", diminutive: "d", imageName: nil))
             currentSegment == 1 ? chartCell.setupToWallet() : chartCell.setupToCurrency()
             
@@ -184,14 +225,12 @@ extension DashboardController: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return collectionView.frame.size
+        return collectionView.bounds.size
     }
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        let currentCells = self.dashboardCollectionView.visibleCells
-        
-        if let first = currentCells.first {
-            let currentIndex = self.dashboardCollectionView.indexPath(for: first)?.row
+        if let cell = getCurrentCell() {
+            let currentIndex = self.dashboardCollectionView.indexPath(for: cell)?.row
             if (currentIndex == nil) {
                 return
             }
@@ -206,6 +245,12 @@ extension DashboardController: UICollectionViewDelegate, UICollectionViewDataSou
             segmentWasSelected = false
             
         }
+    }
+    
+    private func getCurrentCell() -> UICollectionViewCell? {
+        let currentCells = self.dashboardCollectionView.visibleCells
+        
+        return currentCells.first
     }
     
     
@@ -252,6 +297,22 @@ extension DashboardController {
         showingHotList = false
         
         return didChange
+    }
+    
+    
+}
+
+extension DashboardController: DashboardChartDelegate {
+    
+    public func changeTheme(_ type: ThemeStatus) {
+        let isClear = type == .clear
+        
+        if let color = isClear ? UIColor.white : UIColor.gradients.purple.value.first, let oppositeColor = !isClear ? UIColor.white : UIColor.gradients.purple.value.first {
+            
+            UIView.animate(withDuration: K.Design.AnimationTime) {
+                self.navigationBackground.backgroundColor = color
+            }
+        }
     }
     
     

@@ -25,6 +25,7 @@ struct K {
     
     struct Design {
         static let CornerRadius: CGFloat = 10
+        static let AnimationTime: TimeInterval = 0.3
     }
     
     static let Currencies: [Currency] = [
@@ -56,4 +57,8 @@ enum LocalCurrency: String, Codable {
 
 enum TableViewStatus {
     case wallet, coin
+}
+
+enum ThemeStatus {
+    case clear, dark
 }

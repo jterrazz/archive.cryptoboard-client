@@ -26,6 +26,8 @@
 		862319CB20B41A7D00C6E46E /* SearchCurrencyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862319CA20B41A7D00C6E46E /* SearchCurrencyCell.swift */; };
 		862319CD20B44FDD00C6E46E /* MenuContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862319CC20B44FDD00C6E46E /* MenuContentCell.swift */; };
 		862319CF20B4503800C6E46E /* MenuTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862319CE20B4503800C6E46E /* MenuTitleCell.swift */; };
+		86614CED20C140A3001A0DEB /* CAGradientLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86614CEC20C140A3001A0DEB /* CAGradientLayer.swift */; };
+		86614CF120C29AD9001A0DEB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86614CF020C29AD9001A0DEB /* HomeViewController.swift */; };
 		86BD016A20B56D900065CC8B /* HoverFollowedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD016920B56D900065CC8B /* HoverFollowedCell.swift */; };
 		86BD016D20B830850065CC8B /* HoverEmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD016C20B830850065CC8B /* HoverEmptyCell.swift */; };
 		86BD016F20B849E50065CC8B /* CoinListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD016E20B849E50065CC8B /* CoinListCell.swift */; };
@@ -68,6 +70,8 @@
 		862319CA20B41A7D00C6E46E /* SearchCurrencyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCurrencyCell.swift; sourceTree = "<group>"; };
 		862319CC20B44FDD00C6E46E /* MenuContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuContentCell.swift; sourceTree = "<group>"; };
 		862319CE20B4503800C6E46E /* MenuTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTitleCell.swift; sourceTree = "<group>"; };
+		86614CEC20C140A3001A0DEB /* CAGradientLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAGradientLayer.swift; sourceTree = "<group>"; };
+		86614CF020C29AD9001A0DEB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		86BD016920B56D900065CC8B /* HoverFollowedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverFollowedCell.swift; sourceTree = "<group>"; };
 		86BD016C20B830850065CC8B /* HoverEmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverEmptyCell.swift; sourceTree = "<group>"; };
 		86BD016E20B849E50065CC8B /* CoinListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinListCell.swift; sourceTree = "<group>"; };
@@ -166,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				8623199420AFD64000C6E46E /* DashboardController.swift */,
+				86614CF020C29AD9001A0DEB /* HomeViewController.swift */,
 				862319C420B28B8F00C6E46E /* SettingsController.swift */,
 				86BD017020B8BB770065CC8B /* CoinDetailController.swift */,
 				862319C020B2889100C6E46E /* SearchController.swift */,
@@ -190,6 +195,7 @@
 			children = (
 				86BD018420BC663A0065CC8B /* Array.swift */,
 				862319BA20B0030C00C6E46E /* CALayer.swift */,
+				86614CEC20C140A3001A0DEB /* CAGradientLayer.swift */,
 				86BD017E20B9A8180065CC8B /* Double.swift */,
 				862319A920AFD9A100C6E46E /* UIColor.swift */,
 				862319AB20AFDC3100C6E46E /* UIImage.swift */,
@@ -355,6 +361,7 @@
 				86BD018320BC5DD70065CC8B /* UserSettings.swift in Sources */,
 				862319C320B28A5200C6E46E /* MenuHeaderCell.swift in Sources */,
 				86BD017920B91B330065CC8B /* APIRouter.swift in Sources */,
+				86614CF120C29AD9001A0DEB /* HomeViewController.swift in Sources */,
 				8623199520AFD64000C6E46E /* DashboardController.swift in Sources */,
 				86BD017520B8E2A10065CC8B /* CoinInfosCell.swift in Sources */,
 				862319AC20AFDC3100C6E46E /* UIImage.swift in Sources */,
@@ -364,6 +371,7 @@
 				86BD017120B8BB770065CC8B /* CoinDetailController.swift in Sources */,
 				862319AE20AFDD2C00C6E46E /* UIView.swift in Sources */,
 				86BD017B20B91B4D0065CC8B /* APIClient.swift in Sources */,
+				86614CED20C140A3001A0DEB /* CAGradientLayer.swift in Sources */,
 				86BD016D20B830850065CC8B /* HoverEmptyCell.swift in Sources */,
 				862319CF20B4503800C6E46E /* MenuTitleCell.swift in Sources */,
 				862319C520B28B8F00C6E46E /* SettingsController.swift in Sources */,

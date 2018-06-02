@@ -12,10 +12,9 @@ import UIKit
 class HoverWalletCell: UITableViewCell {
     
     lazy var insideView: UIView = {
-        let inside = UIView(frame: CGRect.zero)
+        let inside = UIView()
         inside.translatesAutoresizingMaskIntoConstraints = false
         inside.backgroundColor = UIColor.white
-        inside.layer.cornerRadius = K.Design.CornerRadius
         inside.addShadow()
         return inside
     }()
@@ -41,8 +40,8 @@ class HoverWalletCell: UITableViewCell {
         let constraints = [
             "V:|-16-[title]-16-|",
             "H:|-16-[title]-16-|",
-            "V:|-16-[cell]-16-|",
-            "H:|-16-[cell]-16-|"
+            "V:|-5-[cell]-5-|",
+            "H:|-5-[cell]-5-|"
         ]
         
         NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)

@@ -16,17 +16,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = UINavigationController(rootViewController: DashboardController())
-        window?.makeKeyAndVisible()
+        let navigationController = UINavigationController(rootViewController: HomeViewController())
+//        let navigationController = UINavigationController(rootViewController: DashboardController())
+        navigationController.view.backgroundColor = UIColor.clear
         
-        // Setup NavigationBar
-        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
-        UINavigationBar.appearance().shadowImage = UIImage()
-        UINavigationBar.appearance().barTintColor = UIColor.white
-        UINavigationBar.appearance().tintColor = UIColor.theme.topBarEl.value
-        UINavigationBar.appearance().titleTextAttributes =  [NSAttributedStringKey.foregroundColor: UIColor.theme.topBarEl.value]
-        UINavigationBar.appearance().isTranslucent = false
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = navigationController
+        window?.makeKeyAndVisible()
         
         return true
     }
