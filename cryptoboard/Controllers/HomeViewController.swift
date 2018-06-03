@@ -15,6 +15,8 @@ class HomeViewController: UIViewController {
     
     var indexOfCellBeforeDragging: Int = 0
     
+    lazy var scrollView = UIScrollView()
+    
     lazy var searchBar: UITextField = {
         let field = UITextField()
         field.backgroundColor = UIColor.white
@@ -56,6 +58,12 @@ class HomeViewController: UIViewController {
         
         return collection
     }()
+    
+    lazy var myWallet: UIView = {
+        let container = UIView()
+        container.layer.cornerRadius = K.Design.CornerRadius
+        return container
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,42 +79,56 @@ class HomeViewController: UIViewController {
     
     private func setupViews() {
         let headerTitle = UILabel()
-        headerTitle.text = "RESUME"
-        headerTitle.textColor = UIColor.theme.textIntermediate.value
+        headerTitle.text = "Personnel"
+        headerTitle.textColor = UIColor.theme.textDark.value
         headerTitle.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         
         let secondHeaderTitle = UILabel()
-        secondHeaderTitle.text = "MY CURRENCIES"
-        secondHeaderTitle.textColor = UIColor.theme.textIntermediate.value
+        secondHeaderTitle.text = "Followed coins"
+        secondHeaderTitle.textColor = UIColor.theme.textDark.value
         secondHeaderTitle.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         
         view.backgroundColor = UIColor.theme.bg.value
+        
         view.addSubviewAutoConstraints(searchBar)
-        view.addSubviewAutoConstraints(headerTitle)
-        view.addSubviewAutoConstraints(secondHeaderTitle)
-        view.addSubviewAutoConstraints(cardCollectionView)
+        view.addSubviewAutoConstraints(scrollView)
+        scrollView.addSubviewAutoConstraints(headerTitle)
+        scrollView.addSubviewAutoConstraints(secondHeaderTitle)
+        scrollView.addSubviewAutoConstraints(cardCollectionView)
+        scrollView.addSubviewAutoConstraints(myWallet)
         
         let views = [
+            "scroll": scrollView,
             "search": searchBar,
             "header1": headerTitle,
             "header2": secondHeaderTitle,
-            "cards": cardCollectionView
+            "cards": cardCollectionView,
+            "wallet": myWallet
         ]
         let constraints = [
+            "H:|[scroll]|",
+            "H:|-18-[wallet]-18-|",
             "H:|[cards]|",
-            "H:|-16-[search]-16-|",
+            "H:|-17-[search]-17-|",
             "H:|-18-[header1]-18-|",
             "H:|-18-[header2]-18-|",
-            "V:[search]-36-[header1]-24-[header2]-12-[cards]-12-|"
+            "V:[search]-18-[scroll]|",
+            "V:|-18-[header1]-18-[wallet(60)]-18-[header2]-12-[cards]-12-|",
         ]
+        
+        
         
         NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)
         NSLayoutConstraint.activate([
             searchBar.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 18),
-            searchBar.heightAnchor.constraint(equalToConstant: SEARCH_BAR_HEIGHT)
+            searchBar.heightAnchor.constraint(equalToConstant: SEARCH_BAR_HEIGHT),
+            cardCollectionView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            cardCollectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.65)
         ])
         
+        view.layoutIfNeeded()
         cardCollectionView.reloadData()
+        myWallet.applyGradient(colours: UIColor.gradients.purple.value)
     }
     
 

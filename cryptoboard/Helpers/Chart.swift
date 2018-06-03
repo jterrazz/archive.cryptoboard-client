@@ -11,6 +11,42 @@ import Charts
 
 extension LineChartView {
     
+    func setupCardChart(_ dataPoints: [String], values: [Double], colors: [CGColor]) {
+        var dataEntries: [ChartDataEntry] = []
+        dataEntries.append(ChartDataEntry(x: -1, y: 10))
+        for i in 0..<dataPoints.count {
+            let dataEntry = ChartDataEntry(x: Double(i), y: values[i])
+            dataEntries.append(dataEntry)
+        }
+        dataEntries.append(ChartDataEntry(x: 4, y: 6))
+        let chartDataSet = LineChartDataSet(values: dataEntries, label: "")
+        chartDataSet.lineCapType = .round
+        chartDataSet.mode = .cubicBezier
+        chartDataSet.lineWidth = 0
+        chartDataSet.drawValuesEnabled = false
+        chartDataSet.drawFilledEnabled = true
+        chartDataSet.drawCirclesEnabled = false
+        chartDataSet.fill = self.getFillGradient(colors: colors)
+        chartDataSet.fillAlpha = 1
+        
+        let chartData = LineChartData(dataSet: chartDataSet)
+        
+        self.minOffset = 0
+        
+        self.xAxis.enabled = false
+        self.xAxis.drawGridLinesEnabled = false
+        self.xAxis.drawAxisLineEnabled = false
+        self.xAxis.granularity = 1
+        self.isUserInteractionEnabled = false
+        self.rightAxis.enabled = false
+        self.leftAxis.enabled = false
+        self.chartDescription?.enabled = false
+        self.noDataText = ""
+        self.legend.enabled = false
+        self.data = chartData
+        self.leftAxis.axisMinimum = -10
+    }
+    
     func setupInCellChart(_ dataPoints: [String], values: [Double], variation: ChartVariation) {
         var dataEntries: [ChartDataEntry] = []
         dataEntries.append(ChartDataEntry(x: -1, y: 10))

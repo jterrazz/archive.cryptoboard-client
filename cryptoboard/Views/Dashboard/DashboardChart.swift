@@ -354,18 +354,6 @@ extension DashboardChart: ChartViewDelegate {
         chartView.leftAxis.axisMinimum = -10
         chartView.delegate = self
     }
-    
-    class HomeChartStringFormatter: IAxisValueFormatter {
-        var names: [String] = ["WEEK 1", "WEEK 2", "WEEK 3"]
-        
-        func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-            if (value < 0 || Int(value) >= names.count) {
-                return ""
-            } else {
-                return String(describing: names[Int(value)])
-            }
-        }
-    }
 
 
 }

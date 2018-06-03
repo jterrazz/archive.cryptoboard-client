@@ -24,7 +24,7 @@ struct K {
     }
     
     struct Design {
-        static let CornerRadius: CGFloat = 8
+        static let CornerRadius: CGFloat = 12
         static let AnimationTime: TimeInterval = 0.3
     }
     
