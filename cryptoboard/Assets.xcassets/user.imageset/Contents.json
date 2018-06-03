@@ -2,16 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "icons8-utilisateur-masculin-60.png",
+      "filename" : "icons8-utilisateur-sexe-neutre-30.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "icons8-utilisateur-masculin-90.png",
+      "filename" : "icons8-utilisateur-sexe-neutre-60.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "icons8-utilisateur-sexe-neutre-90.png",
       "scale" : "3x"
     }
   ],

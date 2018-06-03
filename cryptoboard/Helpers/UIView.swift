@@ -11,6 +11,11 @@ import UIKit
 
 extension UIView {
     
+    func addSubviewAutoConstraints(_ view: UIView) {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(view)
+    }
+    
     // Gradient
     func applyGradient(colours: [UIColor]) {
         clipsToBounds = true

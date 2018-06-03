@@ -26,7 +26,7 @@ class CoinListCell: UITableViewCell {
         label.text = "BTC"
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = UIColor.theme.textDark.value
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.boldSystemFont(ofSize: 15)
         
         return label
     }()
@@ -36,7 +36,7 @@ class CoinListCell: UITableViewCell {
         label.text = "$ 433"
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = UIColor.theme.textDark.value
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont.boldSystemFont(ofSize: 15)
         
         return label
     }()
@@ -45,17 +45,21 @@ class CoinListCell: UITableViewCell {
        let label = UILabel()
         label.text = "+20%"
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = UIColor.green
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.textColor = UIColor.theme.green.value
+        label.font = UIFont.boldSystemFont(ofSize: 15)
         
         return label
     }()
     
     lazy var chart: LineChartView = {
         let chart = LineChartView()
-        chart.backgroundColor = UIColor.red
         chart.translatesAutoresizingMaskIntoConstraints = false
         
+        // TMP
+        let months = ["Jan", "Feb", "hkjh", "Mar"]
+        let unitsSold = [10.0, 4.0, 4.0, 6.0]
+        
+        chart.setupInCellChart(months, values: unitsSold, variation: .up)
         return chart
     }()
     
@@ -96,7 +100,7 @@ class CoinListCell: UITableViewCell {
             price.leftAnchor.constraint(equalTo: name.leftAnchor),
             variation.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             chart.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            chart.heightAnchor.constraint(equalToConstant: 40),
+            chart.heightAnchor.constraint(equalToConstant: 50),
             cs
         ])
     }

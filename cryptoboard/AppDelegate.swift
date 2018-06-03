@@ -16,9 +16,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        let navigationController = UINavigationController(rootViewController: HomeViewController())
-//        let navigationController = UINavigationController(rootViewController: DashboardController())
+        let tabBarController = UITabBarController()
+        tabBarController.tabBar.backgroundColor = UIColor.white
+        tabBarController.tabBar.isOpaque = true
+        tabBarController.tabBar.isTranslucent = false
+        tabBarController.tabBar.barTintColor = UIColor.white
+        tabBarController.tabBar.tintColor = UIColor.theme.elemFront.value
+        tabBarController.tabBar.unselectedItemTintColor = UIColor.theme.elemBack.value
+
+        let navigationController = UINavigationController(rootViewController: tabBarController)
         navigationController.view.backgroundColor = UIColor.clear
+        
+        // Setting all main controllers
+        let iconInset = UIEdgeInsets(top: 9, left: 0, bottom: -9, right: 0)
+        let homeController = HomeViewController()
+        let homeIcon = UITabBarItem(title: nil, image: UIImage.init(named: "home"), tag: 0)
+        homeIcon.imageInsets = iconInset
+        homeController.tabBarItem = homeIcon
+        
+        let listController = ListViewController()
+        let listIcon = UITabBarItem(title: nil, image: UIImage.init(named: "list"), tag: 0)
+        listIcon.imageInsets = iconInset
+        listController.tabBarItem = listIcon
+        
+        let settingsController = HomeViewController()
+        let settingsIcon = UITabBarItem(title: nil, image: UIImage.init(named: "user"), tag: 0)
+        settingsIcon.imageInsets = iconInset
+        settingsController.tabBarItem = settingsIcon
+        
+        tabBarController.viewControllers = [homeController, listController, settingsController]
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = navigationController

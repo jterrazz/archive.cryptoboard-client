@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="GeneralCoinListCell" customModule="cryptoboard" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="496" height="155"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" translatesAutoresizingMaskIntoConstraints="NO" id="lMm-u7-ua6">
+                    <rect key="frame" x="18" y="10" width="460" height="14.5"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MARKET CAP" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CVp-9j-78S">
+                            <rect key="frame" x="0.0" y="0.0" width="81" height="14.5"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VOLUME 24H" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rjv-h8-UT1">
+                            <rect key="frame" x="189" y="0.0" width="81" height="14.5"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LAST UDPATE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cxz-MC-Gi0">
+                            <rect key="frame" x="376" y="0.0" width="84" height="14.5"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                </stackView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$24 000 000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IYB-h7-Bx0">
+                    <rect key="frame" x="18" y="32.5" width="112.5" height="104.5"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$24 000 000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YqY-Z6-m2u">
+                    <rect key="frame" x="207" y="74" width="112.5" height="21.5"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2s" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SwR-VK-Zci">
+                    <rect key="frame" x="457.5" y="74" width="20.5" height="21.5"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ko3-CW-htD">
+                    <rect key="frame" x="0.0" y="154" width="496" height="1"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="6h6-cw-tiw"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="lMm-u7-ua6" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="18" id="4ik-4P-0uv"/>
+                <constraint firstAttribute="bottom" secondItem="ko3-CW-htD" secondAttribute="bottom" id="HTC-4G-P8b"/>
+                <constraint firstItem="lMm-u7-ua6" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="10" id="Ros-CX-mY2"/>
+                <constraint firstItem="YqY-Z6-m2u" firstAttribute="centerY" secondItem="IYB-h7-Bx0" secondAttribute="centerY" id="Swp-Vv-qm8"/>
+                <constraint firstItem="IYB-h7-Bx0" firstAttribute="top" secondItem="lMm-u7-ua6" secondAttribute="bottom" constant="8" id="VZq-KY-iRh"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="ko3-CW-htD" secondAttribute="trailing" id="W9i-FI-M6r"/>
+                <constraint firstItem="IYB-h7-Bx0" firstAttribute="leading" secondItem="CVp-9j-78S" secondAttribute="leading" id="cMv-ly-2DH"/>
+                <constraint firstItem="SwR-VK-Zci" firstAttribute="centerY" secondItem="IYB-h7-Bx0" secondAttribute="centerY" id="hBd-eL-TVl"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="IYB-h7-Bx0" secondAttribute="bottom" constant="18" id="kLT-sf-nrI"/>
+                <constraint firstItem="YqY-Z6-m2u" firstAttribute="leading" secondItem="Rjv-h8-UT1" secondAttribute="leading" id="lM1-qK-2fD"/>
+                <constraint firstItem="ko3-CW-htD" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="sst-Pd-3PM"/>
+                <constraint firstItem="Cxz-MC-Gi0" firstAttribute="trailing" secondItem="SwR-VK-Zci" secondAttribute="trailing" id="tKa-hp-VLb"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="lMm-u7-ua6" secondAttribute="trailing" constant="18" id="vGX-9r-6It"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="bottomBorder" destination="ko3-CW-htD" id="3Yr-Pl-JXl"/>
+                <outlet property="marketCap" destination="CVp-9j-78S" id="mz6-Ma-ePv"/>
+                <outlet property="marketCapData" destination="IYB-h7-Bx0" id="WjI-vb-Hfu"/>
+                <outlet property="updated" destination="Cxz-MC-Gi0" id="Ize-Ow-ddS"/>
+                <outlet property="updatedData" destination="SwR-VK-Zci" id="wxZ-E6-ira"/>
+                <outlet property="volume" destination="Rjv-h8-UT1" id="Fy4-BO-PN6"/>
+                <outlet property="volumeData" destination="YqY-Z6-m2u" id="v36-Wm-NFf"/>
+            </connections>
+            <point key="canvasLocation" x="94" y="348.5"/>
+        </view>
+    </objects>
+</document>
