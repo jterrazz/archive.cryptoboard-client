@@ -29,7 +29,8 @@ class CardCoinCell: UICollectionViewCell {
         let months = ["Jan", "Feb", "hkjh", "Mar"]
         let unitsSold = [10.0, 4.0, 4.0, 6.0]
         
-        chartView.setupCardChart(months, values: unitsSold, colors: UIColor.gradients.purple.cgColors)
+        let gradient = [UIColor.theme.custom(hexString: "#fccf30").value.cgColor, UIColor.theme.custom(hexString: "#f55555").value.cgColor]
+        chartView.setupCardChart(months, values: unitsSold, colors: gradient)
         
         setupViews()
     }
@@ -47,10 +48,10 @@ class CardCoinCell: UICollectionViewCell {
         container.layer.cornerRadius = K.Design.CornerRadius
         container.layer.shadowColor = UIColor.theme.shadow.value.cgColor
         container.layer.shadowOffset = CGSize.init(width: 0, height: 4)
-        container.layer.shadowRadius = 10
+        container.layer.shadowRadius = 8
         container.layer.shadowOpacity = 0.15
         
-        chartView.backgroundColor = UIColor.theme.custom(hexString: "#e3e6fd").value
+//        chartView.backgroundColor = UIColor.theme.darkBg.value
         chartView.layer.masksToBounds = true
         chartView.layer.cornerRadius = K.Design.CornerRadius
         
@@ -66,12 +67,12 @@ class CardCoinCell: UICollectionViewCell {
             "box": box
         ]
         let constraints = [
-            "H:|-18-[box]-18-|",
+            "H:|-16-[box]-16-|",
             "H:|[chart]|",
-            "V:[box(100)]-(-18)-|",
+            "V:[box(100)]-(-16)-|",
             "V:|[chart]|",
             "H:|-8-[c]-8-|",
-            "V:|-8-[c]-38-|",
+            "V:|-16-[c]-32-|",
         ]
         
         NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)

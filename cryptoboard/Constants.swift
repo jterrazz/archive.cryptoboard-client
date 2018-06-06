@@ -24,7 +24,7 @@ struct K {
     }
     
     struct Design {
-        static let CornerRadius: CGFloat = 12
+        static let CornerRadius: CGFloat = 7
         static let AnimationTime: TimeInterval = 0.3
     }
     
@@ -60,7 +60,7 @@ enum TableViewStatus {
 }
 
 enum ThemeStatus {
-    case clear, dark
+    case clear, white
 }
 
 enum ChartVariation {

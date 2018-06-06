@@ -261,7 +261,7 @@ extension DashboardChart: UITableViewDelegate, UITableViewDataSource {
         if (scrollView.contentOffset.y < CHART_WIDTH_OFFSET_CONSTANT * 1.5) {
             chartWidthConstraint?.constant = CHART_WIDTH_OFFSET_CONSTANT - scrollView.contentOffset.y / 3
             
-            delegate?.changeTheme(.dark)
+//            delegate?.changeTheme(.dark)
             self.titleLabel.font = UIFont.boldSystemFont(ofSize: TITLE_SIZE - scrollView.contentOffset.y / 40)
             self.contentView.layoutIfNeeded()
             

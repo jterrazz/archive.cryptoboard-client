@@ -9,71 +9,131 @@
 import Foundation
 import UIKit
 
-class CoinDetailController: UITableViewController {
+class CoinDetailController: UIViewController {
     
-    let COIN_GRAPH_CELL_ID = "coin-graph-cell-id"
-    let HEADER_CELL_ID = "header-cell-id"
-    let COIN_INFOS_CELL_ID = "coin-infos-cell-id"
+//    private let COIN_DETAIL_CHART_CELL_ID = "coin-detail-chart-cell-id"
+    
+    lazy var tableView = UITableView()
+    lazy var chartView = CoinDetailChartView()
+    lazy var topBarBg = UIView() // Using this because of iphone X doing a bad UIImage()
+    
+    var chartBottomConstraint: NSLayoutConstraint?
+    var chartFullWidthConstraint: NSLayoutConstraint?
+    var chartMarginWidthConstraint: NSLayoutConstraint?
+    var currentTheme: ThemeStatus = .white
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.bounces = false
-        tableView.register(CoinGraphCell.self, forCellReuseIdentifier: COIN_GRAPH_CELL_ID)
-        tableView.register(CoinInfosCell.self, forCellReuseIdentifier: COIN_INFOS_CELL_ID)
-        tableView.register(MenuHeaderCell.self, forHeaderFooterViewReuseIdentifier: HEADER_CELL_ID)
+        setupViews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
         navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        setTheme(.clear)
+        
+        view.layoutIfNeeded()
+    }
+    
+    private func setupViews() {
+        tableView.contentInsetAdjustmentBehavior = .never
+        tableView.backgroundColor = UIColor.clear
+        tableView.separatorStyle = .none
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.contentInset = UIEdgeInsets.init(top: UIScreen.main.bounds.height, left: 0, bottom: 0, right: 0)
+        
+        topBarBg.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor.theme.bg.value
+        view.addSubviewsAutoConstraints([chartView, tableView, topBarBg])
+        
+        let chartTopConstraint = chartView.topAnchor.constraint(equalTo: tableView.topAnchor)
+        let chartHeightConstraint = chartView.heightAnchor.constraint(greaterThanOrEqualTo: tableView.heightAnchor, multiplier: 0.7)
+        chartTopConstraint.priority = UILayoutPriority(250)
+        chartHeightConstraint.priority = UILayoutPriority(1000)
+        chartBottomConstraint = chartView.bottomAnchor.constraint(equalTo: tableView.bottomAnchor)
+        chartBottomConstraint?.priority = UILayoutPriority(1000)
+        chartFullWidthConstraint = chartView.widthAnchor.constraint(equalTo: tableView.widthAnchor)
+        chartMarginWidthConstraint = chartView.widthAnchor.constraint(equalTo: tableView.widthAnchor, constant: -10)
+        
+        let views = [
+            "scroll": tableView,
+            "barBg": topBarBg
+        ]
+        let constraints = [
+            "H:|[scroll]|",
+            "V:[scroll]|",
+            "H:|[barBg]|",
+        ]
+        
+        NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            chartView.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
+            topBarBg.topAnchor.constraint(equalTo: view.topAnchor),
+            topBarBg.bottomAnchor.constraint(equalTo: view.safeTopAnchor),
+            chartBottomConstraint!,
+            chartFullWidthConstraint!,
+            chartTopConstraint,
+            chartHeightConstraint
+        ])
     }
     
     
 }
 
-extension CoinDetailController {
+extension CoinDetailController: UITableViewDelegate, UITableViewDataSource {
     
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if (section == 0) {
-            return 0
-        }
-        return UITableViewAutomaticDimension
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
     }
     
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let cell = tableView.dequeueReusableHeaderFooterView(withIdentifier: HEADER_CELL_ID) as! MenuHeaderCell
-        cell.setup(title: "Informations")
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell.init(style: .default, reuseIdentifier: "ddd")
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let scrolledDistance = scrollView.contentOffset.y + UIScreen.main.bounds.height
+        let trigger = UIScreen.main.bounds.height / 4
         
-        return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.section {
-        case 0:
-            let cell = tableView.dequeueReusableCell(withIdentifier: COIN_GRAPH_CELL_ID, for: indexPath)
-            
-            return cell
-        default:
-            let cell = tableView.dequeueReusableCell(withIdentifier: COIN_INFOS_CELL_ID, for: indexPath) as! CoinInfosCell
-            cell.setup(leftText: "Market Cap", rightText: "246")
-            
-            return cell
+        chartBottomConstraint?.constant = -scrolledDistance
+        chartView.layoutIfNeeded()
+        
+        if (scrolledDistance > trigger) {
+            chartFullWidthConstraint?.isActive = false
+            chartMarginWidthConstraint?.isActive = true
+            setTheme(.white)
+        } else {
+            chartMarginWidthConstraint?.isActive = false
+            chartFullWidthConstraint?.isActive = true
+            setTheme(.clear)
         }
         
-    }
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return 1
-        default:
-            return 4
+        UIView.animate(withDuration: K.Design.AnimationTime) {
+            self.chartView.layoutIfNeeded()
         }
     }
+    
+    private func setTheme(_ status: ThemeStatus) {
+        let bar = navigationController?.navigationBar
+        
+        UIView.animate(withDuration: K.Design.AnimationTime) {
+            if (status == .clear && self.currentTheme == .white) {
+                bar?.tintColor = UIColor.white
+                self.topBarBg.backgroundColor = UIColor.clear
+                self.navigationController?.navigationBar.barStyle = .black
+            } else if (status == .white && self.currentTheme == .clear) {
+                bar?.tintColor = UIColor.theme.textDark.value
+                self.topBarBg.backgroundColor = UIColor.white
+                self.navigationController?.navigationBar.barStyle = .default
+            }
+        }
+        
+        currentTheme = status
+    }
+    
+    
 }

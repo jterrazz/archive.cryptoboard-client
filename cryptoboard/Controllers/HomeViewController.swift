@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Charts
 
 class HomeViewController: UIViewController {
     
@@ -59,11 +60,10 @@ class HomeViewController: UIViewController {
         return collection
     }()
     
-    lazy var myWallet: UIView = {
-        let container = UIView()
-        container.layer.cornerRadius = K.Design.CornerRadius
-        return container
-    }()
+    lazy var myWallet = WalletView()
+    lazy var underWallet = UnderWalletView()
+    lazy var firstHeader = HomeHeaderView()
+    lazy var secondeHeader = HomeHeaderView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,57 +78,71 @@ class HomeViewController: UIViewController {
     }
     
     private func setupViews() {
-        let headerTitle = UILabel()
-        headerTitle.text = "Personnel"
-        headerTitle.textColor = UIColor.theme.textDark.value
-        headerTitle.font = UIFont.systemFont(ofSize: 14, weight: .bold)
-        
-        let secondHeaderTitle = UILabel()
-        secondHeaderTitle.text = "Followed coins"
-        secondHeaderTitle.textColor = UIColor.theme.textDark.value
-        secondHeaderTitle.font = UIFont.systemFont(ofSize: 14, weight: .bold)
-        
         view.backgroundColor = UIColor.theme.bg.value
+        
+        firstHeader.setup(title: "Personnal")
+        secondeHeader.setup(title: "My coins")
         
         view.addSubviewAutoConstraints(searchBar)
         view.addSubviewAutoConstraints(scrollView)
-        scrollView.addSubviewAutoConstraints(headerTitle)
-        scrollView.addSubviewAutoConstraints(secondHeaderTitle)
+        scrollView.addSubviewAutoConstraints(firstHeader)
+        scrollView.addSubviewAutoConstraints(secondeHeader)
         scrollView.addSubviewAutoConstraints(cardCollectionView)
         scrollView.addSubviewAutoConstraints(myWallet)
+        scrollView.addSubviewAutoConstraints(underWallet)
         
         let views = [
             "scroll": scrollView,
             "search": searchBar,
-            "header1": headerTitle,
-            "header2": secondHeaderTitle,
+            "header1": firstHeader,
+            "header2": secondeHeader,
             "cards": cardCollectionView,
-            "wallet": myWallet
+            "wallet": myWallet,
+            "underWallet": underWallet
         ]
         let constraints = [
             "H:|[scroll]|",
-            "H:|-18-[wallet]-18-|",
+            "H:|-16-[underWallet]-16-|",
+            "H:|-16-[wallet]-16-|",
             "H:|[cards]|",
-            "H:|-17-[search]-17-|",
-            "H:|-18-[header1]-18-|",
-            "H:|-18-[header2]-18-|",
-            "V:[search]-18-[scroll]|",
-            "V:|-18-[header1]-18-[wallet(60)]-18-[header2]-12-[cards]-12-|",
+            "H:|-16-[search]-16-|",
+            "H:|-16-[header1]-16-|",
+            "H:|-16-[header2]-16-|",
+            "V:[search]-16-[scroll]|",
+            "V:|-16-[header1]-16-[wallet]-16-[underWallet]-32-[header2][cards]-12-|",
         ]
-        
-        
         
         NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)
         NSLayoutConstraint.activate([
             searchBar.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 18),
             searchBar.heightAnchor.constraint(equalToConstant: SEARCH_BAR_HEIGHT),
             cardCollectionView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            cardCollectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.65)
+            cardCollectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.65),
         ])
         
         view.layoutIfNeeded()
         cardCollectionView.reloadData()
-        myWallet.applyGradient(colours: UIColor.gradients.purple.value)
+        
+        let coinsCellGradient = [UIColor.theme.custom(hexString: "#ff7676").value.cgColor, UIColor.theme.custom(hexString: "#f54ea2").value.cgColor]
+        let settingsCellGradient = [UIColor.theme.custom(hexString: "#00e9ff").value.cgColor, UIColor.theme.custom(hexString: "#3b8be7").value.cgColor]
+        
+        underWallet.coinsCell.setGradient(colors: coinsCellGradient, angle: 90)
+        underWallet.settingsCell.setGradient(colors: settingsCellGradient, angle: 90)
+        
+        let allCoinsTap = UITapGestureRecognizer(target: self, action: #selector(self.handleAllCoinsTap(_:)))
+        underWallet.coinsCell.addGestureRecognizer(allCoinsTap)
+    }
+    
+    @objc private func handleAllCoinsTap(_ sender: UITapGestureRecognizer?) {
+        if let fromView = tabBarController?.selectedViewController?.view, let viewControllers = tabBarController?.viewControllers {
+            if (viewControllers.count < 2) { return }
+            
+            let toView = viewControllers[1].view
+            
+            UIView.transition(from: fromView, to: toView!, duration: K.Design.AnimationTime, options: UIViewAnimationOptions.transitionFlipFromBottom) { (finished) in
+                self.tabBarController?.selectedIndex = 1
+            }
+        }
     }
     
 
@@ -162,7 +176,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     private func calculateCellSize() -> CGSize {
         let cardHeight = cardCollectionView.bounds.height
-        let cardWidth = cardCollectionView.bounds.width - 50
+        let cardWidth = cardCollectionView.bounds.width - 48
         
         return CGSize.init(width: cardWidth, height: cardHeight)
     }
@@ -207,7 +221,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = DashboardController()
+        let vc = CoinDetailController()
         
         navigationController?.pushViewController(vc, animated: true)
     }
