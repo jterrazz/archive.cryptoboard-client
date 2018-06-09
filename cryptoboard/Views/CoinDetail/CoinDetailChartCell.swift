@@ -10,14 +10,17 @@ import Foundation
 import UIKit
 import Charts
 
-class CoinDetailChartView: UIView {
+class CoinDetailChartCell: UITableViewCell {
     
+    lazy var containerView = UIView()
     lazy var chartView = LineChartView()
     lazy var hoverInformations = CoinDetailChartDataView()
     lazy var chartSegmentedControll = RoundSegmentedControl(frame: .zero)
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    var topContainerConstraint: NSLayoutConstraint?
+    
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
     }
     
@@ -32,29 +35,45 @@ class CoinDetailChartView: UIView {
             UIColor.theme.custom(hexString: "#0296ff").value.cgColor,
         ]
         
-        backgroundColor = UIColor.theme.darkBg.value
+        selectionStyle = .none
+        backgroundColor = UIColor.clear
         chartSegmentedControll.borderColor = UIColor.init(white: 1, alpha: 0.5)
         chartView.setupFilled(values: [4, 5, 1, 6, 4, 9], colors: gradient, withMargins: true)
-        addSubviewsAutoConstraints([chartView, hoverInformations, chartSegmentedControll])
+        addSubviewAutoConstraints(containerView)
+        containerView.addSubviewsAutoConstraints([chartView, hoverInformations, chartSegmentedControll])
+        
+        topContainerConstraint = containerView.topAnchor.constraint(equalTo: safeTopAnchor)
         
         let views = [
+            "c": containerView,
             "chart": chartView,
             "infos": hoverInformations
         ]
         let constraints = [
+            "H:|[c]|",
+            "V:[c]|",
             "H:|-48-[infos]|",
             "H:|[chart]|",
-            "V:[infos]-32-[chart]|",
+            "V:|[infos]-32-[chart]|",
         ]
         
         NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)
         NSLayoutConstraint.activate([
-            hoverInformations.topAnchor.constraint(equalTo: safeTopAnchor, constant: 0),
             chartSegmentedControll.centerXAnchor.constraint(equalTo: chartView.centerXAnchor),
             chartSegmentedControll.bottomAnchor.constraint(equalTo: chartView.bottomAnchor, constant: -24),
             chartSegmentedControll.heightAnchor.constraint(equalToConstant: 36),
-            chartSegmentedControll.widthAnchor.constraint(equalToConstant: 200)
+            chartSegmentedControll.widthAnchor.constraint(equalToConstant: 200),
+            topContainerConstraint!
         ])
+    }
+    
+    public func setOffset(offset: CGFloat, trigger: CGFloat) {
+        if (offset < 0) {
+            topContainerConstraint?.constant = offset / 3
+            return
+        } else if (offset < trigger) {
+            topContainerConstraint?.constant = offset
+        }
     }
     
     

@@ -60,7 +60,7 @@
 		86DD9E6020C6068E00EEC20F /* HomeHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 86DD9E5F20C6068E00EEC20F /* HomeHeaderView.xib */; };
 		86DD9E6220C606A000EEC20F /* HomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DD9E6120C606A000EEC20F /* HomeHeaderView.swift */; };
 		86DD9E6520C6A02300EEC20F /* PieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DD9E6420C6A02300EEC20F /* PieChartView.swift */; };
-		86DD9E6820C6AE4300EEC20F /* CoinDetailChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DD9E6720C6AE4300EEC20F /* CoinDetailChartView.swift */; };
+		86DD9E6820C6AE4300EEC20F /* CoinDetailChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DD9E6720C6AE4300EEC20F /* CoinDetailChartCell.swift */; };
 		FE6D13C8B0CD9AA730D59096 /* Pods_cryptoboard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AECE56E8026DE6661182C9E /* Pods_cryptoboard.framework */; };
 /* End PBXBuildFile section */
 
@@ -121,7 +121,7 @@
 		86DD9E5F20C6068E00EEC20F /* HomeHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeHeaderView.xib; sourceTree = "<group>"; };
 		86DD9E6120C606A000EEC20F /* HomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderView.swift; sourceTree = "<group>"; };
 		86DD9E6420C6A02300EEC20F /* PieChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartView.swift; sourceTree = "<group>"; };
-		86DD9E6720C6AE4300EEC20F /* CoinDetailChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetailChartView.swift; sourceTree = "<group>"; };
+		86DD9E6720C6AE4300EEC20F /* CoinDetailChartCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetailChartCell.swift; sourceTree = "<group>"; };
 		88C9C5A0BA25730005577C54 /* Pods-cryptoboard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cryptoboard.release.xcconfig"; path = "Pods/Target Support Files/Pods-cryptoboard/Pods-cryptoboard.release.xcconfig"; sourceTree = "<group>"; };
 		A485F1B7133266ACBD55CDC8 /* Pods-cryptoboard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cryptoboard.debug.xcconfig"; path = "Pods/Target Support Files/Pods-cryptoboard/Pods-cryptoboard.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -307,7 +307,7 @@
 		86DD9E6620C6AE1F00EEC20F /* CoinDetail */ = {
 			isa = PBXGroup;
 			children = (
-				86DD9E6720C6AE4300EEC20F /* CoinDetailChartView.swift */,
+				86DD9E6720C6AE4300EEC20F /* CoinDetailChartCell.swift */,
 				866A030420C7FF1F00784938 /* CoinDetailChartDataView.xib */,
 				866A030620C7FFA000784938 /* CoinDetailChartDataView.swift */,
 			);
@@ -476,7 +476,7 @@
 				86BD016D20B830850065CC8B /* HoverEmptyCell.swift in Sources */,
 				862319CF20B4503800C6E46E /* MenuTitleCell.swift in Sources */,
 				862319C520B28B8F00C6E46E /* SettingsController.swift in Sources */,
-				86DD9E6820C6AE4300EEC20F /* CoinDetailChartView.swift in Sources */,
+				86DD9E6820C6AE4300EEC20F /* CoinDetailChartCell.swift in Sources */,
 				86BD016A20B56D900065CC8B /* HoverFollowedCell.swift in Sources */,
 				86BD017D20B91C020065CC8B /* CurrencyController.swift in Sources */,
 				862319BB20B0030C00C6E46E /* CALayer.swift in Sources */,
