@@ -38,7 +38,7 @@ extension LineChartView {
         chartDataSet.drawValuesEnabled = false
         chartDataSet.drawFilledEnabled = true
         chartDataSet.setCircleColors(UIColor.white)
-        chartDataSet.circleHoleColor = UIColor.gradients.purple.value.first
+        chartDataSet.circleHoleColor = colors.first != nil ? UIColor.init(cgColor: colors.first!) : UIColor.white
         chartDataSet.circleHoleRadius = 5
         
         chartDataSet.fill = self.getFillGradient(colors: colors)

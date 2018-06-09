@@ -13,38 +13,8 @@ import Charts
 class CoinDetailChartView: UIView {
     
     lazy var chartView = LineChartView()
-    
-    lazy var priceLabel: UILabel = {
-        let label = UILabel()
-        label.text = "$20 000.00"
-        label.font = UIFont.systemFont(ofSize: 22, weight: .regular)
-        label.textColor = UIColor.white
-        return label
-    }()
-    
-    lazy var priceSubtitleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Current value"
-        label.textColor = UIColor.white
-        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-        return label
-    }()
-    
-    lazy var marketcapLabel: UILabel = {
-        let label = UILabel()
-        label.text = "$20 000.00"
-        label.font = UIFont.systemFont(ofSize: 22, weight: .regular)
-        label.textColor = UIColor.white
-        return label
-    }()
-    
-    lazy var marketcapSubtitleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Current value"
-        label.textColor = UIColor.white
-        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-        return label
-    }()
+    lazy var hoverInformations = CoinDetailChartDataView()
+    lazy var chartSegmentedControll = RoundSegmentedControl(frame: .zero)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -53,41 +23,38 @@ class CoinDetailChartView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        setupViews()
     }
     
     private func setupViews() {
-        backgroundColor = UIColor.theme.darkBg.value
         let gradient = [
             UIColor.theme.custom(hexString: "#abdcff").value.cgColor,
             UIColor.theme.custom(hexString: "#0296ff").value.cgColor,
         ]
+        
+        backgroundColor = UIColor.theme.darkBg.value
+        chartSegmentedControll.borderColor = UIColor.init(white: 1, alpha: 0.5)
         chartView.setupFilled(values: [4, 5, 1, 6, 4, 9], colors: gradient, withMargins: true)
-        addSubviewsAutoConstraints([chartView, priceLabel, priceSubtitleLabel, marketcapLabel, marketcapSubtitleLabel])
+        addSubviewsAutoConstraints([chartView, hoverInformations, chartSegmentedControll])
         
         let views = [
             "chart": chartView,
-            "price": priceLabel,
-            "priceSub": priceSubtitleLabel,
-            "mk": marketcapLabel,
-            "mkSub": marketcapSubtitleLabel
+            "infos": hoverInformations
         ]
         let constraints = [
+            "H:|-48-[infos]|",
             "H:|[chart]|",
-            "H:|-16-[price]",
-            "V:|-200-[chart]|",
-            "V:[price]-2-[priceSub]-42-|",
+            "V:[infos]-32-[chart]|",
         ]
         
         NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)
         NSLayoutConstraint.activate([
-            priceSubtitleLabel.leftAnchor.constraint(equalTo: priceLabel.leftAnchor),
-            marketcapLabel.leftAnchor.constraint(greaterThanOrEqualTo: priceLabel.rightAnchor, constant: 16),
-            marketcapLabel.leftAnchor.constraint(greaterThanOrEqualTo: priceSubtitleLabel.rightAnchor, constant: 16),
-            marketcapSubtitleLabel.leftAnchor.constraint(equalTo: marketcapLabel.leftAnchor),
-            marketcapSubtitleLabel.bottomAnchor.constraint(equalTo: priceSubtitleLabel.bottomAnchor),
-            marketcapLabel.bottomAnchor.constraint(equalTo: priceLabel.bottomAnchor)
+            hoverInformations.topAnchor.constraint(equalTo: safeTopAnchor, constant: 0),
+            chartSegmentedControll.centerXAnchor.constraint(equalTo: chartView.centerXAnchor),
+            chartSegmentedControll.bottomAnchor.constraint(equalTo: chartView.bottomAnchor, constant: -24),
+            chartSegmentedControll.heightAnchor.constraint(equalToConstant: 36),
+            chartSegmentedControll.widthAnchor.constraint(equalToConstant: 200)
         ])
-        
     }
     
     

@@ -28,7 +28,6 @@ class ListViewController: UITableViewController {
         view.backgroundColor = UIColor.theme.bg.value
         
         let bar = navigationController?.navigationBar
-        bar?.shadowImage = UIImage()
         bar?.backgroundColor = UIColor.theme.bg.value
         bar?.barTintColor = UIColor.theme.bg.value
         bar?.tintColor = UIColor.white
@@ -36,6 +35,10 @@ class ListViewController: UITableViewController {
         bar?.topItem?.title = "Crypto currencies"
         
         navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.navigationBar.topItem?.title = nil
     }
     
     

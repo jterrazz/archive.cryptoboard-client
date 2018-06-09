@@ -22,6 +22,8 @@ class CoinDetailController: UIViewController {
     var chartMarginWidthConstraint: NSLayoutConstraint?
     var currentTheme: ThemeStatus = .white
     
+    var tapGesture: UITapGestureRecognizer!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,10 +31,10 @@ class CoinDetailController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        let bar = navigationController?.navigationBar
+        
         navigationController?.setNavigationBarHidden(false, animated: true)
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        bar?.backgroundColor = UIColor.clear
         setTheme(.clear)
         
         view.layoutIfNeeded()
@@ -51,7 +53,7 @@ class CoinDetailController: UIViewController {
         view.addSubviewsAutoConstraints([chartView, tableView, topBarBg])
         
         let chartTopConstraint = chartView.topAnchor.constraint(equalTo: tableView.topAnchor)
-        let chartHeightConstraint = chartView.heightAnchor.constraint(greaterThanOrEqualTo: tableView.heightAnchor, multiplier: 0.7)
+        let chartHeightConstraint = chartView.heightAnchor.constraint(greaterThanOrEqualTo: tableView.heightAnchor, multiplier: 0.8)
         chartTopConstraint.priority = UILayoutPriority(250)
         chartHeightConstraint.priority = UILayoutPriority(1000)
         chartBottomConstraint = chartView.bottomAnchor.constraint(equalTo: tableView.bottomAnchor)
@@ -88,7 +90,7 @@ class CoinDetailController: UIViewController {
 extension CoinDetailController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 15
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -118,17 +120,17 @@ extension CoinDetailController: UITableViewDelegate, UITableViewDataSource {
     }
     
     private func setTheme(_ status: ThemeStatus) {
-        let bar = navigationController?.navigationBar
+        let bar = self.navigationController?.navigationBar
         
         UIView.animate(withDuration: K.Design.AnimationTime) {
             if (status == .clear && self.currentTheme == .white) {
                 bar?.tintColor = UIColor.white
                 self.topBarBg.backgroundColor = UIColor.clear
-                self.navigationController?.navigationBar.barStyle = .black
+                bar?.barStyle = .black
             } else if (status == .white && self.currentTheme == .clear) {
                 bar?.tintColor = UIColor.theme.textDark.value
                 self.topBarBg.backgroundColor = UIColor.white
-                self.navigationController?.navigationBar.barStyle = .default
+                bar?.barStyle = .default
             }
         }
         

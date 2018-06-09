@@ -29,7 +29,7 @@ class HomeViewController: UIViewController {
         field.layer.shadowRadius = 8
         field.layer.shadowColor = UIColor.theme.shadow.value.cgColor
         field.layer.shadowOpacity = 0.15
-        field.attributedPlaceholder = NSAttributedString.init(string: "Search any currency", attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.medium)])
+        field.attributedPlaceholder = NSAttributedString.init(string: "Search any coins", attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.medium)])
         
         let searchView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: SEARCH_BAR_HEIGHT, height: 23))
         let iconImage = UIImage.init(named: "search_icon")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
@@ -68,6 +68,8 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
+        
         setupViews()
     }
     
@@ -80,8 +82,8 @@ class HomeViewController: UIViewController {
     private func setupViews() {
         view.backgroundColor = UIColor.theme.bg.value
         
-        firstHeader.setup(title: "Personnal")
-        secondeHeader.setup(title: "My coins")
+        firstHeader.setup(title: "Personnal", borderColor: UIColor.theme.darkBg.value)
+        secondeHeader.setup(title: "Coins", borderColor: UIColor.theme.darkBg.value)
         
         view.addSubviewAutoConstraints(searchBar)
         view.addSubviewAutoConstraints(scrollView)

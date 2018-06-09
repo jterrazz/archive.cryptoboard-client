@@ -34,8 +34,9 @@ class HomeHeaderView: UIView {
         titleLabel.textColor = UIColor.theme.textDark.value
     }
     
-    public func setup(title: String) {
+    public func setup(title: String, borderColor: UIColor = UIColor.theme.textDark.value) {
         titleLabel.text = title
+        leftBorder.backgroundColor = borderColor
     }
     
     

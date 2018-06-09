@@ -26,10 +26,14 @@
 		862319CB20B41A7D00C6E46E /* SearchCurrencyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862319CA20B41A7D00C6E46E /* SearchCurrencyCell.swift */; };
 		862319CD20B44FDD00C6E46E /* MenuContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862319CC20B44FDD00C6E46E /* MenuContentCell.swift */; };
 		862319CF20B4503800C6E46E /* MenuTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862319CE20B4503800C6E46E /* MenuTitleCell.swift */; };
+		865E1B0C20C83FBC000B3092 /* RoundSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865E1B0B20C83FBC000B3092 /* RoundSegmentedControl.swift */; };
 		86614CED20C140A3001A0DEB /* CAGradientLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86614CEC20C140A3001A0DEB /* CAGradientLayer.swift */; };
 		86614CF120C29AD9001A0DEB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86614CF020C29AD9001A0DEB /* HomeViewController.swift */; };
 		86614CF620C35EE5001A0DEB /* CardCoinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86614CF520C35EE5001A0DEB /* CardCoinCell.swift */; };
 		86614CF820C38AC4001A0DEB /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86614CF720C38AC4001A0DEB /* ListViewController.swift */; };
+		866A030520C7FF1F00784938 /* CoinDetailChartDataView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 866A030420C7FF1F00784938 /* CoinDetailChartDataView.xib */; };
+		866A030720C7FFA000784938 /* CoinDetailChartDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866A030620C7FFA000784938 /* CoinDetailChartDataView.swift */; };
+		866A030A20C80BF800784938 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866A030920C80BF800784938 /* ProgressView.swift */; };
 		86BD016A20B56D900065CC8B /* HoverFollowedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD016920B56D900065CC8B /* HoverFollowedCell.swift */; };
 		86BD016D20B830850065CC8B /* HoverEmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD016C20B830850065CC8B /* HoverEmptyCell.swift */; };
 		86BD016F20B849E50065CC8B /* CoinListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD016E20B849E50065CC8B /* CoinListCell.swift */; };
@@ -83,10 +87,14 @@
 		862319CA20B41A7D00C6E46E /* SearchCurrencyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCurrencyCell.swift; sourceTree = "<group>"; };
 		862319CC20B44FDD00C6E46E /* MenuContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuContentCell.swift; sourceTree = "<group>"; };
 		862319CE20B4503800C6E46E /* MenuTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTitleCell.swift; sourceTree = "<group>"; };
+		865E1B0B20C83FBC000B3092 /* RoundSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundSegmentedControl.swift; sourceTree = "<group>"; };
 		86614CEC20C140A3001A0DEB /* CAGradientLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAGradientLayer.swift; sourceTree = "<group>"; };
 		86614CF020C29AD9001A0DEB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		86614CF520C35EE5001A0DEB /* CardCoinCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCoinCell.swift; sourceTree = "<group>"; };
 		86614CF720C38AC4001A0DEB /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
+		866A030420C7FF1F00784938 /* CoinDetailChartDataView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CoinDetailChartDataView.xib; sourceTree = "<group>"; };
+		866A030620C7FFA000784938 /* CoinDetailChartDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetailChartDataView.swift; sourceTree = "<group>"; };
+		866A030920C80BF800784938 /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		86BD016920B56D900065CC8B /* HoverFollowedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverFollowedCell.swift; sourceTree = "<group>"; };
 		86BD016C20B830850065CC8B /* HoverEmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverEmptyCell.swift; sourceTree = "<group>"; };
 		86BD016E20B849E50065CC8B /* CoinListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinListCell.swift; sourceTree = "<group>"; };
@@ -224,14 +232,9 @@
 			isa = PBXGroup;
 			children = (
 				86DD9E6320C6A01000EEC20F /* Chart */,
-				86BD018420BC663A0065CC8B /* Array.swift */,
-				862319BA20B0030C00C6E46E /* CALayer.swift */,
-				86614CEC20C140A3001A0DEB /* CAGradientLayer.swift */,
-				86BD017E20B9A8180065CC8B /* Double.swift */,
-				862319A920AFD9A100C6E46E /* UIColor.swift */,
-				862319AB20AFDC3100C6E46E /* UIImage.swift */,
-				862319AD20AFDD2C00C6E46E /* UIView.swift */,
-				862319C620B28DB500C6E46E /* NSLayoutConstraint.swift */,
+				866A030820C80B9700784938 /* OS */,
+				865E1B0B20C83FBC000B3092 /* RoundSegmentedControl.swift */,
+				866A030920C80BF800784938 /* ProgressView.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -242,6 +245,21 @@
 				862319B820AFFAD000C6E46E /* Pacifico.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		866A030820C80B9700784938 /* OS */ = {
+			isa = PBXGroup;
+			children = (
+				86BD018420BC663A0065CC8B /* Array.swift */,
+				862319BA20B0030C00C6E46E /* CALayer.swift */,
+				86614CEC20C140A3001A0DEB /* CAGradientLayer.swift */,
+				86BD017E20B9A8180065CC8B /* Double.swift */,
+				862319A920AFD9A100C6E46E /* UIColor.swift */,
+				862319AB20AFDC3100C6E46E /* UIImage.swift */,
+				862319AD20AFDD2C00C6E46E /* UIView.swift */,
+				862319C620B28DB500C6E46E /* NSLayoutConstraint.swift */,
+			);
+			path = OS;
 			sourceTree = "<group>";
 		};
 		86BD018A20BDB50E0065CC8B /* Dashboard */ = {
@@ -290,6 +308,8 @@
 			isa = PBXGroup;
 			children = (
 				86DD9E6720C6AE4300EEC20F /* CoinDetailChartView.swift */,
+				866A030420C7FF1F00784938 /* CoinDetailChartDataView.xib */,
+				866A030620C7FFA000784938 /* CoinDetailChartDataView.swift */,
 			);
 			path = CoinDetail;
 			sourceTree = "<group>";
@@ -378,6 +398,7 @@
 				86DD9E5C20C6017700EEC20F /* WalletView.xib in Resources */,
 				8623199A20AFD64100C6E46E /* Assets.xcassets in Resources */,
 				86DD9E5320C397BF00EEC20F /* GeneralCoinListCell.xib in Resources */,
+				866A030520C7FF1F00784938 /* CoinDetailChartDataView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -448,7 +469,9 @@
 				86BD017120B8BB770065CC8B /* CoinDetailController.swift in Sources */,
 				86614CF820C38AC4001A0DEB /* ListViewController.swift in Sources */,
 				862319AE20AFDD2C00C6E46E /* UIView.swift in Sources */,
+				866A030720C7FFA000784938 /* CoinDetailChartDataView.swift in Sources */,
 				86BD017B20B91B4D0065CC8B /* APIClient.swift in Sources */,
+				866A030A20C80BF800784938 /* ProgressView.swift in Sources */,
 				86614CED20C140A3001A0DEB /* CAGradientLayer.swift in Sources */,
 				86BD016D20B830850065CC8B /* HoverEmptyCell.swift in Sources */,
 				862319CF20B4503800C6E46E /* MenuTitleCell.swift in Sources */,
@@ -466,6 +489,7 @@
 				86614CF620C35EE5001A0DEB /* CardCoinCell.swift in Sources */,
 				86DD9E6220C606A000EEC20F /* HomeHeaderView.swift in Sources */,
 				862319CD20B44FDD00C6E46E /* MenuContentCell.swift in Sources */,
+				865E1B0C20C83FBC000B3092 /* RoundSegmentedControl.swift in Sources */,
 				86BD017320B8E1FE0065CC8B /* CoinGraphCell.swift in Sources */,
 				86DD9E5E20C6018000EEC20F /* WalletView.swift in Sources */,
 				86BD018520BC663A0065CC8B /* Array.swift in Sources */,

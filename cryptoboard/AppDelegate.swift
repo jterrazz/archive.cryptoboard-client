@@ -29,6 +29,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationController = UINavigationController(rootViewController: tabBarController)
         navigationController.view.backgroundColor = UIColor.clear
         
+        let navBar = navigationController.navigationBar
+        navBar.shadowImage = UIImage()
+        navBar.isTranslucent = true
+        navBar.setBackgroundImage(UIImage(), for: .default)
+        
         // Setting all main controllers
         let iconInset = UIEdgeInsets(top: 9, left: 0, bottom: -9, right: 0)
         let homeController = HomeViewController()
