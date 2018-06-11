@@ -13,6 +13,29 @@ import Foundation
 
 class CurrencyController {
     
+    public static func getList(limit: Int, callback: @escaping ([Currency]) -> Void) {
+        
+        let storageController = StorageController()
+        var needUpdate = true
+        
+        if let cachedCurrencies = storageController.retrieveCurrencyList() {
+            let dateLimit = cachedCurrencies.updatedAt.addingTimeInterval(K.APIValidity.currencyList)
+            let now = Date()
+            
+            needUpdate = now > dateLimit
+            callback(Array(cachedCurrencies.list.prefix(limit)))
+        }
+        needUpdate = true
+        
+        if (needUpdate) {
+            APIClient.getCurrencyList { (updatedCurrencies) in
+                let sortedCurrencies = updatedCurrencies.sorted(by: { $0.id <= $1.id })
+                callback(Array(sortedCurrencies.prefix(limit)))
+                storageController.storeCurrencyList(list: sortedCurrencies)
+            }
+        }
+    }
+    
     public static func getCurrencyState(currencies: [Currency], callback: @escaping ([Currency]) -> Void) {
         
         let storageController = StorageController()
@@ -20,6 +43,8 @@ class CurrencyController {
         var cachedCurrencies = [Currency]()
         var updatedCurrencies = [Currency]()
         
+        
+        // Check the update
         currencies.forEach { (currency) in
             let dateLimit = currency.liveData?.updateTime?.addingTimeInterval(20)
             let now = Date()

@@ -12,7 +12,13 @@ import UIKit
 class SearchController: UIViewController, UIGestureRecognizerDelegate {
     
     private let CURRENCY_CELL_ID = "search-currency-cell"
-    private var results: [Currency] = K.Currencies
+    
+    var allCurrencies = [Currency]()
+    var searchResults = [Currency]() {
+        didSet {
+            resultTableView.reloadData()
+        }
+    }
     
     lazy var searchBar: UITextField = {
         let input = UITextField()
@@ -74,6 +80,12 @@ class SearchController: UIViewController, UIGestureRecognizerDelegate {
             "V:[search]-8-[results]|"
         ]
         NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)
+        
+        searchResults.removeAll()
+        CurrencyController.getList(limit: 999999) { (currencies) in
+            self.allCurrencies = currencies
+            // TODO Update list
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -84,24 +96,40 @@ class SearchController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @objc private func handleTextChange(_ sender: UITextField) {
-        print("lol")
+        if let searched = searchBar.text?.lowercased() {
+            searchResults = allCurrencies.filter({ (currency) -> Bool in
+                let nameMatch = currency.name.lowercased().range(of: searched)
+                let symbolMatch = currency.diminutive.lowercased().range(of: searched)
+                
+                let match = (nameMatch != nil || symbolMatch != nil) ? true : false
+                
+                return match
+            })
+        } else {
+            // TODO Empty search = recent or most famous
+        }
     }
     
     @objc private func handleBackAction(_ sender: UITapGestureRecognizer) {
-        self.navigationController?.popViewController(animated: true)
+        let transition = CATransition()
+        transition.duration = K.Design.AnimationTime
+        transition.timingFunction = CAMediaTimingFunction.init(name: kCAMediaTimingFunctionEaseInEaseOut)
+        transition.type = kCATransitionFade
+        navigationController?.view.layer.add(transition, forKey: nil)
+        self.navigationController?.popViewController(animated: false)
     }
 }
 
 extension SearchController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return results.count
+        return searchResults.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CURRENCY_CELL_ID, for: indexPath) as! SearchCurrencyCell
         
-        cell.setup(currency: results[indexPath.row])
+        cell.setup(currency: searchResults[indexPath.row])
         return cell
     }
     

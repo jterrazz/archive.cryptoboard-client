@@ -12,6 +12,26 @@ import SwiftyJSON
 
 class APIClient {
     
+    static func getCurrencyList(callback: @escaping ([Currency]) -> Void) {
+        Alamofire.request(APIRouter.currencyList()).responseJSON { (response) in
+            guard (response.error == nil && response.result.value != nil) else {
+                return
+            }
+            
+            var currencyList = [Currency]()
+            let json = JSON(response.result.value!)
+            
+            if let currencies = json["Data"].dictionary {
+                for (_, currency) in currencies {
+                    if let stringId = currency["SortOrder"].string, let id = UInt(stringId), let name = currency["CoinName"].string, let diminutive = currency["Name"].string, let imageUrl = currency["ImageUrl"].string {
+                        currencyList.append(Currency(id: id, name: name, diminutive: diminutive, imageName: nil))
+                    }
+                }
+            }
+            callback(currencyList)
+        }
+    }
+    
     static func getCurrencyHistory(_ type: CurrencyHistoryType, currencyFrom: String, currencyTo: String, aggregate: UInt, points: UInt, callback: @escaping ([CurrencyPrice]) -> Void) {
         let router: APIRouter
         

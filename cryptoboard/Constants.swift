@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 struct K {
+    
     struct APIServer {
         static let baseURL = "https://min-api.cryptocompare.com"
     }
@@ -21,6 +22,10 @@ struct K {
         static let currencyTo = "tsym"
         static let aggregate = "aggregate"
         static let limit = "limit"
+    }
+    
+    struct APIValidity {
+        static let currencyList: TimeInterval = 60 * 60 * 24
     }
     
     struct Design {
@@ -35,6 +40,8 @@ struct K {
         Currency(id: 3, name: "EOS", diminutive: "EOS", imageName: nil),
         Currency(id: 4, name: "LOL", diminutive: "LOL", imageName: nil),
     ]
+    
+    
 }
 
 enum HTTPHeaderFields: String {

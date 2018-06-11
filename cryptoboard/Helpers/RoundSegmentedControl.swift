@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AudioToolbox
 
 class RoundSegmentedControl: UISegmentedControl {
 
@@ -20,6 +21,7 @@ class RoundSegmentedControl: UISegmentedControl {
     
     private var labels = [UILabel]()
     private var selectedView = UIView()
+    private var draggedFromSelectedView: Bool = false
     
     override var bounds: CGRect {
         didSet {
@@ -29,19 +31,15 @@ class RoundSegmentedControl: UISegmentedControl {
     }
     
     // Data
-    var items: [String] = ["0", "1", "222"]
-    var selectedIndex: Int = 0 {
-        didSet {
-            
-        }
-    }
+    var items: [String] = ["0", "1", "2"] { didSet { setupLabels() }}
+    var selectedIndex: Int = 0 { didSet { didSelectIndex(index: selectedIndex) }}
     
     // Style
-    var selectedLabelColor: UIColor = UIColor.black {didSet {setColors()}}
-    var unselectedLabelColor: UIColor = UIColor.white {didSet {setColors()}}
-    var selectedColor: UIColor = UIColor.white {didSet {setColors()}}
-    var borderColor: UIColor = UIColor.white {didSet {setColors()}}
-    var font: UIFont = UIFont.systemFont(ofSize: 14) {didSet {setFont()}}
+    var selectedLabelColor: UIColor = UIColor.black { didSet { setColors() }}
+    var unselectedLabelColor: UIColor = UIColor.white { didSet { setColors() }}
+    var selectedColor: UIColor = UIColor.white { didSet { setColors() }}
+    var borderColor: UIColor = UIColor.white { didSet { setColors() }}
+    var font: UIFont = UIFont.systemFont(ofSize: 14) { didSet { setFont() }}
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -54,6 +52,7 @@ class RoundSegmentedControl: UISegmentedControl {
     }
     
     private func commonInit() {
+        clipsToBounds = true
         backgroundColor = UIColor.clear
         isUserInteractionEnabled = true
         
@@ -69,14 +68,15 @@ class RoundSegmentedControl: UISegmentedControl {
         ])
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleButtonPressed(_:)))
-        tapGesture.numberOfTouchesRequired = 1
-        containerView.isUserInteractionEnabled = true
         containerView.addGestureRecognizer(tapGesture)
+        
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
+        containerView.addGestureRecognizer(panGesture)
     }
     
     private func setupLabels() {
         for label in labels {
-            containerView.removeArrangedSubview(label)
+            label.removeFromSuperview()
         }
         
         labels.removeAll(keepingCapacity: true)
@@ -88,6 +88,7 @@ class RoundSegmentedControl: UISegmentedControl {
             label.textAlignment = .center
             label.font = UIFont.systemFont(ofSize: 14)
             label.textColor = UIColor.white
+            label.isUserInteractionEnabled = false
             
             // TODO create color if index selected ?
             
@@ -99,26 +100,59 @@ class RoundSegmentedControl: UISegmentedControl {
     }
     
     @objc private func handleButtonPressed(_ sender: UITapGestureRecognizer) {
-        print("okokokok")
+        if let index = getIndexForTouchLocation(location: sender.location(in: self)) {
+            AudioServicesPlaySystemSound(1519)
+            selectedIndex = index
+        }
     }
     
-    override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
-        let location = touch.location(in: self)
-        print(location)
+    @objc private func handlePan(_ sender: UIPanGestureRecognizer) {
+        let translation = sender.translation(in: containerView)
         
+        if (sender.state == .began) {
+            let location = sender.location(in: containerView)
+            draggedFromSelectedView = selectedView.frame.contains(location) ? true : false
+        }
+        switch sender.state {
+        case .began, .changed:
+            if (!draggedFromSelectedView) {
+                return
+            }
+            
+            let newXPosition = selectedView.center.x + translation.x
+            let distanceToCenter = selectedView.frame.width / 2
+            let leftLimit = 0 + distanceToCenter
+            let rightLimit = containerView.frame.width - distanceToCenter
+            
+            if (newXPosition > leftLimit && newXPosition < rightLimit) {
+                selectedView.center = CGPoint.init(x: newXPosition, y: selectedView.center.y)
+                sender.setTranslation(CGPoint(x: 0, y: 0), in: containerView)
+            }
+        case .ended:
+            if let index = getIndexForTouchLocation(location: selectedView.center) {
+                selectedIndex = index
+                AudioServicesPlaySystemSound(1519)
+            }
+        default:
+            break
+        }
+    }
+    
+    private func getIndexForTouchLocation(location: CGPoint) -> Int? {
         var calculatedIndex: Int?
+        
         for (index, label) in labels.enumerated() {
             if (label.frame.contains(location)) {
                 calculatedIndex = index
             }
         }
-        
+
         if (calculatedIndex != nil) {
             selectedIndex = calculatedIndex!
             sendActions(for: .valueChanged)
         }
         
-        return false
+        return calculatedIndex
     }
     
     private func boundsChanged() {
@@ -134,7 +168,7 @@ class RoundSegmentedControl: UISegmentedControl {
         selectedView.layer.cornerRadius = selectedView.frame.height / 2
     }
     
-    private func setSelectedIndex() {
+    private func didSelectIndex(index: Int) {
         for label in labels {
             label.textColor = unselectedLabelColor
         }
@@ -142,7 +176,7 @@ class RoundSegmentedControl: UISegmentedControl {
         let selectedLabel = labels[selectedIndex]
         selectedLabel.textColor = selectedLabelColor
         
-        UIView.animate(withDuration: K.Design.AnimationTime, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.8, options: [], animations: {
+        UIView.animate(withDuration: K.Design.AnimationTime, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.4, options: [], animations: {
             self.selectedView.frame = selectedLabel.frame
         }, completion: nil)
     }

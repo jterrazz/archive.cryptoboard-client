@@ -26,17 +26,19 @@ class CoinDetailController: UIViewController {
         tableView.register(CoinDetailChartCell.self, forCellReuseIdentifier: COIN_DETAIL_CHART_CELL_ID)
         
         setupViews()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
+        
         let bar = navigationController?.navigationBar
         
-        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.setNavigationBarHidden(false, animated: false)
         bar?.backgroundColor = UIColor.clear
         view.backgroundColor = UIColor.theme.darkBg.value
         setTheme(.clear)
         
         view.layoutIfNeeded()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
     }
     
     private func setupViews() {

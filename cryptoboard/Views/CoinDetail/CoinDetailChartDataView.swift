@@ -14,6 +14,8 @@ class CoinDetailChartDataView: UIView {
     @IBOutlet weak var progressHour: ProgressView!
     @IBOutlet weak var progressDay: ProgressView!
     @IBOutlet weak var progressMonth: ProgressView!
+    @IBOutlet weak var containerProgress: UIView!
+    @IBOutlet weak var symbolLabel: UILabel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,6 +33,10 @@ class CoinDetailChartDataView: UIView {
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         contentView.backgroundColor = UIColor.clear
+        containerProgress.backgroundColor = UIColor.theme.darkBgHover.value
+        containerProgress.layer.cornerRadius = K.Design.CornerRadius
+        symbolLabel.textColor = UIColor.theme.textOnDark.value
+        symbolLabel.font = UIFont.systemFont(ofSize: 14)
         
         let progressGradient = [
             UIColor.theme.custom(hexString: "#feb692").value.cgColor,

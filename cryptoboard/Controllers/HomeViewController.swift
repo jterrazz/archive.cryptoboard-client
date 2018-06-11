@@ -16,8 +16,6 @@ class HomeViewController: UIViewController {
     
     var indexOfCellBeforeDragging: Int = 0
     
-    lazy var scrollView = UIScrollView()
-    
     lazy var searchBar: UITextField = {
         let field = UITextField()
         field.backgroundColor = UIColor.white
@@ -64,12 +62,16 @@ class HomeViewController: UIViewController {
     lazy var underWallet = UnderWalletView()
     lazy var firstHeader = HomeHeaderView()
     lazy var secondeHeader = HomeHeaderView()
+    lazy var scrollView = UIScrollView()
+    lazy var topBackgroundWithAngle = BackgroundAngleView(frame: CGRect.init(x: 0, y: 0, width: 300, height: 300))
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
         
+        let searchTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSearchBarTouch(_:)))
+        searchBar.addGestureRecognizer(searchTapGesture)
         setupViews()
     }
     
@@ -84,7 +86,15 @@ class HomeViewController: UIViewController {
         
         firstHeader.setup(title: "Personnal", borderColor: UIColor.theme.darkBg.value)
         secondeHeader.setup(title: "Coins", borderColor: UIColor.theme.darkBg.value)
+        myWallet.addShadow()
         
+        topBackgroundWithAngle.gradientColors = [
+            UIColor.theme.custom(hexString: "#0d64d7").value.cgColor,
+            UIColor.theme.custom(hexString: "#5d9bec").value.cgColor,
+//            UIColor.theme.custom(hexString: "#4158D0").value.cgColor,
+        ]
+        
+        view.addSubviewsAutoConstraints([topBackgroundWithAngle])
         view.addSubviewAutoConstraints(searchBar)
         view.addSubviewAutoConstraints(scrollView)
         scrollView.addSubviewAutoConstraints(firstHeader)
@@ -100,9 +110,12 @@ class HomeViewController: UIViewController {
             "header2": secondeHeader,
             "cards": cardCollectionView,
             "wallet": myWallet,
-            "underWallet": underWallet
+            "underWallet": underWallet,
+            "angleBg": topBackgroundWithAngle
         ]
         let constraints = [
+            "H:|[angleBg]|",
+            "V:|[angleBg(300)]",
             "H:|[scroll]|",
             "H:|-16-[underWallet]-16-|",
             "H:|-16-[wallet]-16-|",
@@ -136,15 +149,25 @@ class HomeViewController: UIViewController {
     }
     
     @objc private func handleAllCoinsTap(_ sender: UITapGestureRecognizer?) {
-        if let fromView = tabBarController?.selectedViewController?.view, let viewControllers = tabBarController?.viewControllers {
-            if (viewControllers.count < 2) { return }
-            
-            let toView = viewControllers[1].view
-            
-            UIView.transition(from: fromView, to: toView!, duration: K.Design.AnimationTime, options: UIViewAnimationOptions.transitionFlipFromBottom) { (finished) in
-                self.tabBarController?.selectedIndex = 1
-            }
-        }
+        let transition = CATransition()
+        
+        transition.duration = K.Design.AnimationTime
+        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        transition.type = kCAFillModeForwards
+        
+        tabBarController?.view.layer.add(transition, forKey: nil)
+        self.tabBarController?.selectedIndex = 1
+    }
+    
+    @objc private func handleSearchBarTouch(_ sender: UITapGestureRecognizer) {
+        let vc = SearchController()
+        let transition = CATransition()
+        
+        transition.duration = K.Design.AnimationTime
+        transition.timingFunction = CAMediaTimingFunction.init(name: kCAMediaTimingFunctionEaseInEaseOut)
+        transition.type = kCATransitionFade
+        navigationController?.view.layer.add(transition, forKey: nil)
+        navigationController?.pushViewController(vc, animated: false)
     }
     
 

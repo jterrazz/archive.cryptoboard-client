@@ -51,7 +51,6 @@ class CardCoinCell: UICollectionViewCell {
         container.layer.shadowRadius = 8
         container.layer.shadowOpacity = 0.15
         
-//        chartView.backgroundColor = UIColor.theme.darkBg.value
         chartView.layer.masksToBounds = true
         chartView.layer.cornerRadius = K.Design.CornerRadius
         

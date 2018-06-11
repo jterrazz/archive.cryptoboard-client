@@ -84,3 +84,16 @@ class CurrencyPrice: Codable, CustomStringConvertible {
     
     
 }
+
+class CurrencyList: Codable {
+    
+    var list: [Currency]
+    var updatedAt: Date
+    
+    init(list: [Currency]) {
+        self.list = list
+        self.updatedAt = Date()
+    }
+    
+    
+}

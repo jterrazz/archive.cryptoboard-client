@@ -26,6 +26,9 @@
 		862319CB20B41A7D00C6E46E /* SearchCurrencyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862319CA20B41A7D00C6E46E /* SearchCurrencyCell.swift */; };
 		862319CD20B44FDD00C6E46E /* MenuContentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862319CC20B44FDD00C6E46E /* MenuContentCell.swift */; };
 		862319CF20B4503800C6E46E /* MenuTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862319CE20B4503800C6E46E /* MenuTitleCell.swift */; };
+		86306E3720CD1B8400FFAFC3 /* CoinWithChartCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 86306E3620CD1B8400FFAFC3 /* CoinWithChartCell.xib */; };
+		86306E3920CD1C7E00FFAFC3 /* CoinWithChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86306E3820CD1C7E00FFAFC3 /* CoinWithChartCell.swift */; };
+		865017AC20CD2BDD00EF5403 /* BackgroundAngleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865017AB20CD2BDD00EF5403 /* BackgroundAngleView.swift */; };
 		865E1B0C20C83FBC000B3092 /* RoundSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 865E1B0B20C83FBC000B3092 /* RoundSegmentedControl.swift */; };
 		86614CED20C140A3001A0DEB /* CAGradientLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86614CEC20C140A3001A0DEB /* CAGradientLayer.swift */; };
 		86614CF120C29AD9001A0DEB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86614CF020C29AD9001A0DEB /* HomeViewController.swift */; };
@@ -34,6 +37,8 @@
 		866A030520C7FF1F00784938 /* CoinDetailChartDataView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 866A030420C7FF1F00784938 /* CoinDetailChartDataView.xib */; };
 		866A030720C7FFA000784938 /* CoinDetailChartDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866A030620C7FFA000784938 /* CoinDetailChartDataView.swift */; };
 		866A030A20C80BF800784938 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866A030920C80BF800784938 /* ProgressView.swift */; };
+		869E84DE20CD9A54008AB1EC /* CoinWithChartHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869E84DD20CD9A54008AB1EC /* CoinWithChartHeader.swift */; };
+		869E84E020CE853A008AB1EC /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869E84DF20CE853A008AB1EC /* WalletViewController.swift */; };
 		86BD016A20B56D900065CC8B /* HoverFollowedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD016920B56D900065CC8B /* HoverFollowedCell.swift */; };
 		86BD016D20B830850065CC8B /* HoverEmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD016C20B830850065CC8B /* HoverEmptyCell.swift */; };
 		86BD016F20B849E50065CC8B /* CoinListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD016E20B849E50065CC8B /* CoinListCell.swift */; };
@@ -87,6 +92,9 @@
 		862319CA20B41A7D00C6E46E /* SearchCurrencyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCurrencyCell.swift; sourceTree = "<group>"; };
 		862319CC20B44FDD00C6E46E /* MenuContentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuContentCell.swift; sourceTree = "<group>"; };
 		862319CE20B4503800C6E46E /* MenuTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTitleCell.swift; sourceTree = "<group>"; };
+		86306E3620CD1B8400FFAFC3 /* CoinWithChartCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CoinWithChartCell.xib; sourceTree = "<group>"; };
+		86306E3820CD1C7E00FFAFC3 /* CoinWithChartCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinWithChartCell.swift; sourceTree = "<group>"; };
+		865017AB20CD2BDD00EF5403 /* BackgroundAngleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundAngleView.swift; sourceTree = "<group>"; };
 		865E1B0B20C83FBC000B3092 /* RoundSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundSegmentedControl.swift; sourceTree = "<group>"; };
 		86614CEC20C140A3001A0DEB /* CAGradientLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAGradientLayer.swift; sourceTree = "<group>"; };
 		86614CF020C29AD9001A0DEB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -95,6 +103,8 @@
 		866A030420C7FF1F00784938 /* CoinDetailChartDataView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CoinDetailChartDataView.xib; sourceTree = "<group>"; };
 		866A030620C7FFA000784938 /* CoinDetailChartDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetailChartDataView.swift; sourceTree = "<group>"; };
 		866A030920C80BF800784938 /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
+		869E84DD20CD9A54008AB1EC /* CoinWithChartHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinWithChartHeader.swift; sourceTree = "<group>"; };
+		869E84DF20CE853A008AB1EC /* WalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewController.swift; sourceTree = "<group>"; };
 		86BD016920B56D900065CC8B /* HoverFollowedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverFollowedCell.swift; sourceTree = "<group>"; };
 		86BD016C20B830850065CC8B /* HoverEmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverEmptyCell.swift; sourceTree = "<group>"; };
 		86BD016E20B849E50065CC8B /* CoinListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinListCell.swift; sourceTree = "<group>"; };
@@ -210,6 +220,7 @@
 				86614CF020C29AD9001A0DEB /* HomeViewController.swift */,
 				862319C420B28B8F00C6E46E /* SettingsController.swift */,
 				86614CF720C38AC4001A0DEB /* ListViewController.swift */,
+				869E84DF20CE853A008AB1EC /* WalletViewController.swift */,
 				86BD017020B8BB770065CC8B /* CoinDetailController.swift */,
 				862319C020B2889100C6E46E /* SearchController.swift */,
 			);
@@ -235,6 +246,7 @@
 				866A030820C80B9700784938 /* OS */,
 				865E1B0B20C83FBC000B3092 /* RoundSegmentedControl.swift */,
 				866A030920C80BF800784938 /* ProgressView.swift */,
+				865017AB20CD2BDD00EF5403 /* BackgroundAngleView.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -277,6 +289,9 @@
 				86BD016E20B849E50065CC8B /* CoinListCell.swift */,
 				86DD9E5020C3910600EEC20F /* GeneralCoinListCell.swift */,
 				86DD9E5220C397BF00EEC20F /* GeneralCoinListCell.xib */,
+				86306E3620CD1B8400FFAFC3 /* CoinWithChartCell.xib */,
+				86306E3820CD1C7E00FFAFC3 /* CoinWithChartCell.swift */,
+				869E84DD20CD9A54008AB1EC /* CoinWithChartHeader.swift */,
 			);
 			path = ListCells;
 			sourceTree = "<group>";
@@ -393,6 +408,7 @@
 			files = (
 				8623199D20AFD64100C6E46E /* LaunchScreen.storyboard in Resources */,
 				86DD9E5820C53E2F00EEC20F /* UnderWalletView.xib in Resources */,
+				86306E3720CD1B8400FFAFC3 /* CoinWithChartCell.xib in Resources */,
 				862319B920AFFAD000C6E46E /* Pacifico.ttf in Resources */,
 				86DD9E6020C6068E00EEC20F /* HomeHeaderView.xib in Resources */,
 				86DD9E5C20C6017700EEC20F /* WalletView.xib in Resources */,
@@ -463,6 +479,7 @@
 				8623199520AFD64000C6E46E /* DashboardController.swift in Sources */,
 				86BD017520B8E2A10065CC8B /* CoinInfosCell.swift in Sources */,
 				862319AC20AFDC3100C6E46E /* UIImage.swift in Sources */,
+				869E84E020CE853A008AB1EC /* WalletViewController.swift in Sources */,
 				86BD017F20B9A8180065CC8B /* Double.swift in Sources */,
 				862319BD20B070FA00C6E46E /* HoverWalletCell.swift in Sources */,
 				86BD018C20BDB5380065CC8B /* DashboardChart.swift in Sources */,
@@ -475,6 +492,7 @@
 				86614CED20C140A3001A0DEB /* CAGradientLayer.swift in Sources */,
 				86BD016D20B830850065CC8B /* HoverEmptyCell.swift in Sources */,
 				862319CF20B4503800C6E46E /* MenuTitleCell.swift in Sources */,
+				869E84DE20CD9A54008AB1EC /* CoinWithChartHeader.swift in Sources */,
 				862319C520B28B8F00C6E46E /* SettingsController.swift in Sources */,
 				86DD9E6820C6AE4300EEC20F /* CoinDetailChartCell.swift in Sources */,
 				86BD016A20B56D900065CC8B /* HoverFollowedCell.swift in Sources */,
@@ -498,6 +516,8 @@
 				862319CB20B41A7D00C6E46E /* SearchCurrencyCell.swift in Sources */,
 				8623199320AFD64000C6E46E /* AppDelegate.swift in Sources */,
 				862319C120B2889100C6E46E /* SearchController.swift in Sources */,
+				865017AC20CD2BDD00EF5403 /* BackgroundAngleView.swift in Sources */,
+				86306E3920CD1C7E00FFAFC3 /* CoinWithChartCell.swift in Sources */,
 				862319BF20B281E700C6E46E /* Constants.swift in Sources */,
 				86BD018E20BDB6400065CC8B /* DashboardHotList.swift in Sources */,
 			);

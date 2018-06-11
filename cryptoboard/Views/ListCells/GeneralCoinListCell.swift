@@ -11,24 +11,31 @@ import UIKit
 
 class GeneralCoinListCell: UITableViewCell {
     
-    @IBOutlet weak var bottomBorder: UIView!
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var marketCap: UILabel!
     @IBOutlet weak var volume: UILabel!
     @IBOutlet weak var updated: UILabel!
     @IBOutlet weak var marketCapData: UILabel!
     @IBOutlet weak var volumeData: UILabel!
     @IBOutlet weak var updatedData: UILabel!
+    @IBOutlet weak var marketBorder: UIView!
+    @IBOutlet weak var volumeBorder: UIView!
+    @IBOutlet weak var updateBorder: UIView!
     
     override func awakeFromNib() {
-        backgroundColor = UIColor.theme.bg.value
-        bottomBorder.backgroundColor = UIColor.theme.border.value
+        backgroundColor = UIColor.theme.darkBg.value
+        containerView.layer.cornerRadius = K.Design.CornerRadius
+        containerView.backgroundColor = UIColor.theme.darkBgHover.value
         
-        marketCap.textColor = UIColor.theme.textIntermediate.value
-        volume.textColor = UIColor.theme.textIntermediate.value
-        updated.textColor = UIColor.theme.textIntermediate.value
-        marketCapData.textColor = UIColor.theme.textDark.value
-        volumeData.textColor = UIColor.theme.textDark.value
-        updatedData.textColor = UIColor.theme.textDark.value
+        for (index, borderView) in [marketBorder, volumeBorder, updateBorder].enumerated() {
+            borderView?.layer.cornerRadius = 3
+            
+            // TODO Change gradient per index
+            borderView?.applyGradient(colours: [
+                UIColor.theme.custom(hexString: "#29fadf").value,
+                UIColor.theme.custom(hexString: "#4c83ff").value,
+                ])
+        }
     }
     
     

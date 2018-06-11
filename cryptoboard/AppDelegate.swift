@@ -36,17 +36,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Setting all main controllers
         let iconInset = UIEdgeInsets(top: 9, left: 0, bottom: -9, right: 0)
+        
         let homeController = HomeViewController()
         let homeIcon = UITabBarItem(title: nil, image: UIImage.init(named: "home"), tag: 0)
         homeIcon.imageInsets = iconInset
         homeController.tabBarItem = homeIcon
         
         let listController = ListViewController()
-        let listIcon = UITabBarItem(title: nil, image: UIImage.init(named: "list"), tag: 0)
+        let listIcon = UITabBarItem(title: nil, image: UIImage.init(named: "price-tag"), tag: 0)
         listIcon.imageInsets = iconInset
         listController.tabBarItem = listIcon
         
-        let settingsController = HomeViewController()
+//        let walletController = WalletViewController()
+//        let walletIcon = UITabBarItem(title: nil, image: UIImage.init(named: "wallet"), tag: 0)
+//        walletIcon.imageInsets = iconInset
+//        walletController.tabBarItem = walletIcon
+        
+        let settingsController = SettingsController()
         let settingsIcon = UITabBarItem(title: nil, image: UIImage.init(named: "user"), tag: 0)
         settingsIcon.imageInsets = iconInset
         settingsController.tabBarItem = settingsIcon

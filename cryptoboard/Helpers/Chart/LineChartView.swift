@@ -47,11 +47,9 @@ extension LineChartView {
         
         let chartData = LineChartData(dataSet: chartDataSet)
         self.minOffset = 0
-        self.xAxis.labelFont = UIFont.systemFont(ofSize: 14, weight: .semibold)
-        self.xAxis.labelTextColor = UIColor.theme.textIntermediate.value
+        self.xAxis.labelFont = UIFont.systemFont(ofSize: 12, weight: .semibold)
+        self.xAxis.labelTextColor = UIColor.theme.textOnDark.value
         self.xAxis.valueFormatter = HomeChartStringFormatter()
-        self.xAxis.labelFont = UIFont.systemFont(ofSize: 14, weight: .semibold)
-        self.xAxis.labelTextColor = UIColor.init(white: 1, alpha: 0.4)
         self.xAxis.drawGridLinesEnabled = false
         self.xAxis.drawAxisLineEnabled = false
         self.xAxis.granularity = 1
@@ -151,10 +149,14 @@ extension LineChartView {
             UIColor.theme.custom(hexString: "#28c76f").withAlpha(1).cgColor,
             UIColor.theme.custom(hexString: "#81fbb8").withAlpha(0).cgColor,
         ]
-        let gradient = variation == .up ? greenGradient : redGradient
+        let gradient = [
+            UIColor(white: 1, alpha: 1).cgColor,
+            UIColor(white: 1, alpha: 0).cgColor
+        ]
+//        let gradient = variation == .up ? greenGradient : redGradient
         
         chartDataSet.fill = self.getFillGradient(colors: gradient)
-//        chartDataSet.setColor(color)
+        chartDataSet.setColor(UIColor.white)
         
         let chartData = LineChartData(dataSet: chartDataSet)
         self.data = chartData
@@ -166,7 +168,7 @@ extension LineChartView {
         self.chartDescription?.enabled = false
         self.noDataText = ""
         self.legend.enabled = false
-        self.leftAxis.axisMinimum = -10
+        self.leftAxis.axisMinimum = -2
         self.minOffset = 0
     }
     

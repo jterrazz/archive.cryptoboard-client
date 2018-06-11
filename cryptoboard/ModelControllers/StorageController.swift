@@ -15,10 +15,29 @@ class StorageController {
     
     private let CURRENCY_PREFIX_KEY: String = "currency-storage-key-"
     private let CURRENCY_HISTORY_PREFIX_KEY: String = "currency-history-state-key-"
+    private let CURRENCY_LIST_KEY: String = "currency-list-key"
     
     private let userDefaults = UserDefaults.standard
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
+    
+    // CURRENCY LIST
+    public func retrieveCurrencyList() -> CurrencyList? {
+        if let data = userDefaults.data(forKey: CURRENCY_LIST_KEY) {
+            let listObj = try? decoder.decode(CurrencyList.self, from: data)
+            
+            return listObj
+        }
+        return nil
+    }
+    
+    public func storeCurrencyList(list: [Currency]) {
+        let listObj = CurrencyList.init(list: list)
+        
+        if let encoded = try? encoder.encode(listObj) {
+            userDefaults.set(encoded, forKey: CURRENCY_LIST_KEY)
+        }
+    }
     
     // CURRENCY PRICE HISTORY
     public func retrieveCurrencyHistory(symbol: String, aggregate: UInt, points: UInt) -> [CurrencyPrice]? {

@@ -15,6 +15,7 @@ enum APIRouter: URLRequestConvertible {
     case histoDay(currencyFrom: String, currencyTo: String, aggregate: UInt, points: UInt)
     case histoHour(currencyFrom: String, currencyTo: String, aggregate: UInt, points: UInt)
     case histoMinute(currencyFrom: String, currencyTo: String, aggregate: UInt, points: UInt)
+    case currencyList()
     
     private var method: HTTPMethod {
         switch self {
@@ -33,6 +34,8 @@ enum APIRouter: URLRequestConvertible {
             return "/data/histominute"
         case .currenciesState:
             return "/data/pricemultifull"
+        case .currencyList:
+            return "/data/all/coinlist"
         }
     }
     
@@ -42,6 +45,8 @@ enum APIRouter: URLRequestConvertible {
             return [K.APIParamsKeys.currenciesFrom: from.joined(separator: ","), K.APIParamsKeys.currenciesTo: to]
         case .histoDay(let from, let to, let aggregate, let points), .histoHour(let from, let to, let aggregate, let points), .histoMinute(let from, let to, let aggregate, let points):
             return [K.APIParamsKeys.currencyFrom: from, K.APIParamsKeys.currencyTo: to, K.APIParamsKeys.aggregate: aggregate, K.APIParamsKeys.limit: points]
+        default:
+            return nil
         }
     }
     
