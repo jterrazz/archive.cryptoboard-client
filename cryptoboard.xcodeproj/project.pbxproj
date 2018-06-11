@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		8623199320AFD64000C6E46E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8623199220AFD64000C6E46E /* AppDelegate.swift */; };
-		8623199520AFD64000C6E46E /* DashboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8623199420AFD64000C6E46E /* DashboardController.swift */; };
 		8623199A20AFD64100C6E46E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8623199920AFD64100C6E46E /* Assets.xcassets */; };
 		8623199D20AFD64100C6E46E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8623199B20AFD64100C6E46E /* LaunchScreen.storyboard */; };
 		862319AA20AFD9A100C6E46E /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862319A920AFD9A100C6E46E /* UIColor.swift */; };
@@ -16,7 +15,6 @@
 		862319AE20AFDD2C00C6E46E /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862319AD20AFDD2C00C6E46E /* UIView.swift */; };
 		862319B920AFFAD000C6E46E /* Pacifico.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 862319B820AFFAD000C6E46E /* Pacifico.ttf */; };
 		862319BB20B0030C00C6E46E /* CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862319BA20B0030C00C6E46E /* CALayer.swift */; };
-		862319BD20B070FA00C6E46E /* HoverWalletCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862319BC20B070FA00C6E46E /* HoverWalletCell.swift */; };
 		862319BF20B281E700C6E46E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862319BE20B281E700C6E46E /* Constants.swift */; };
 		862319C120B2889100C6E46E /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862319C020B2889100C6E46E /* SearchController.swift */; };
 		862319C320B28A5200C6E46E /* MenuHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 862319C220B28A5200C6E46E /* MenuHeaderCell.swift */; };
@@ -39,12 +37,11 @@
 		866A030A20C80BF800784938 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 866A030920C80BF800784938 /* ProgressView.swift */; };
 		869E84DE20CD9A54008AB1EC /* CoinWithChartHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869E84DD20CD9A54008AB1EC /* CoinWithChartHeader.swift */; };
 		869E84E020CE853A008AB1EC /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869E84DF20CE853A008AB1EC /* WalletViewController.swift */; };
-		86BD016A20B56D900065CC8B /* HoverFollowedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD016920B56D900065CC8B /* HoverFollowedCell.swift */; };
-		86BD016D20B830850065CC8B /* HoverEmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD016C20B830850065CC8B /* HoverEmptyCell.swift */; };
+		869E84E220CE8806008AB1EC /* CurrencyLive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869E84E120CE8806008AB1EC /* CurrencyLive.swift */; };
+		869E84E420CE8838008AB1EC /* CurrencyPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869E84E320CE8838008AB1EC /* CurrencyPrice.swift */; };
+		869E84E620CE8852008AB1EC /* CurrencyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869E84E520CE8852008AB1EC /* CurrencyList.swift */; };
 		86BD016F20B849E50065CC8B /* CoinListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD016E20B849E50065CC8B /* CoinListCell.swift */; };
 		86BD017120B8BB770065CC8B /* CoinDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD017020B8BB770065CC8B /* CoinDetailController.swift */; };
-		86BD017320B8E1FE0065CC8B /* CoinGraphCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD017220B8E1FE0065CC8B /* CoinGraphCell.swift */; };
-		86BD017520B8E2A10065CC8B /* CoinInfosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD017420B8E2A10065CC8B /* CoinInfosCell.swift */; };
 		86BD017920B91B330065CC8B /* APIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD017820B91B330065CC8B /* APIRouter.swift */; };
 		86BD017B20B91B4D0065CC8B /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD017A20B91B4D0065CC8B /* APIClient.swift */; };
 		86BD017D20B91C020065CC8B /* CurrencyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD017C20B91C020065CC8B /* CurrencyController.swift */; };
@@ -53,8 +50,6 @@
 		86BD018320BC5DD70065CC8B /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD018220BC5DD70065CC8B /* UserSettings.swift */; };
 		86BD018520BC663A0065CC8B /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD018420BC663A0065CC8B /* Array.swift */; };
 		86BD018920BC6D630065CC8B /* UserSettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD018820BC6D630065CC8B /* UserSettingsController.swift */; };
-		86BD018C20BDB5380065CC8B /* DashboardChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD018B20BDB5380065CC8B /* DashboardChart.swift */; };
-		86BD018E20BDB6400065CC8B /* DashboardHotList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD018D20BDB6400065CC8B /* DashboardHotList.swift */; };
 		86DD9E5120C3910600EEC20F /* GeneralCoinListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DD9E5020C3910600EEC20F /* GeneralCoinListCell.swift */; };
 		86DD9E5320C397BF00EEC20F /* GeneralCoinListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 86DD9E5220C397BF00EEC20F /* GeneralCoinListCell.xib */; };
 		86DD9E5520C3A49400EEC20F /* LineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86DD9E5420C3A49400EEC20F /* LineChartView.swift */; };
@@ -73,7 +68,6 @@
 		5AECE56E8026DE6661182C9E /* Pods_cryptoboard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_cryptoboard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8623198F20AFD64000C6E46E /* cryptoboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cryptoboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8623199220AFD64000C6E46E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8623199420AFD64000C6E46E /* DashboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardController.swift; sourceTree = "<group>"; };
 		8623199920AFD64100C6E46E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8623199C20AFD64100C6E46E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8623199E20AFD64100C6E46E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -82,7 +76,6 @@
 		862319AD20AFDD2C00C6E46E /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		862319B820AFFAD000C6E46E /* Pacifico.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Pacifico.ttf; sourceTree = "<group>"; };
 		862319BA20B0030C00C6E46E /* CALayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayer.swift; sourceTree = "<group>"; };
-		862319BC20B070FA00C6E46E /* HoverWalletCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverWalletCell.swift; sourceTree = "<group>"; };
 		862319BE20B281E700C6E46E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		862319C020B2889100C6E46E /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		862319C220B28A5200C6E46E /* MenuHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuHeaderCell.swift; sourceTree = "<group>"; };
@@ -105,12 +98,11 @@
 		866A030920C80BF800784938 /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		869E84DD20CD9A54008AB1EC /* CoinWithChartHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinWithChartHeader.swift; sourceTree = "<group>"; };
 		869E84DF20CE853A008AB1EC /* WalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewController.swift; sourceTree = "<group>"; };
-		86BD016920B56D900065CC8B /* HoverFollowedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverFollowedCell.swift; sourceTree = "<group>"; };
-		86BD016C20B830850065CC8B /* HoverEmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverEmptyCell.swift; sourceTree = "<group>"; };
+		869E84E120CE8806008AB1EC /* CurrencyLive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyLive.swift; sourceTree = "<group>"; };
+		869E84E320CE8838008AB1EC /* CurrencyPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPrice.swift; sourceTree = "<group>"; };
+		869E84E520CE8852008AB1EC /* CurrencyList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyList.swift; sourceTree = "<group>"; };
 		86BD016E20B849E50065CC8B /* CoinListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinListCell.swift; sourceTree = "<group>"; };
 		86BD017020B8BB770065CC8B /* CoinDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetailController.swift; sourceTree = "<group>"; };
-		86BD017220B8E1FE0065CC8B /* CoinGraphCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinGraphCell.swift; sourceTree = "<group>"; };
-		86BD017420B8E2A10065CC8B /* CoinInfosCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinInfosCell.swift; sourceTree = "<group>"; };
 		86BD017820B91B330065CC8B /* APIRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRouter.swift; sourceTree = "<group>"; };
 		86BD017A20B91B4D0065CC8B /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		86BD017C20B91C020065CC8B /* CurrencyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyController.swift; sourceTree = "<group>"; };
@@ -119,8 +111,6 @@
 		86BD018220BC5DD70065CC8B /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		86BD018420BC663A0065CC8B /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		86BD018820BC6D630065CC8B /* UserSettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettingsController.swift; sourceTree = "<group>"; };
-		86BD018B20BDB5380065CC8B /* DashboardChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardChart.swift; sourceTree = "<group>"; };
-		86BD018D20BDB6400065CC8B /* DashboardHotList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardHotList.swift; sourceTree = "<group>"; };
 		86DD9E5020C3910600EEC20F /* GeneralCoinListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralCoinListCell.swift; sourceTree = "<group>"; };
 		86DD9E5220C397BF00EEC20F /* GeneralCoinListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GeneralCoinListCell.xib; sourceTree = "<group>"; };
 		86DD9E5420C3A49400EEC20F /* LineChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartView.swift; sourceTree = "<group>"; };
@@ -188,6 +178,9 @@
 			isa = PBXGroup;
 			children = (
 				862319C820B4171E00C6E46E /* Currency.swift */,
+				869E84E120CE8806008AB1EC /* CurrencyLive.swift */,
+				869E84E320CE8838008AB1EC /* CurrencyPrice.swift */,
+				869E84E520CE8852008AB1EC /* CurrencyList.swift */,
 				86BD018220BC5DD70065CC8B /* UserSettings.swift */,
 			);
 			path = Models;
@@ -198,13 +191,7 @@
 			children = (
 				86DD9E6620C6AE1F00EEC20F /* CoinDetail */,
 				86DD9E5620C53E1D00EEC20F /* Home */,
-				86BD018A20BDB50E0065CC8B /* Dashboard */,
 				86DD9E4F20C3909E00EEC20F /* ListCells */,
-				86BD016C20B830850065CC8B /* HoverEmptyCell.swift */,
-				86BD016920B56D900065CC8B /* HoverFollowedCell.swift */,
-				862319BC20B070FA00C6E46E /* HoverWalletCell.swift */,
-				86BD017220B8E1FE0065CC8B /* CoinGraphCell.swift */,
-				86BD017420B8E2A10065CC8B /* CoinInfosCell.swift */,
 				862319CC20B44FDD00C6E46E /* MenuContentCell.swift */,
 				862319C220B28A5200C6E46E /* MenuHeaderCell.swift */,
 				862319CE20B4503800C6E46E /* MenuTitleCell.swift */,
@@ -216,7 +203,6 @@
 		862319A620AFD85100C6E46E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				8623199420AFD64000C6E46E /* DashboardController.swift */,
 				86614CF020C29AD9001A0DEB /* HomeViewController.swift */,
 				862319C420B28B8F00C6E46E /* SettingsController.swift */,
 				86614CF720C38AC4001A0DEB /* ListViewController.swift */,
@@ -272,15 +258,6 @@
 				862319C620B28DB500C6E46E /* NSLayoutConstraint.swift */,
 			);
 			path = OS;
-			sourceTree = "<group>";
-		};
-		86BD018A20BDB50E0065CC8B /* Dashboard */ = {
-			isa = PBXGroup;
-			children = (
-				86BD018B20BDB5380065CC8B /* DashboardChart.swift */,
-				86BD018D20BDB6400065CC8B /* DashboardHotList.swift */,
-			);
-			path = Dashboard;
 			sourceTree = "<group>";
 		};
 		86DD9E4F20C3909E00EEC20F /* ListCells */ = {
@@ -476,13 +453,9 @@
 				862319C320B28A5200C6E46E /* MenuHeaderCell.swift in Sources */,
 				86BD017920B91B330065CC8B /* APIRouter.swift in Sources */,
 				86614CF120C29AD9001A0DEB /* HomeViewController.swift in Sources */,
-				8623199520AFD64000C6E46E /* DashboardController.swift in Sources */,
-				86BD017520B8E2A10065CC8B /* CoinInfosCell.swift in Sources */,
 				862319AC20AFDC3100C6E46E /* UIImage.swift in Sources */,
 				869E84E020CE853A008AB1EC /* WalletViewController.swift in Sources */,
 				86BD017F20B9A8180065CC8B /* Double.swift in Sources */,
-				862319BD20B070FA00C6E46E /* HoverWalletCell.swift in Sources */,
-				86BD018C20BDB5380065CC8B /* DashboardChart.swift in Sources */,
 				86BD017120B8BB770065CC8B /* CoinDetailController.swift in Sources */,
 				86614CF820C38AC4001A0DEB /* ListViewController.swift in Sources */,
 				862319AE20AFDD2C00C6E46E /* UIView.swift in Sources */,
@@ -490,16 +463,17 @@
 				86BD017B20B91B4D0065CC8B /* APIClient.swift in Sources */,
 				866A030A20C80BF800784938 /* ProgressView.swift in Sources */,
 				86614CED20C140A3001A0DEB /* CAGradientLayer.swift in Sources */,
-				86BD016D20B830850065CC8B /* HoverEmptyCell.swift in Sources */,
+				869E84E420CE8838008AB1EC /* CurrencyPrice.swift in Sources */,
 				862319CF20B4503800C6E46E /* MenuTitleCell.swift in Sources */,
 				869E84DE20CD9A54008AB1EC /* CoinWithChartHeader.swift in Sources */,
 				862319C520B28B8F00C6E46E /* SettingsController.swift in Sources */,
 				86DD9E6820C6AE4300EEC20F /* CoinDetailChartCell.swift in Sources */,
-				86BD016A20B56D900065CC8B /* HoverFollowedCell.swift in Sources */,
+				869E84E620CE8852008AB1EC /* CurrencyList.swift in Sources */,
 				86BD017D20B91C020065CC8B /* CurrencyController.swift in Sources */,
 				862319BB20B0030C00C6E46E /* CALayer.swift in Sources */,
 				862319C720B28DB500C6E46E /* NSLayoutConstraint.swift in Sources */,
 				862319C920B4171E00C6E46E /* Currency.swift in Sources */,
+				869E84E220CE8806008AB1EC /* CurrencyLive.swift in Sources */,
 				86DD9E5A20C540F400EEC20F /* UnderWalletView.swift in Sources */,
 				86BD018120B9C27B0065CC8B /* StorageController.swift in Sources */,
 				862319AA20AFD9A100C6E46E /* UIColor.swift in Sources */,
@@ -508,7 +482,6 @@
 				86DD9E6220C606A000EEC20F /* HomeHeaderView.swift in Sources */,
 				862319CD20B44FDD00C6E46E /* MenuContentCell.swift in Sources */,
 				865E1B0C20C83FBC000B3092 /* RoundSegmentedControl.swift in Sources */,
-				86BD017320B8E1FE0065CC8B /* CoinGraphCell.swift in Sources */,
 				86DD9E5E20C6018000EEC20F /* WalletView.swift in Sources */,
 				86BD018520BC663A0065CC8B /* Array.swift in Sources */,
 				86BD018920BC6D630065CC8B /* UserSettingsController.swift in Sources */,
@@ -519,7 +492,6 @@
 				865017AC20CD2BDD00EF5403 /* BackgroundAngleView.swift in Sources */,
 				86306E3920CD1C7E00FFAFC3 /* CoinWithChartCell.swift in Sources */,
 				862319BF20B281E700C6E46E /* Constants.swift in Sources */,
-				86BD018E20BDB6400065CC8B /* DashboardHotList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
