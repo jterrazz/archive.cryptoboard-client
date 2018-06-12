@@ -40,5 +40,23 @@ class Currency: Codable, CustomStringConvertible {
         self.createdAt = Date()
     }
     
+    static func filterList(_ searched: String?, coinList: [Currency]) -> [Currency]? {
+        var results = [Currency]()
+        
+        if let searched = searched?.lowercased() {
+            results = coinList.filter({ (currency) -> Bool in
+                let nameMatch = currency.name.lowercased().range(of: searched)
+                let symbolMatch = currency.diminutive.lowercased().range(of: searched)
+                
+                let match = (nameMatch != nil || symbolMatch != nil) ? true : false
+                
+                return match
+            })
+            return results.count > 0 ? results : nil
+        }
+        
+        return nil
+    }
+    
     
 }

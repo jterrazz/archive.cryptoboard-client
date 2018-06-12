@@ -36,7 +36,7 @@ class WelcomeWalletViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            nextButton.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: -32),
+            nextButton.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: -48),
             nextButton.widthAnchor.constraint(equalToConstant: 200),
             waveBackground.centerYAnchor.constraint(equalTo: view.centerYAnchor)
             ])

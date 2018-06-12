@@ -17,9 +17,7 @@ class WelcomeViewController: UIPageViewController, UIPageViewControllerDataSourc
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.setGradient(colors: UIColor.gradients.bluepurple.cgColors, angle: 45)
-        
-//        navigationController?.navigationBar.barStyle = .black
+        view.setGradient(colors: UIColor.gradients.purple.cgColors, angle: -45)
 
         let page1 = WelcomeFirstViewController()
         let page2 = WelcomeFollowViewController()
@@ -38,7 +36,7 @@ class WelcomeViewController: UIPageViewController, UIPageViewControllerDataSourc
         
         NSLayoutConstraint.activate([
             pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            pageControl.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: 8)
+            pageControl.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: 0)
         ])
     }
     
@@ -83,6 +81,10 @@ class WelcomeViewController: UIPageViewController, UIPageViewControllerDataSourc
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
     }
     
 

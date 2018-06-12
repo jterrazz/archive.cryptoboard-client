@@ -18,7 +18,7 @@ class RoundedButton: UIButton {
 
     public func styleForHoverGradient() {
         self.backgroundColor = UIColor.init(white: 1, alpha: 0.36)
-        self.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .medium)
+        self.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         self.contentEdgeInsets = UIEdgeInsets.init(top: 12, left: 12, bottom: 12, right: 12)
     }
 

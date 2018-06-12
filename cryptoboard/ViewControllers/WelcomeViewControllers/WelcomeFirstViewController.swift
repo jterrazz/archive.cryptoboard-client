@@ -28,10 +28,10 @@ class WelcomeFirstViewController: UIViewController {
         view.backgroundColor = UIColor.clear
         
         titleLabel.text = "Coinboard"
-        titleLabel.textColor = UIColor.theme.blueClear.value
-        titleLabel.font = UIFont.systemFont(ofSize: 26, weight: .regular)
+        titleLabel.textColor = UIColor.theme.textDark.value
+        titleLabel.font = UIFont.systemFont(ofSize: 24, weight: .regular)
         
-        descriptionLabel.text = "To enjoy best our app, please configure your preferences on the next screens"
+        descriptionLabel.text = "Our app is best enjoyed if you take the time to personalize the experience."
         descriptionLabel.textColor = UIColor.theme.textIntermediate.value
         descriptionLabel.font = UIFont.systemFont(ofSize: 14)
         descriptionLabel.numberOfLines = 0
@@ -68,7 +68,7 @@ class WelcomeFirstViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            nextButton.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: -32),
+            nextButton.bottomAnchor.constraint(equalTo: view.safeBottomAnchor, constant: -48),
             nextButton.widthAnchor.constraint(equalToConstant: 200),
             waveBackground.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
