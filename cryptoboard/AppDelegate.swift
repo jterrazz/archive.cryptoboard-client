@@ -47,21 +47,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         listIcon.imageInsets = iconInset
         listController.tabBarItem = listIcon
         
-//        let walletController = WalletViewController()
-//        let walletIcon = UITabBarItem(title: nil, image: UIImage.init(named: "wallet"), tag: 0)
-//        walletIcon.imageInsets = iconInset
-//        walletController.tabBarItem = walletIcon
+        let walletController = UserWalletViewController()
+        let walletIcon = UITabBarItem(title: nil, image: UIImage.init(named: "wallet"), tag: 0)
+        walletIcon.imageInsets = iconInset
+        walletController.tabBarItem = walletIcon
         
         let settingsController = SettingsController()
         let settingsIcon = UITabBarItem(title: nil, image: UIImage.init(named: "user"), tag: 0)
         settingsIcon.imageInsets = iconInset
         settingsController.tabBarItem = settingsIcon
         
-        tabBarController.viewControllers = [homeController, listController, settingsController]
+        tabBarController.viewControllers = [homeController, listController, walletController, settingsController]
+        
+        let firstTimeController = WelcomeViewController()
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
+        
+        if (true) { // TODO add logic
+            navigationController.present(firstTimeController, animated: false, completion: nil)
+        }
         
         return true
     }

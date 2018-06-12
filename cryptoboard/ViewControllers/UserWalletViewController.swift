@@ -9,15 +9,10 @@
 import Foundation
 import UIKit
 
-class WalletViewController: UIViewController {
+class UserWalletViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setViews()
-    }
-    
-    private func setViews() {
-        view.backgroundColor = UIColor.theme.bg.value
     }
     
     

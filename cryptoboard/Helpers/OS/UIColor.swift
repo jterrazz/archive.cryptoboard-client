@@ -40,7 +40,7 @@ extension UIColor {
             case .textDark:
                 return UIColor(hex: "#4A5D69")
             case .textIntermediate:
-                return UIColor(hex: "#768D9C")
+                return UIColor(hex: "#AAAAAA")
             case .green:
                 return UIColor(hex: "#57af7d")
             case .red:
@@ -50,7 +50,7 @@ extension UIColor {
             case .redDark:
                 return UIColor(hex: "#FC5462")
             case .blueClear:
-                return UIColor(hex: "#00A6FB")
+                return UIColor(hex: "#21d3fd")
             case .shadow:
                 return UIColor(hex: "#464646")
             case .topBarEl:
