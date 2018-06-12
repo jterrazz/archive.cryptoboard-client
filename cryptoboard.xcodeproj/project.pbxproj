@@ -40,7 +40,10 @@
 		869E84E220CE8806008AB1EC /* CurrencyLive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869E84E120CE8806008AB1EC /* CurrencyLive.swift */; };
 		869E84E420CE8838008AB1EC /* CurrencyPrice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869E84E320CE8838008AB1EC /* CurrencyPrice.swift */; };
 		869E84E620CE8852008AB1EC /* CurrencyList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869E84E520CE8852008AB1EC /* CurrencyList.swift */; };
-		86BD016F20B849E50065CC8B /* CoinListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD016E20B849E50065CC8B /* CoinListCell.swift */; };
+		869E84E820CEAF83008AB1EC /* CoinDetailTitleHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869E84E720CEAF83008AB1EC /* CoinDetailTitleHeader.swift */; };
+		869E84EA20CEB9B4008AB1EC /* CoinDetailInformationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869E84E920CEB9B4008AB1EC /* CoinDetailInformationsCell.swift */; };
+		869E84EC20CEC005008AB1EC /* RoundedContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869E84EB20CEC005008AB1EC /* RoundedContainerView.swift */; };
+		869E84EE20CED5E0008AB1EC /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869E84ED20CED5E0008AB1EC /* UITextField.swift */; };
 		86BD017120B8BB770065CC8B /* CoinDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD017020B8BB770065CC8B /* CoinDetailController.swift */; };
 		86BD017920B91B330065CC8B /* APIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD017820B91B330065CC8B /* APIRouter.swift */; };
 		86BD017B20B91B4D0065CC8B /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86BD017A20B91B4D0065CC8B /* APIClient.swift */; };
@@ -101,7 +104,10 @@
 		869E84E120CE8806008AB1EC /* CurrencyLive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyLive.swift; sourceTree = "<group>"; };
 		869E84E320CE8838008AB1EC /* CurrencyPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPrice.swift; sourceTree = "<group>"; };
 		869E84E520CE8852008AB1EC /* CurrencyList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyList.swift; sourceTree = "<group>"; };
-		86BD016E20B849E50065CC8B /* CoinListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinListCell.swift; sourceTree = "<group>"; };
+		869E84E720CEAF83008AB1EC /* CoinDetailTitleHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetailTitleHeader.swift; sourceTree = "<group>"; };
+		869E84E920CEB9B4008AB1EC /* CoinDetailInformationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetailInformationsCell.swift; sourceTree = "<group>"; };
+		869E84EB20CEC005008AB1EC /* RoundedContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedContainerView.swift; sourceTree = "<group>"; };
+		869E84ED20CED5E0008AB1EC /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		86BD017020B8BB770065CC8B /* CoinDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetailController.swift; sourceTree = "<group>"; };
 		86BD017820B91B330065CC8B /* APIRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRouter.swift; sourceTree = "<group>"; };
 		86BD017A20B91B4D0065CC8B /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
@@ -203,12 +209,12 @@
 		862319A620AFD85100C6E46E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				86614CF020C29AD9001A0DEB /* HomeViewController.swift */,
-				862319C420B28B8F00C6E46E /* SettingsController.swift */,
-				86614CF720C38AC4001A0DEB /* ListViewController.swift */,
-				869E84DF20CE853A008AB1EC /* WalletViewController.swift */,
 				86BD017020B8BB770065CC8B /* CoinDetailController.swift */,
+				86614CF020C29AD9001A0DEB /* HomeViewController.swift */,
+				86614CF720C38AC4001A0DEB /* ListViewController.swift */,
 				862319C020B2889100C6E46E /* SearchController.swift */,
+				862319C420B28B8F00C6E46E /* SettingsController.swift */,
+				869E84DF20CE853A008AB1EC /* WalletViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -231,6 +237,7 @@
 				86DD9E6320C6A01000EEC20F /* Chart */,
 				866A030820C80B9700784938 /* OS */,
 				865E1B0B20C83FBC000B3092 /* RoundSegmentedControl.swift */,
+				869E84EB20CEC005008AB1EC /* RoundedContainerView.swift */,
 				866A030920C80BF800784938 /* ProgressView.swift */,
 				865017AB20CD2BDD00EF5403 /* BackgroundAngleView.swift */,
 			);
@@ -253,6 +260,7 @@
 				86614CEC20C140A3001A0DEB /* CAGradientLayer.swift */,
 				86BD017E20B9A8180065CC8B /* Double.swift */,
 				862319A920AFD9A100C6E46E /* UIColor.swift */,
+				869E84ED20CED5E0008AB1EC /* UITextField.swift */,
 				862319AB20AFDC3100C6E46E /* UIImage.swift */,
 				862319AD20AFDD2C00C6E46E /* UIView.swift */,
 				862319C620B28DB500C6E46E /* NSLayoutConstraint.swift */,
@@ -263,12 +271,11 @@
 		86DD9E4F20C3909E00EEC20F /* ListCells */ = {
 			isa = PBXGroup;
 			children = (
-				86BD016E20B849E50065CC8B /* CoinListCell.swift */,
+				86306E3820CD1C7E00FFAFC3 /* CoinWithChartCell.swift */,
+				86306E3620CD1B8400FFAFC3 /* CoinWithChartCell.xib */,
+				869E84DD20CD9A54008AB1EC /* CoinWithChartHeader.swift */,
 				86DD9E5020C3910600EEC20F /* GeneralCoinListCell.swift */,
 				86DD9E5220C397BF00EEC20F /* GeneralCoinListCell.xib */,
-				86306E3620CD1B8400FFAFC3 /* CoinWithChartCell.xib */,
-				86306E3820CD1C7E00FFAFC3 /* CoinWithChartCell.swift */,
-				869E84DD20CD9A54008AB1EC /* CoinWithChartHeader.swift */,
 			);
 			path = ListCells;
 			sourceTree = "<group>";
@@ -300,8 +307,10 @@
 			isa = PBXGroup;
 			children = (
 				86DD9E6720C6AE4300EEC20F /* CoinDetailChartCell.swift */,
-				866A030420C7FF1F00784938 /* CoinDetailChartDataView.xib */,
 				866A030620C7FFA000784938 /* CoinDetailChartDataView.swift */,
+				866A030420C7FF1F00784938 /* CoinDetailChartDataView.xib */,
+				869E84E920CEB9B4008AB1EC /* CoinDetailInformationsCell.swift */,
+				869E84E720CEAF83008AB1EC /* CoinDetailTitleHeader.swift */,
 			);
 			path = CoinDetail;
 			sourceTree = "<group>";
@@ -449,6 +458,7 @@
 			files = (
 				86DD9E6520C6A02300EEC20F /* PieChartView.swift in Sources */,
 				86DD9E5520C3A49400EEC20F /* LineChartView.swift in Sources */,
+				869E84EA20CEB9B4008AB1EC /* CoinDetailInformationsCell.swift in Sources */,
 				86BD018320BC5DD70065CC8B /* UserSettings.swift in Sources */,
 				862319C320B28A5200C6E46E /* MenuHeaderCell.swift in Sources */,
 				86BD017920B91B330065CC8B /* APIRouter.swift in Sources */,
@@ -456,6 +466,7 @@
 				862319AC20AFDC3100C6E46E /* UIImage.swift in Sources */,
 				869E84E020CE853A008AB1EC /* WalletViewController.swift in Sources */,
 				86BD017F20B9A8180065CC8B /* Double.swift in Sources */,
+				869E84E820CEAF83008AB1EC /* CoinDetailTitleHeader.swift in Sources */,
 				86BD017120B8BB770065CC8B /* CoinDetailController.swift in Sources */,
 				86614CF820C38AC4001A0DEB /* ListViewController.swift in Sources */,
 				862319AE20AFDD2C00C6E46E /* UIView.swift in Sources */,
@@ -465,6 +476,7 @@
 				86614CED20C140A3001A0DEB /* CAGradientLayer.swift in Sources */,
 				869E84E420CE8838008AB1EC /* CurrencyPrice.swift in Sources */,
 				862319CF20B4503800C6E46E /* MenuTitleCell.swift in Sources */,
+				869E84EC20CEC005008AB1EC /* RoundedContainerView.swift in Sources */,
 				869E84DE20CD9A54008AB1EC /* CoinWithChartHeader.swift in Sources */,
 				862319C520B28B8F00C6E46E /* SettingsController.swift in Sources */,
 				86DD9E6820C6AE4300EEC20F /* CoinDetailChartCell.swift in Sources */,
@@ -477,7 +489,6 @@
 				86DD9E5A20C540F400EEC20F /* UnderWalletView.swift in Sources */,
 				86BD018120B9C27B0065CC8B /* StorageController.swift in Sources */,
 				862319AA20AFD9A100C6E46E /* UIColor.swift in Sources */,
-				86BD016F20B849E50065CC8B /* CoinListCell.swift in Sources */,
 				86614CF620C35EE5001A0DEB /* CardCoinCell.swift in Sources */,
 				86DD9E6220C606A000EEC20F /* HomeHeaderView.swift in Sources */,
 				862319CD20B44FDD00C6E46E /* MenuContentCell.swift in Sources */,
@@ -486,6 +497,7 @@
 				86BD018520BC663A0065CC8B /* Array.swift in Sources */,
 				86BD018920BC6D630065CC8B /* UserSettingsController.swift in Sources */,
 				86DD9E5120C3910600EEC20F /* GeneralCoinListCell.swift in Sources */,
+				869E84EE20CED5E0008AB1EC /* UITextField.swift in Sources */,
 				862319CB20B41A7D00C6E46E /* SearchCurrencyCell.swift in Sources */,
 				8623199320AFD64000C6E46E /* AppDelegate.swift in Sources */,
 				862319C120B2889100C6E46E /* SearchController.swift in Sources */,

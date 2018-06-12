@@ -27,8 +27,14 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bitcoin" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e6m-Af-90D">
-                    <rect key="frame" x="58" y="28" width="71.5" height="29"/>
+                    <rect key="frame" x="50" y="28" width="71.5" height="29"/>
                     <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" alpha="0.34999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BTC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sVr-7Y-0Kr">
+                    <rect key="frame" x="50" y="57" width="27.5" height="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -113,27 +119,27 @@
                     </constraints>
                 </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Eay-6q-cUI">
-                    <rect key="frame" x="8" y="28" width="42" height="42"/>
+                    <rect key="frame" x="0.0" y="28" width="42" height="42"/>
                     <color key="backgroundColor" red="0.123170486" green="0.9330278635" blue="0.70141152080000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="Eay-6q-cUI" secondAttribute="height" multiplier="1:1" id="7SL-nI-drH"/>
                         <constraint firstAttribute="width" constant="42" id="f4F-QB-ciK"/>
                     </constraints>
                 </imageView>
-                <label opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" alpha="0.34999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BTC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sVr-7Y-0Kr">
-                    <rect key="frame" x="58" y="57" width="27.5" height="17"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hyK-t7-lQY">
+                    <rect key="frame" x="314" y="34" width="61" height="30"/>
+                    <state key="normal" title="Followed"/>
+                </button>
             </subviews>
             <color key="backgroundColor" red="0.046419700760000002" green="0.14040601229999999" blue="0.2096016839" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
             <constraints>
                 <constraint firstItem="e6m-Af-90D" firstAttribute="leading" secondItem="Eay-6q-cUI" secondAttribute="trailing" constant="8" id="103-6K-bbq"/>
                 <constraint firstItem="J0z-rm-HsO" firstAttribute="top" secondItem="Eay-6q-cUI" secondAttribute="bottom" constant="36" id="36H-ls-pR5"/>
                 <constraint firstItem="sVr-7Y-0Kr" firstAttribute="leading" secondItem="Eay-6q-cUI" secondAttribute="trailing" constant="8" id="8lL-8n-hSP"/>
-                <constraint firstItem="Eay-6q-cUI" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="8" id="JzR-fq-PcL"/>
+                <constraint firstItem="Eay-6q-cUI" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="JzR-fq-PcL"/>
+                <constraint firstItem="hyK-t7-lQY" firstAttribute="centerY" secondItem="Eay-6q-cUI" secondAttribute="centerY" id="ZEQ-3H-GcL"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="J0z-rm-HsO" secondAttribute="trailing" id="b7o-lP-cAa"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="hyK-t7-lQY" secondAttribute="trailing" id="bHW-TC-AR2"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="J0z-rm-HsO" secondAttribute="bottom" id="eUM-3P-T4X"/>
                 <constraint firstItem="sVr-7Y-0Kr" firstAttribute="top" secondItem="e6m-Af-90D" secondAttribute="bottom" id="guX-yC-hJd"/>
                 <constraint firstItem="e6m-Af-90D" firstAttribute="top" secondItem="Eay-6q-cUI" secondAttribute="top" id="hie-Tt-VBF"/>

@@ -29,26 +29,8 @@ extension UIView {
         gradient.frame = gradientLayerView.bounds
         gradient.colors = colors
         
-        let alpha: Float = angle / 360
-        let startPointX = powf(
-            sinf(2 * Float.pi * ((alpha + 0.75) / 2)),
-            2
-        )
-        let startPointY = powf(
-            sinf(2 * Float.pi * ((alpha + 0) / 2)),
-            2
-        )
-        let endPointX = powf(
-            sinf(2 * Float.pi * ((alpha + 0.25) / 2)),
-            2
-        )
-        let endPointY = powf(
-            sinf(2 * Float.pi * ((alpha + 0.5) / 2)),
-            2
-        )
-        
-        gradient.endPoint = CGPoint(x: CGFloat(endPointX),y: CGFloat(endPointY))
-        gradient.startPoint = CGPoint(x: CGFloat(startPointX), y: CGFloat(startPointY))
+        gradient.endPoint = CAGradientLayer.getStartEndingPoint(start: false, angle: angle)
+        gradient.startPoint = CAGradientLayer.getStartEndingPoint(start: true, angle: angle)
         
         gradientLayerView.layer.insertSublayer(gradient, at: 0)
         layer.insertSublayer(gradientLayerView.layer, at: 0)

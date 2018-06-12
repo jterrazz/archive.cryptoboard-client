@@ -34,5 +34,29 @@ extension CAGradientLayer {
         return image
     }
     
+    static func getStartEndingPoint(start: Bool, angle: Float) -> CGPoint {
+        let alpha: Float = angle / 360
+        let startPointX = powf(
+            sinf(2 * Float.pi * ((alpha + 0.75) / 2)),
+            2
+        )
+        let startPointY = powf(
+            sinf(2 * Float.pi * ((alpha + 0) / 2)),
+            2
+        )
+        let endPointX = powf(
+            sinf(2 * Float.pi * ((alpha + 0.25) / 2)),
+            2
+        )
+        let endPointY = powf(
+            sinf(2 * Float.pi * ((alpha + 0.5) / 2)),
+            2
+        )
+        
+        if (start) {
+            return CGPoint(x: CGFloat(startPointX), y: CGFloat(startPointY))
+        }
+        return CGPoint(x: CGFloat(endPointX),y: CGFloat(endPointY))
+    }
     
 }

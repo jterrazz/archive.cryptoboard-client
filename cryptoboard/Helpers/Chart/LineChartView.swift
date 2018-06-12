@@ -142,15 +142,15 @@ extension LineChartView {
         chartDataSet.drawCirclesEnabled = false
         
         let greenGradient = [
-            UIColor.theme.custom(hexString: "#28c76f").withAlpha(1).cgColor,
+            UIColor.theme.custom(hexString: "#28c76f").withAlpha(0.5).cgColor,
             UIColor.theme.custom(hexString: "#81fbb8").withAlpha(0).cgColor,
         ]
         let redGradient = [
-            UIColor.theme.custom(hexString: "#28c76f").withAlpha(1).cgColor,
+            UIColor.theme.custom(hexString: "#28c76f").withAlpha(0.5).cgColor,
             UIColor.theme.custom(hexString: "#81fbb8").withAlpha(0).cgColor,
         ]
         let gradient = [
-            UIColor(white: 1, alpha: 1).cgColor,
+            UIColor(white: 1, alpha: 0.5).cgColor,
             UIColor(white: 1, alpha: 0).cgColor
         ]
 //        let gradient = variation == .up ? greenGradient : redGradient

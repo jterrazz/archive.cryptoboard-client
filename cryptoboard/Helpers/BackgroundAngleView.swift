@@ -12,6 +12,8 @@ import UIKit
 class BackgroundAngleView: UIView {
     
     var gradientColors: [CGColor] = [UIColor.white.cgColor, UIColor.black.cgColor]
+    var gradientAngle: Float = 45
+    var heightMultiplier: CGFloat = 0.85
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,7 +27,7 @@ class BackgroundAngleView: UIView {
     
     override func draw(_ rect: CGRect) {
         let size = self.bounds.size
-        let h = size.height * 0.8
+        let h = size.height * heightMultiplier
         
         let p1 = self.bounds.origin
         let p2 = CGPoint(x: p1.x + size.width, y: p1.y)
@@ -42,6 +44,8 @@ class BackgroundAngleView: UIView {
         let gradient = CAGradientLayer()
         gradient.frame = path.bounds
         gradient.colors = gradientColors
+        gradient.startPoint = CAGradientLayer.getStartEndingPoint(start: true, angle: gradientAngle)
+        gradient.endPoint = CAGradientLayer.getStartEndingPoint(start: false, angle: gradientAngle)
         
         let shapeMask = CAShapeLayer()
         shapeMask.path = path.cgPath

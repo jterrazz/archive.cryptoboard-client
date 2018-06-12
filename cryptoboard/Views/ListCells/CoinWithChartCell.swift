@@ -18,6 +18,7 @@ class CoinWithChartCell: UITableViewCell {
     @IBOutlet weak var coinName: UILabel!
     @IBOutlet weak var coinPrice: UILabel!
     @IBOutlet weak var volumeLabel: UILabel!
+    @IBOutlet weak var variationLabel: UILabel!
     @IBOutlet weak var border: UIView!
     
     override func awakeFromNib() {
@@ -26,8 +27,10 @@ class CoinWithChartCell: UITableViewCell {
     }
     
     private func setViews() {
+        selectionStyle = .none
+        backgroundColor = UIColor.clear
+        contentView.backgroundColor = UIColor.clear
         containerView.backgroundColor = UIColor.white
-        backgroundColor = UIColor.theme.darkBg.value
         chartView.backgroundColor = UIColor.theme.darkBg.value
         chartView.layer.cornerRadius = 3
         chartView.isUserInteractionEnabled = false
@@ -37,9 +40,17 @@ class CoinWithChartCell: UITableViewCell {
         chartView.layer.cornerRadius = 3
         chartView.clipsToBounds = true
         border.backgroundColor = UIColor.theme.border.value
-        coinName.textColor = UIColor.theme.textDark.value
-        coinPrice.textColor = UIColor.theme.textDark.value
+        coinName.textColor = UIColor.black
+        coinPrice.textColor = UIColor.black
         volumeLabel.textColor = UIColor.theme.textIntermediate.value
+        variationLabel.textColor = UIColor.theme.red.value
+    }
+    
+    public func setup(currency: Currency) {
+        coinName.text = currency.name
+        volumeLabel.text = "vol: $12"
+        coinPrice.text = "$22.00"
+        variationLabel.text = "+22333%"
     }
     
     private func setupChart() {

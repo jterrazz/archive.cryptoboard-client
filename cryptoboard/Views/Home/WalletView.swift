@@ -32,7 +32,7 @@ class WalletView: UIView {
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         contentView.layer.cornerRadius = K.Design.CornerRadius
-        contentView.backgroundColor = UIColor.white
+        contentView.backgroundColor = UIColor.theme.darkBg.value
         
         setupMainChart()
         circleChartView.setupForVariation(0.4)

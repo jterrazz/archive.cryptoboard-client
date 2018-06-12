@@ -9,29 +9,6 @@
 import Foundation
 import UIKit
 
-class RoundedContainerView: UIView {
-    
-    var roundedRadius: CGSize = CGSize.zero
-    var corners: UIRectCorner = .allCorners
-    
-    convenience init (_ cornerRadius: CGFloat, corners: UIRectCorner) {
-        self.init(frame: .zero)
-        
-        self.roundedRadius = CGSize.init(width: cornerRadius, height: cornerRadius)
-        self.corners = corners
-    }
-    
-    override func draw(_ rect: CGRect) {
-        let path = UIBezierPath.init(roundedRect: self.bounds, byRoundingCorners: corners, cornerRadii: roundedRadius)
-        let maskLayer = CAShapeLayer()
-        
-        maskLayer.path = path.cgPath
-        self.layer.mask = maskLayer
-    }
-    
-    
-}
-
 class CoinWithChartHeader: UITableViewHeaderFooterView {
     
     lazy var containerView = RoundedContainerView(K.Design.CornerRadius, corners: [.topLeft, .topRight])
@@ -54,7 +31,9 @@ class CoinWithChartHeader: UITableViewHeaderFooterView {
         let labels = [graphLabel, priceLabel, coinLabel]
         var constraints = [NSLayoutConstraint]()
         
-        contentView.backgroundColor = UIColor.theme.darkBg.value
+        backgroundColor = UIColor.clear
+        backgroundView = UIView()
+        contentView.backgroundColor = UIColor.clear
         borderView.backgroundColor = UIColor.theme.border.value
         containerView.backgroundColor = UIColor.theme.bg.value
         
@@ -72,7 +51,7 @@ class CoinWithChartHeader: UITableViewHeaderFooterView {
         containerView.addSubviewsAutoConstraints(labels)
         NSLayoutConstraint.activate([
             graphLabel.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 8),
-            coinLabel.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 120),
+            coinLabel.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 110),
             priceLabel.rightAnchor.constraint(equalTo: containerView.rightAnchor, constant: -8),
             containerView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 8),
             containerView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -8),

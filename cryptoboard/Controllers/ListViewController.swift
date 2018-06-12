@@ -54,10 +54,11 @@ class ListViewController: UIViewController {
         bar?.titleTextAttributes =  [NSAttributedStringKey.foregroundColor: UIColor.white]
         bar?.topItem?.title = "Coin list"
         bar?.barStyle = .black
-        view.backgroundColor = UIColor.theme.darkBg.value
+        
+        view.setGradient(colors: UIColor.gradients.bluepurple.cgColors, angle: 45)
         
         tableView.separatorStyle = .none
-        tableView.backgroundColor = UIColor.theme.darkBg.value
+        tableView.backgroundColor = UIColor.clear
         
         view.addSubviewsAutoConstraints([tableView])
         
@@ -107,9 +108,10 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
         case 0:
             cell = tableView.dequeueReusableCell(withIdentifier: GENERAL_COIN_CELL_ID, for: indexPath)
         default:
-            cell = tableView.dequeueReusableCell(withIdentifier: COIN_WITH_CHART_CELL_ID, for: indexPath)
+            let dataCell = tableView.dequeueReusableCell(withIdentifier: COIN_WITH_CHART_CELL_ID, for: indexPath) as! CoinWithChartCell
             
-            
+            dataCell.setup(currency: currencyList[indexPath.row])
+            cell = dataCell
         }
         
         return cell

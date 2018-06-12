@@ -12,33 +12,16 @@ import Charts
 class HomeViewController: UIViewController {
     
     private let CARD_COIN_CELL_ID = "card-coin-cell-id"
-    private let SEARCH_BAR_HEIGHT: CGFloat = 48
+    private let SEARCH_BAR_HEIGHT: CGFloat = 44
     
     var indexOfCellBeforeDragging: Int = 0
     
     lazy var searchBar: UITextField = {
-        let field = UITextField()
-        field.backgroundColor = UIColor.white
-        field.layer.masksToBounds = false
-        field.layer.borderWidth = 1
-        field.layer.borderColor = UIColor.theme.border.value.cgColor
-        field.layer.cornerRadius = 5
-        field.layer.shadowOffset = CGSize.init(width: 0, height: 8)
-        field.layer.shadowRadius = 8
-        field.layer.shadowColor = UIColor.theme.shadow.value.cgColor
-        field.layer.shadowOpacity = 0.15
-        field.attributedPlaceholder = NSAttributedString.init(string: "Search any coins", attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.medium)])
+        let searchImage = UIImage.init(named: "search_icon")
+        let frame = CGRect.init(x: 0, y: 0, width: SEARCH_BAR_HEIGHT, height: 24)
+        let input = UITextField.searchBar(cornerRadius: SEARCH_BAR_HEIGHT / 2, theme: .clear, leftImage: searchImage, leftImageFrame: frame)
         
-        let searchView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: SEARCH_BAR_HEIGHT, height: 23))
-        let iconImage = UIImage.init(named: "search_icon")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
-        searchView.image = iconImage
-        searchView.contentMode = .scaleAspectFit
-        searchView.tintColor = UIColor.theme.custom(hexString: "#c8c8c8").value
-        
-        field.leftView = searchView
-        field.leftViewMode = .always
-        
-        return field
+        return input
     }()
     
     lazy var cardCollectionView: UICollectionView = {
@@ -88,11 +71,7 @@ class HomeViewController: UIViewController {
         secondeHeader.setup(title: "Coins", borderColor: UIColor.theme.darkBg.value)
         myWallet.addShadow()
         
-        topBackgroundWithAngle.gradientColors = [
-            UIColor.theme.custom(hexString: "#0d64d7").value.cgColor,
-            UIColor.theme.custom(hexString: "#5d9bec").value.cgColor,
-//            UIColor.theme.custom(hexString: "#4158D0").value.cgColor,
-        ]
+        topBackgroundWithAngle.gradientColors = UIColor.gradients.bluepurple.cgColors
         
         view.addSubviewsAutoConstraints([topBackgroundWithAngle])
         view.addSubviewAutoConstraints(searchBar)
@@ -115,7 +94,7 @@ class HomeViewController: UIViewController {
         ]
         let constraints = [
             "H:|[angleBg]|",
-            "V:|[angleBg(300)]",
+            "V:|[angleBg(200)]",
             "H:|[scroll]|",
             "H:|-16-[underWallet]-16-|",
             "H:|-16-[wallet]-16-|",
@@ -129,7 +108,7 @@ class HomeViewController: UIViewController {
         
         NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)
         NSLayoutConstraint.activate([
-            searchBar.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 18),
+            searchBar.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 8),
             searchBar.heightAnchor.constraint(equalToConstant: SEARCH_BAR_HEIGHT),
             cardCollectionView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             cardCollectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.65),

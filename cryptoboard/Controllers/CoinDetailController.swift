@@ -12,6 +12,8 @@ import UIKit
 class CoinDetailController: UIViewController {
     
     private let COIN_DETAIL_CHART_CELL_ID = "coin-detail-chart-cell-id"
+    private let COIN_DETAIL_HEADER_ID = "coin-detail-header-id"
+    private let COIN_INFORMATIONS_CELL_ID = "coin-informations-cell-id"
     
     lazy var tableView = UITableView()
     lazy var topBarBg = UIView() // Using this because of iphone X doing a bad UIImage()
@@ -24,6 +26,8 @@ class CoinDetailController: UIViewController {
         super.viewDidLoad()
         
         tableView.register(CoinDetailChartCell.self, forCellReuseIdentifier: COIN_DETAIL_CHART_CELL_ID)
+        tableView.register(CoinDetailTitleHeader.self, forHeaderFooterViewReuseIdentifier: COIN_DETAIL_HEADER_ID)
+        tableView.register(CoinDetailInformationsCell.self, forCellReuseIdentifier: COIN_INFORMATIONS_CELL_ID)
         
         setupViews()
         
@@ -76,18 +80,58 @@ class CoinDetailController: UIViewController {
 extension CoinDetailController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 15
+        switch section {
+        case 0:
+            return 1
+        default:
+            return 15
+        }
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: COIN_DETAIL_HEADER_ID) as! CoinDetailTitleHeader
+        switch section {
+        case 1:
+            view.setup(title: "Market data")
+        default:
+            view.setup(title: "Coin informations")
+        }
+        
+        return view
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if (indexPath.row == 0) {
+        switch indexPath.section {
+        case 0:
             return tableView.dequeueReusableCell(withIdentifier: COIN_DETAIL_CHART_CELL_ID, for: indexPath)
+        default:
+            let cell = tableView.dequeueReusableCell(withIdentifier: COIN_INFORMATIONS_CELL_ID, for: indexPath) as! CoinDetailInformationsCell
+            var corners: UIRectCorner?
+            
+            if (indexPath.row == 0) {
+                corners = [.topLeft, .topRight]
+            } else if (indexPath.row == 1) {
+                corners = [.bottomRight, .bottomLeft]
+            }
+            cell.setup(leftText: "Market cap", subLeftText: nil, rightText: "20,420,420,420", subRightText: nil, corners: corners)
+            
+            return cell
         }
-        return UITableViewCell.init(style: .default, reuseIdentifier: "ddd")
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if (section == 0) {
+            return 0
+        }
+        return 36
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if (indexPath.row == 0) {
+        if (indexPath.section == 0) {
             return tableView.bounds.height
         }
         return UITableViewAutomaticDimension

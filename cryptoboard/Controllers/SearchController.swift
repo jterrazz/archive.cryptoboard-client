@@ -21,27 +21,15 @@ class SearchController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     lazy var searchBar: UITextField = {
-        let input = UITextField()
-        input.backgroundColor = UIColor.theme.inputBg.value
-        input.attributedPlaceholder = NSAttributedString(string: "Search currencies", attributes: [NSAttributedStringKey.foregroundColor : UIColor.theme.textIntermediate.value])
-        input.translatesAutoresizingMaskIntoConstraints = false
-        input.layer.cornerRadius = 22
-        input.font = UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.regular)
-        
-        let backView = UIImageView.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: 17))
-        let backImage = UIImage.init(named: "left-arrow")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
-        backView.image = backImage
-        backView.contentMode = .scaleAspectFit
-        backView.tintColor = UIColor.theme.textIntermediate.value
+        let backImage = UIImage.init(named: "left-arrow")
+        let frame = CGRect.init(x: 0, y: 0, width: 44, height: 17)
+        let input = UITextField.searchBar(cornerRadius: 22, theme: .clear, leftImage: backImage, leftImageFrame: frame)
+
+        // Events
         let backTouch = UITapGestureRecognizer(target: self, action: #selector(handleBackAction(_:)))
-        backView.addGestureRecognizer(backTouch)
-        backView.isUserInteractionEnabled = true
-        
-        input.leftView = backView
-        input.leftViewMode = .always
-        input.autocorrectionType = .no
+        input.leftView?.addGestureRecognizer(backTouch)
         input.addTarget(self, action: #selector(handleTextChange(_:)), for: .editingChanged)
-        
+
         return input
     }()
     
@@ -62,8 +50,7 @@ class SearchController: UIViewController, UIGestureRecognizerDelegate {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor.white
-        view.addSubview(searchBar)
-        view.addSubview(resultTableView)
+        view.addSubviewsAutoConstraints([searchBar, resultTableView])
         
         NSLayoutConstraint.activate([
             searchBar.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 8),

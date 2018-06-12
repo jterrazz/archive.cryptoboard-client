@@ -23,7 +23,7 @@ class GeneralCoinListCell: UITableViewCell {
     @IBOutlet weak var updateBorder: UIView!
     
     override func awakeFromNib() {
-        backgroundColor = UIColor.theme.darkBg.value
+        backgroundColor = UIColor.clear
         containerView.layer.cornerRadius = K.Design.CornerRadius
         containerView.backgroundColor = UIColor.theme.darkBgHover.value
         
@@ -35,6 +35,10 @@ class GeneralCoinListCell: UITableViewCell {
                 UIColor.theme.custom(hexString: "#29fadf").value,
                 UIColor.theme.custom(hexString: "#4c83ff").value,
                 ])
+        }
+        
+        for label in [marketCap, updated, volume] {
+            label?.textColor = UIColor.theme.textOnDark.value
         }
     }
     
