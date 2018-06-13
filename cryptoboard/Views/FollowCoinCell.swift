@@ -10,8 +10,13 @@ import UIKit
 
 class FollowCoinCell: UITableViewCell {
     
+    let followImage = UIImage(named: "heart", in: Bundle.main, compatibleWith: nil)
+    
+    var delegate: FollowCoinDelegate?
+    var currency: Currency?
+    
     lazy var leftLabel = UILabel()
-    lazy var followButton = UIButton()
+    lazy var followButton = FollowButton(frame: CGRect.init(x: 0, y: 0, width: 50, height: 50), image: followImage)
     lazy var bottomBorder = UIView()
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -25,6 +30,8 @@ class FollowCoinCell: UITableViewCell {
     }
     
     private func commonInit() {
+        followButton.addTarget(self, action: #selector(handleFollowClick(_:)), for: .touchUpInside)
+        
         bottomBorder.backgroundColor = UIColor.theme.borderClear.value
         selectionStyle = .none
         
@@ -41,13 +48,44 @@ class FollowCoinCell: UITableViewCell {
             bottomBorder.leftAnchor.constraint(equalTo: leftLabel.leftAnchor),
             bottomBorder.rightAnchor.constraint(equalTo: followButton.rightAnchor),
             bottomBorder.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            bottomBorder.heightAnchor.constraint(equalToConstant: 1)
+            bottomBorder.heightAnchor.constraint(equalToConstant: 1),
+            followButton.heightAnchor.constraint(equalToConstant: 50),
+            followButton.widthAnchor.constraint(equalToConstant: 50),
             ])
     }
     
-    public func setup(name: String, image: UIImage?, followed: Bool) {
-        leftLabel.text = name
+    public func setup(currency: Currency, selected: Bool) {
+        leftLabel.text = currency.name
+        self.currency = currency
+        
+        if (selected) {
+            followButton.select()
+        } else {
+            followButton.deselect()
+        }
+    }
+    
+    @objc private func handleFollowClick(_ sender: FollowButton) {
+        if (sender.isSelected) {
+            sender.deselect()
+            if let safeCurrency = currency {
+                delegate?.didUnselectButton(currency: safeCurrency)
+            }
+        } else {
+            sender.select()
+            if let safeCurrency = currency {
+                delegate?.didSelectButton(currency: safeCurrency)
+            }
+        }
     }
     
 
+}
+
+protocol FollowCoinDelegate {
+    
+    func didSelectButton(currency: Currency)
+    func didUnselectButton(currency: Currency)
+    
+    
 }

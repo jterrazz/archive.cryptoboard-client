@@ -41,6 +41,7 @@
 		8694FC3E20D03D63000E904C /* WaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694FC3D20D03D63000E904C /* WaveView.swift */; };
 		8694FC4020D04315000E904C /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694FC3F20D04315000E904C /* RoundedButton.swift */; };
 		8694FC4220D06FB6000E904C /* FollowCoinCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694FC4120D06FB6000E904C /* FollowCoinCell.swift */; };
+		8694FC4420D094DC000E904C /* FollowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694FC4320D094DC000E904C /* FollowButton.swift */; };
 		869E84DE20CD9A54008AB1EC /* CoinWithChartHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869E84DD20CD9A54008AB1EC /* CoinWithChartHeader.swift */; };
 		869E84E020CE853A008AB1EC /* UserWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869E84DF20CE853A008AB1EC /* UserWalletViewController.swift */; };
 		869E84E220CE8806008AB1EC /* CurrencyLive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869E84E120CE8806008AB1EC /* CurrencyLive.swift */; };
@@ -111,6 +112,7 @@
 		8694FC3D20D03D63000E904C /* WaveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveView.swift; sourceTree = "<group>"; };
 		8694FC3F20D04315000E904C /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 		8694FC4120D06FB6000E904C /* FollowCoinCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowCoinCell.swift; sourceTree = "<group>"; };
+		8694FC4320D094DC000E904C /* FollowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowButton.swift; sourceTree = "<group>"; };
 		869E84DD20CD9A54008AB1EC /* CoinWithChartHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinWithChartHeader.swift; sourceTree = "<group>"; };
 		869E84DF20CE853A008AB1EC /* UserWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserWalletViewController.swift; sourceTree = "<group>"; };
 		869E84E120CE8806008AB1EC /* CurrencyLive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyLive.swift; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 				865E1B0B20C83FBC000B3092 /* RoundSegmentedControl.swift */,
 				869E84EB20CEC005008AB1EC /* RoundedContainerView.swift */,
 				866A030920C80BF800784938 /* ProgressView.swift */,
+				8694FC4320D094DC000E904C /* FollowButton.swift */,
 				8694FC3F20D04315000E904C /* RoundedButton.swift */,
 				865017AB20CD2BDD00EF5403 /* BackgroundAngleView.swift */,
 				8694FC3D20D03D63000E904C /* WaveView.swift */,
@@ -485,6 +488,7 @@
 				869E84E020CE853A008AB1EC /* UserWalletViewController.swift in Sources */,
 				86BD017F20B9A8180065CC8B /* Double.swift in Sources */,
 				8694FC4220D06FB6000E904C /* FollowCoinCell.swift in Sources */,
+				8694FC4420D094DC000E904C /* FollowButton.swift in Sources */,
 				869E84E820CEAF83008AB1EC /* CoinDetailTitleHeader.swift in Sources */,
 				8694FC3C20D03AE4000E904C /* WelcomeWalletViewController.swift in Sources */,
 				8694FC4020D04315000E904C /* RoundedButton.swift in Sources */,

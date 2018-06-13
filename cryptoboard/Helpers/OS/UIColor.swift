@@ -14,7 +14,7 @@ fileprivate let COLOR_MAX: CGFloat = 255.0
 extension UIColor {
     
     enum theme {
-        case bg, darkBg, border, textDark, textIntermediate, redClear, redDark, shadow, topBarEl, inputBg, blueClear, elemFront, elemBack, green, red, darkBgHover, textOnDark, grayBg, borderClear
+        case bg, darkBg, border, textDark, textIntermediate, redClear, redDark, shadow, topBarEl, inputBg, blueClear, elemFront, elemBack, green, red, darkBgHover, textOnDark, grayBg, borderClear, blue
         case custom(hexString: String)
 
         func withAlpha(_ alpha: Double) -> UIColor {
@@ -47,6 +47,8 @@ extension UIColor {
                 return UIColor(hex: "#57af7d")
             case .red:
                 return UIColor(hex: "#f75078")
+            case .blue:
+                return UIColor(hex: "#42cbff")
             case .redClear:
                 return UIColor(hex: "#F46251")
             case .redDark:

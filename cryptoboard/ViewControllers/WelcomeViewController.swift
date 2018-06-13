@@ -12,16 +12,16 @@ class WelcomeViewController: UIPageViewController, UIPageViewControllerDataSourc
     
     var pages = [UIViewController]()
     let pageControl = UIPageControl()
-    var currentIndex = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.setGradient(colors: UIColor.gradients.purple.cgColors, angle: -45)
+        view.setGradient(colors: UIColor.gradients.purple.cgColors, angle: 135)
 
         let page1 = WelcomeFirstViewController()
         let page2 = WelcomeFollowViewController()
         let page3 = WelcomeWalletViewController()
+        let startIndex = 0
         
         pages.append(page1)
         pages.append(page2)
@@ -30,7 +30,7 @@ class WelcomeViewController: UIPageViewController, UIPageViewControllerDataSourc
         
         pageControl.frame = .zero
         pageControl.numberOfPages = pages.count
-        pageControl.currentPage = currentIndex
+        pageControl.currentPage = startIndex
         
         view.addSubviewAutoConstraints(pageControl)
         
@@ -41,7 +41,7 @@ class WelcomeViewController: UIPageViewController, UIPageViewControllerDataSourc
     }
     
     public func setViewController(_ index: Int) {
-        let direction: UIPageViewControllerNavigationDirection = index < currentIndex ? .reverse : .forward
+        let direction: UIPageViewControllerNavigationDirection = index < pageControl.currentPage ? .reverse : .forward
         
         if (index < pages.count) {
             setViewControllers([pages[index]], direction: direction, animated: true, completion: nil)

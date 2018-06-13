@@ -26,13 +26,23 @@ class WalletView: UIView {
         commonInit()
     }
     
+    override func layoutSubviews() {
+        let walletGradient = [
+            UIColor.theme.custom(hexString: "#0f0c29").value.cgColor,
+            UIColor.theme.custom(hexString: "#302b63").value.cgColor,
+            UIColor.theme.custom(hexString: "#24243e").value.cgColor
+        ]
+        
+        contentView.setGradient(colors: walletGradient, angle: 65)
+    }
+    
     private func commonInit() {
         Bundle.main.loadNibNamed("WalletView", owner: self, options: nil)
         addSubview(contentView)
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         contentView.layer.cornerRadius = K.Design.CornerRadius
-        contentView.backgroundColor = UIColor.theme.darkBg.value
+        contentView.backgroundColor = UIColor.clear
         
         setupMainChart()
         circleChartView.setupForVariation(0.4)

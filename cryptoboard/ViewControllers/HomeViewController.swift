@@ -18,7 +18,7 @@ class HomeViewController: UIViewController {
     
     lazy var searchBar: UITextField = {
         let searchImage = UIImage.init(named: "search_icon")
-        let frame = CGRect.init(x: 0, y: 0, width: SEARCH_BAR_HEIGHT, height: 24)
+        let frame = CGRect.init(x: 0, y: 0, width: SEARCH_BAR_HEIGHT, height: 26)
         let input = UITextField.searchBar(cornerRadius: SEARCH_BAR_HEIGHT / 2, theme: .clear, leftImage: searchImage, leftImageFrame: frame)
         
         return input
@@ -67,11 +67,11 @@ class HomeViewController: UIViewController {
     private func setupViews() {
         view.backgroundColor = UIColor.theme.bg.value
         
-        firstHeader.setup(title: "Personnal", borderColor: UIColor.theme.darkBg.value)
-        secondeHeader.setup(title: "Coins", borderColor: UIColor.theme.darkBg.value)
+        firstHeader.setup(title: "Personnal", borderColor: UIColor.theme.blue.value)
+        secondeHeader.setup(title: "Coins", borderColor: UIColor.theme.blue.value)
         myWallet.addShadow()
         
-        topBackgroundWithAngle.gradientColors = UIColor.gradients.bluepurple.cgColors
+        topBackgroundWithAngle.gradientColors = [UIColor.white.cgColor]
         
         view.addSubviewsAutoConstraints([topBackgroundWithAngle])
         view.addSubviewAutoConstraints(searchBar)
@@ -117,11 +117,11 @@ class HomeViewController: UIViewController {
         view.layoutIfNeeded()
         cardCollectionView.reloadData()
         
-        let coinsCellGradient = [UIColor.theme.custom(hexString: "#ff7676").value.cgColor, UIColor.theme.custom(hexString: "#f54ea2").value.cgColor]
-        let settingsCellGradient = [UIColor.theme.custom(hexString: "#00e9ff").value.cgColor, UIColor.theme.custom(hexString: "#3b8be7").value.cgColor]
+        let coinsCellGradient = [UIColor.theme.custom(hexString: "#feb692").value.cgColor, UIColor.theme.custom(hexString: "#ea5455").value.cgColor]
+        let settingsCellGradient = [UIColor.theme.custom(hexString: "#abdcff").value.cgColor, UIColor.theme.custom(hexString: "#0296ff").value.cgColor]
         
-        underWallet.coinsCell.setGradient(colors: coinsCellGradient, angle: 90)
-        underWallet.settingsCell.setGradient(colors: settingsCellGradient, angle: 90)
+        underWallet.coinsCell.setGradient(colors: coinsCellGradient, angle: 65)
+        underWallet.settingsCell.setGradient(colors: settingsCellGradient, angle: 65)
         
         let allCoinsTap = UITapGestureRecognizer(target: self, action: #selector(self.handleAllCoinsTap(_:)))
         underWallet.coinsCell.addGestureRecognizer(allCoinsTap)

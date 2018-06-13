@@ -48,9 +48,9 @@ extension UITextField {
         let textField = UITextField(frame: .zero)
         
         textField.layer.cornerRadius = cornerRadius
-        textField.font = UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.medium)
+        textField.font = UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.medium)
         textField.autocorrectionType = .no
-        textField.attributedPlaceholder = NSAttributedString(string: "Search any coins", attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14, weight: UIFont.Weight.medium)])
+        textField.placeholder = "Search any coin"
         textField.textColor = UIColor.theme.textDark.value
         
         if (theme == .clear) {
