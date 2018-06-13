@@ -15,6 +15,7 @@
             <connections>
                 <outlet property="containerProgress" destination="J0z-rm-HsO" id="goe-vg-4BS"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="MHv-DC-VEl"/>
+                <outlet property="logoImageView" destination="Eay-6q-cUI" id="omA-NE-f7D"/>
                 <outlet property="progressDay" destination="zcx-H5-4nu" id="8R2-yi-HOU"/>
                 <outlet property="progressHour" destination="ef3-ra-gj2" id="bJY-Uh-yJB"/>
                 <outlet property="progressMonth" destination="ULV-iI-k0n" id="oRU-Js-dMe"/>
@@ -126,10 +127,6 @@
                         <constraint firstAttribute="width" constant="42" id="f4F-QB-ciK"/>
                     </constraints>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hyK-t7-lQY">
-                    <rect key="frame" x="314" y="34" width="61" height="30"/>
-                    <state key="normal" title="Followed"/>
-                </button>
             </subviews>
             <color key="backgroundColor" red="0.046419700760000002" green="0.14040601229999999" blue="0.2096016839" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
             <constraints>
@@ -137,9 +134,7 @@
                 <constraint firstItem="J0z-rm-HsO" firstAttribute="top" secondItem="Eay-6q-cUI" secondAttribute="bottom" constant="36" id="36H-ls-pR5"/>
                 <constraint firstItem="sVr-7Y-0Kr" firstAttribute="leading" secondItem="Eay-6q-cUI" secondAttribute="trailing" constant="8" id="8lL-8n-hSP"/>
                 <constraint firstItem="Eay-6q-cUI" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="JzR-fq-PcL"/>
-                <constraint firstItem="hyK-t7-lQY" firstAttribute="centerY" secondItem="Eay-6q-cUI" secondAttribute="centerY" id="ZEQ-3H-GcL"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="J0z-rm-HsO" secondAttribute="trailing" id="b7o-lP-cAa"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="hyK-t7-lQY" secondAttribute="trailing" id="bHW-TC-AR2"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="J0z-rm-HsO" secondAttribute="bottom" id="eUM-3P-T4X"/>
                 <constraint firstItem="sVr-7Y-0Kr" firstAttribute="top" secondItem="e6m-Af-90D" secondAttribute="bottom" id="guX-yC-hJd"/>
                 <constraint firstItem="e6m-Af-90D" firstAttribute="top" secondItem="Eay-6q-cUI" secondAttribute="top" id="hie-Tt-VBF"/>

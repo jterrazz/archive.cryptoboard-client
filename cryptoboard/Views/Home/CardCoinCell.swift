@@ -13,15 +13,10 @@ import Charts
 class CardCoinCell: UICollectionViewCell {
     
     lazy var container = UIView()
-    lazy var box = UIView()
+    lazy var box = CardCoinInformationsCell()
     lazy var chartView = LineChartView()
     
-//    lazy var title: UILabel = {
-//        let label = UILabel()
-//        label.text = "Bitcoin"
-//        label.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.regular)
-//        return label
-//    }()
+    var currency: Currency?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -40,9 +35,6 @@ class CardCoinCell: UICollectionViewCell {
     }
     
     private func setupViews() {
-        box.backgroundColor = UIColor.white
-        box.layer.cornerRadius = K.Design.CornerRadius
-        
         container.backgroundColor = UIColor.white
         container.layer.masksToBounds = false
         container.layer.cornerRadius = K.Design.CornerRadius
@@ -54,13 +46,15 @@ class CardCoinCell: UICollectionViewCell {
         chartView.layer.masksToBounds = true
         chartView.layer.cornerRadius = K.Design.CornerRadius
         
+        setupConstraints()
+    }
+    
+    private func setupConstraints() {
         addSubviewAutoConstraints(container)
-//        container.addSubviewAutoConstraints(title)
         container.addSubviewAutoConstraints(chartView)
         container.addSubviewAutoConstraints(box)
         
         let views = [
-//            "title": title,
             "chart": chartView,
             "c": container,
             "box": box
@@ -68,13 +62,18 @@ class CardCoinCell: UICollectionViewCell {
         let constraints = [
             "H:|-16-[box]-16-|",
             "H:|[chart]|",
-            "V:[box(100)]-(-16)-|",
+            "V:[box]-(-16)-|",
             "V:|[chart]|",
             "H:|-8-[c]-8-|",
             "V:|-16-[c]-32-|",
-        ]
+            ]
         
         NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)
+    }
+    
+    func setup(currency: Currency) {
+        self.currency = currency
+        box.setup(currency: currency)
     }
     
     

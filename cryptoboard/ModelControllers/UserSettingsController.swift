@@ -15,19 +15,45 @@ class UserSettingsController {
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
     
-    public func get() -> UserSettings? {
+    func get() -> UserSettings? {
+        
         var settings: UserSettings?
         
         if let data = userDefaults.data(forKey: SETTINGS_KEY) {
             settings = try? decoder.decode(UserSettings.self, from: data)
         }
+        
         return settings
     }
     
-    public func set(_ settings: UserSettings) throws {
+    func set(_ settings: UserSettings) throws {
+        
         let encoded = try encoder.encode(settings)
         
         userDefaults.set(encoded, forKey: SETTINGS_KEY)
+    }
+    
+    func update(ft: (UserSettings) -> Void) {
+        
+        if let settings = get() {
+            ft(settings)
+            
+            // TODO handle error
+            do {
+                try self.set(settings)
+            } catch {
+                
+            }
+        }
+    }
+    
+    func isFollowingCurrency(_ symbol: String) -> Bool {
+        
+        if let followedSymbols = get()?.followedCurrencies {
+            return (followedSymbols.index(of: symbol) != nil) ? true : false
+        }
+        
+        return false
     }
     
     

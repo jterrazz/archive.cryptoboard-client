@@ -14,6 +14,7 @@ class Currency: Codable, CustomStringConvertible {
     var name: String
     var diminutive: String
     var imageName: String?
+    var imageUrl: String?
     var liveData: CurrencyLive?
     var historyPrice: [CurrencyPrice]?
     var createdAt: Date

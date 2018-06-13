@@ -17,11 +17,11 @@ class UserSettings: Codable {
         self.localCurrency = localCurrency
     }
     
-    public func changeLocalCurrency(_ currency: LocalCurrency) {
+    func changeLocalCurrency(_ currency: LocalCurrency) {
         self.localCurrency = currency
     }
     
-    public func followCurrency(_ symbol: String) {
+    func followCurrency(_ symbol: String) {
         let i = followedCurrencies.index(of: symbol)
         
         if (i == nil) {
@@ -29,16 +29,20 @@ class UserSettings: Codable {
         }
     }
     
-    public func unfollowCurrency(_ symbol: String) {
+    func unfollowCurrency(_ symbol: String) {
         if let i = followedCurrencies.index(of: symbol) {
             followedCurrencies.remove(at: i)
         }
     }
     
-    public func moveFollowedCurrency(_ symbol: String, toIndex: Int) {
+    func moveFollowedCurrency(_ symbol: String, toIndex: Int) {
         if let i = followedCurrencies.index(of: symbol) {
             followedCurrencies.rearrange(from: i, to: toIndex)
         }
+    }
+    
+    func emptyFollowedCurrency() {
+        followedCurrencies.removeAll(keepingCapacity: true)
     }
     
     

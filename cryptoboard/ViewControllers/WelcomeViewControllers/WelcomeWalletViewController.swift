@@ -29,6 +29,7 @@ class WelcomeWalletViewController: UIViewController {
         
         backButton.addTarget(self, action: #selector(triggerBackButton(_:)), for: .touchUpInside)
         
+        view.clipsToBounds = true
         view.backgroundColor = UIColor.clear
         
         nextButton.styleForHoverGradient()

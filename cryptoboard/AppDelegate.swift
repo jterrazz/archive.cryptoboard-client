@@ -65,7 +65,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         
-        if (true) { // TODO add logic
+        let settings = UserSettingsController().get()
+        
+        if (settings == nil) { // TODO add logic
             navigationController.present(firstTimeController, animated: false, completion: nil)
         }
         

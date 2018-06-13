@@ -37,6 +37,12 @@ class CoinDetailChartCell: UITableViewCell {
     var rightContainerConstraint: NSLayoutConstraint?
     var showingChart: Bool = true
     
+    var currency: Currency? {
+        didSet {
+            hoverInformations.currency = self.currency
+        }
+    }
+    
     // do commoninit everywhere
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

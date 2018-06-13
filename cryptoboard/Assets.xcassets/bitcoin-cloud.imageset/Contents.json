@@ -2,11 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "bitcoin-3.png",
+      "filename" : "bitcoin-2.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "bitcoin-4.png",
       "scale" : "2x"
     },
     {

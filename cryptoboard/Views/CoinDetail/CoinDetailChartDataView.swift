@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AudioToolbox
 
 class CoinDetailChartDataView: UIView {
 
@@ -16,6 +17,20 @@ class CoinDetailChartDataView: UIView {
     @IBOutlet weak var progressMonth: ProgressView!
     @IBOutlet weak var containerProgress: UIView!
     @IBOutlet weak var symbolLabel: UILabel!
+    @IBOutlet weak var logoImageView: UIImageView!
+    
+    let followImage = UIImage(named: "heart", in: Bundle.main, compatibleWith: nil)
+    let userSettingsController = UserSettingsController()
+    
+    var currency: Currency? {
+        didSet {
+            if let symbol = currency?.diminutive {
+                UserSettingsController().isFollowingCurrency(symbol) ? followButton.select() : followButton.deselect()
+            }
+        }
+    }
+    
+    lazy var followButton = FollowButton(frame: CGRect.init(x: 0, y: 0, width: 50, height: 50), image: followImage)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,11 +48,16 @@ class CoinDetailChartDataView: UIView {
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         contentView.backgroundColor = UIColor.clear
+        
+        setupViews()
+    }
+    
+    private func setupViews() {
         containerProgress.backgroundColor = UIColor.theme.darkBgHover.value
         containerProgress.layer.cornerRadius = K.Design.CornerRadius
         symbolLabel.textColor = UIColor.theme.textOnDark.value
         symbolLabel.font = UIFont.systemFont(ofSize: 14)
-        
+        followButton.addTarget(self, action: #selector(handleFollowClick(_:)), for: .touchUpInside)
         let progressGradient = [
             UIColor.theme.custom(hexString: "#feb692").value.cgColor,
             UIColor.theme.custom(hexString: "#ea5455").value.cgColor
@@ -46,6 +66,37 @@ class CoinDetailChartDataView: UIView {
         progressHour.setup(0.5, colors: progressGradient)
         progressDay.setup(0.2, colors: progressGradient)
         progressMonth.setup(0.2, colors: progressGradient)
+        
+        setupConstraints()
+    }
+    
+    private func setupConstraints() {
+        addSubviewAutoConstraints(followButton)
+        NSLayoutConstraint.activate([
+            followButton.centerYAnchor.constraint(equalTo: logoImageView.centerYAnchor),
+            followButton.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 0),
+            followButton.heightAnchor.constraint(equalToConstant: 50),
+            followButton.widthAnchor.constraint(equalToConstant: 50),
+            ])
+    }
+    
+    @objc private func handleFollowClick(_ sender: FollowButton) {
+        if (sender.isSelected) {
+            sender.deselect()
+            userSettingsController.update { (settings) in
+                if let safeCurrency = currency {
+                    settings.unfollowCurrency(safeCurrency.diminutive)
+                }
+            }
+        } else {
+            sender.select()
+            userSettingsController.update { (settings) in
+                if let safeCurrency = currency {
+                    settings.followCurrency(safeCurrency.diminutive)
+                }
+            }
+        }
+        AudioServicesPlaySystemSound(1519)
     }
     
 

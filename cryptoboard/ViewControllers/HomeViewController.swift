@@ -14,12 +14,20 @@ class HomeViewController: UIViewController {
     private let CARD_COIN_CELL_ID = "card-coin-cell-id"
     private let SEARCH_BAR_HEIGHT: CGFloat = 44
     
+    var userSettingsController = UserSettingsController()
+    var followedCurrencies = [Currency]() {
+        didSet {
+            print("FOLLOED : ", followedCurrencies)
+            cardCollectionView.reloadData()
+        }
+    }
+    
     var indexOfCellBeforeDragging: Int = 0
     
     lazy var searchBar: UITextField = {
         let searchImage = UIImage.init(named: "search_icon")
         let frame = CGRect.init(x: 0, y: 0, width: SEARCH_BAR_HEIGHT, height: 26)
-        let input = UITextField.searchBar(cornerRadius: SEARCH_BAR_HEIGHT / 2, theme: .clear, leftImage: searchImage, leftImageFrame: frame)
+        let input = UITextField.searchBar(cornerRadius: SEARCH_BAR_HEIGHT / 2, theme: ThemeStatus.clear, leftImage: searchImage, leftImageFrame: frame)
         
         return input
     }()
@@ -60,15 +68,32 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setUserData()
+        if (followedCurrencies.count > 0) {
+            cardCollectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredHorizontally, animated: true)
+        }
         
         navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    private func setUserData() {
+        if let settings = userSettingsController.get() {
+            let symbols = settings.followedCurrencies
+            print(symbols)
+            CurrencyController.getCurrenciesBase(symbols: symbols) { (currencies) in
+                CurrencyController.getCurrencyState(currencies: currencies, callback: { (currenciesStates) in
+                    self.followedCurrencies = currenciesStates
+                })
+            }
+        }
     }
     
     private func setupViews() {
         view.backgroundColor = UIColor.theme.bg.value
         
-        firstHeader.setup(title: "Personnal", borderColor: UIColor.theme.blue.value)
-        secondeHeader.setup(title: "Coins", borderColor: UIColor.theme.blue.value)
+        firstHeader.setup(title: "Personnal", borderColor: UIColor.theme.blue.value, rightText: nil)
+        secondeHeader.setup(title: "Coins", borderColor: UIColor.theme.blue.value, rightText: "modify")
+        secondeHeader.delegate = self
         myWallet.addShadow()
         
         topBackgroundWithAngle.gradientColors = [UIColor.white.cgColor]
@@ -111,14 +136,14 @@ class HomeViewController: UIViewController {
             searchBar.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 8),
             searchBar.heightAnchor.constraint(equalToConstant: SEARCH_BAR_HEIGHT),
             cardCollectionView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-            cardCollectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.65),
+            cardCollectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.57),
         ])
         
         view.layoutIfNeeded()
         cardCollectionView.reloadData()
         
-        let coinsCellGradient = [UIColor.theme.custom(hexString: "#feb692").value.cgColor, UIColor.theme.custom(hexString: "#ea5455").value.cgColor]
-        let settingsCellGradient = [UIColor.theme.custom(hexString: "#abdcff").value.cgColor, UIColor.theme.custom(hexString: "#0296ff").value.cgColor]
+        let coinsCellGradient = [UIColor.theme.custom(hexString: "fe6972").value.cgColor, UIColor.theme.custom(hexString: "d85862").value.cgColor]
+        let settingsCellGradient = [UIColor.theme.custom(hexString: "#b08efb").value.cgColor, UIColor.theme.custom(hexString: "6377fa").value.cgColor]
         
         underWallet.coinsCell.setGradient(colors: coinsCellGradient, angle: 65)
         underWallet.settingsCell.setGradient(colors: settingsCellGradient, angle: 65)
@@ -155,12 +180,13 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return followedCurrencies.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CARD_COIN_CELL_ID, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CARD_COIN_CELL_ID, for: indexPath) as! CardCoinCell
         
+        cell.setup(currency: followedCurrencies[indexPath.row])
         return cell
     }
     
@@ -225,9 +251,22 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = CoinDetailController()
+        let currency = followedCurrencies[indexPath.row]
+        let vc = CoinDetailController(currency: currency)
         
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    
+}
+
+extension HomeViewController: HomeHeaderViewDelegate {
+    
+    func didSelectButton() {
+        let vc = FollowedCoinsPopUpViewController()
+        
+        vc.modalPresentationStyle = .overFullScreen
+        self.present(vc, animated: false, completion: nil)
     }
     
     

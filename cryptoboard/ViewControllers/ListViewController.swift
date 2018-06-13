@@ -19,7 +19,6 @@ class ListViewController: UIViewController {
     
     var currencyList = [Currency]() {
         didSet {
-            print("Data set")
             self.tableView.reloadData()
         }
     }
@@ -118,9 +117,12 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = CoinDetailController()
-        
-        navigationController?.pushViewController(vc, animated: true)
+        if (indexPath.section == 1) {
+            let currency = currencyList[indexPath.row]
+            let vc = CoinDetailController(currency: currency)
+            
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

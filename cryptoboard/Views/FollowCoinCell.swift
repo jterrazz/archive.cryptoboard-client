@@ -12,7 +12,7 @@ class FollowCoinCell: UITableViewCell {
     
     let followImage = UIImage(named: "heart", in: Bundle.main, compatibleWith: nil)
     
-    var delegate: FollowCoinDelegate?
+    var delegate: FollowCoinCellDelegate?
     var currency: Currency?
     
     lazy var leftLabel = UILabel()
@@ -44,13 +44,13 @@ class FollowCoinCell: UITableViewCell {
             leftLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             followButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             followButton.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16),
+            followButton.heightAnchor.constraint(equalToConstant: 50),
+            followButton.widthAnchor.constraint(equalToConstant: 50),
             leftLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16),
             bottomBorder.leftAnchor.constraint(equalTo: leftLabel.leftAnchor),
             bottomBorder.rightAnchor.constraint(equalTo: followButton.rightAnchor),
             bottomBorder.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             bottomBorder.heightAnchor.constraint(equalToConstant: 1),
-            followButton.heightAnchor.constraint(equalToConstant: 50),
-            followButton.widthAnchor.constraint(equalToConstant: 50),
             ])
     }
     
@@ -82,7 +82,7 @@ class FollowCoinCell: UITableViewCell {
 
 }
 
-protocol FollowCoinDelegate {
+protocol FollowCoinCellDelegate {
     
     func didSelectButton(currency: Currency)
     func didUnselectButton(currency: Currency)

@@ -48,7 +48,7 @@ extension UIColor {
             case .red:
                 return UIColor(hex: "#f75078")
             case .blue:
-                return UIColor(hex: "#42cbff")
+                return UIColor(hex: "#0c7cf9")
             case .redClear:
                 return UIColor(hex: "#F46251")
             case .redDark:

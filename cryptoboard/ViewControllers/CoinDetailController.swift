@@ -19,8 +19,14 @@ class CoinDetailController: UIViewController {
     lazy var topBarBg = UIView() // Using this because of iphone X doing a bad UIImage()
     
     var currentTheme: ThemeStatus = .white
-    
+    var currency: Currency?
     var tapGesture: UITapGestureRecognizer!
+    
+    convenience init(currency: Currency) {
+        self.init()
+        
+        self.currency = currency
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,8 +47,8 @@ class CoinDetailController: UIViewController {
         view.layoutIfNeeded()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        
+    public func setup(currency: Currency) {
+        self.currency = currency
     }
     
     private func setupViews() {
@@ -107,7 +113,10 @@ extension CoinDetailController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
-            return tableView.dequeueReusableCell(withIdentifier: COIN_DETAIL_CHART_CELL_ID, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: COIN_DETAIL_CHART_CELL_ID, for: indexPath) as! CoinDetailChartCell
+            cell.currency = currency
+            
+            return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: COIN_INFORMATIONS_CELL_ID, for: indexPath) as! CoinDetailInformationsCell
             var corners: UIRectCorner?

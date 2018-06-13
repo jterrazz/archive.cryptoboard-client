@@ -31,6 +31,8 @@ class WelcomeFirstViewController: UIViewController {
         titleLabel.textColor = UIColor.theme.textDark.value
         titleLabel.font = UIFont.systemFont(ofSize: 24, weight: .regular)
         
+        view.clipsToBounds = true
+        
         descriptionLabel.text = "Our app is best enjoyed if you take the time to personalize the experience."
         descriptionLabel.textColor = UIColor.theme.textIntermediate.value
         descriptionLabel.font = UIFont.systemFont(ofSize: 14)

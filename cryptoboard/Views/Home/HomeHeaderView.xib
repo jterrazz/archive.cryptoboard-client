@@ -14,15 +14,16 @@
             <connections>
                 <outlet property="contentView" destination="iN0-l3-epB" id="2PD-LC-bjb"/>
                 <outlet property="leftBorder" destination="BQ2-qA-rzl" id="K66-xf-BKY"/>
+                <outlet property="rightButton" destination="L6c-IB-NRL" id="Dse-1s-bm5"/>
                 <outlet property="titleLabel" destination="70f-Uo-vDI" id="zBq-f5-Ze0"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="388" height="119"/>
+        <view contentMode="scaleToFill" ambiguous="YES" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="388" height="181"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BQ2-qA-rzl">
+                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BQ2-qA-rzl">
                     <rect key="frame" x="0.0" y="0.0" width="4" height="119"/>
                     <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
@@ -31,24 +32,29 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="70f-Uo-vDI">
-                    <rect key="frame" x="16" y="51" width="356" height="18"/>
+                    <rect key="frame" x="16" y="-9" width="39" height="18"/>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L6c-IB-NRL">
+                    <rect key="frame" x="342" y="-15" width="46" height="30"/>
+                    <state key="normal" title="Button"/>
+                </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="70f-Uo-vDI" secondAttribute="trailing" constant="16" id="KbV-Xk-e6S"/>
+                <constraint firstAttribute="trailing" secondItem="L6c-IB-NRL" secondAttribute="trailing" id="AXC-AI-y68"/>
                 <constraint firstItem="BQ2-qA-rzl" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="LEc-WE-0KJ"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="BQ2-qA-rzl" secondAttribute="bottom" id="NIr-bC-56Y"/>
+                <constraint firstItem="L6c-IB-NRL" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Ybl-Xe-3tp"/>
                 <constraint firstItem="BQ2-qA-rzl" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="l3j-oV-rEI"/>
                 <constraint firstItem="70f-Uo-vDI" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="w3Y-tG-A28"/>
                 <constraint firstItem="70f-Uo-vDI" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="w5Q-Sl-uJu"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <point key="canvasLocation" x="40" y="327.5"/>
+            <point key="canvasLocation" x="40" y="296.5"/>
         </view>
     </objects>
 </document>

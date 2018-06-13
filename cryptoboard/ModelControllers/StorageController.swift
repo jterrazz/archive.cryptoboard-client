@@ -50,11 +50,14 @@ class StorageController {
     }
     
     public func storeCurrencyHistory(symbol: String, prices: [CurrencyPrice], aggregate: UInt, points: UInt) {
-        let currency = CurrencyController.getCurrencyBase(symbol: symbol)
-        currency?.historyPrice = prices
-        
-        if let encoded = try? encoder.encode(currency) {
-            userDefaults.set(encoded, forKey: CURRENCY_HISTORY_PREFIX_KEY + String(aggregate) + "-" + String(points))
+        CurrencyController.getCurrencyBase(symbol: symbol) { (currency) in
+            if let safeCurrency = currency {
+                safeCurrency.historyPrice = prices
+                
+                if let encoded = try? self.encoder.encode(safeCurrency) {
+                    self.userDefaults.set(encoded, forKey: self.CURRENCY_HISTORY_PREFIX_KEY + String(aggregate) + "-" + String(points))
+                }
+            }
         }
     }
     

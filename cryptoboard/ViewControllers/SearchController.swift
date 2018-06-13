@@ -125,7 +125,8 @@ extension SearchController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = CoinDetailController()
+        let currency = searchResults[indexPath.row]
+        let vc = CoinDetailController(currency: currency)
         
         navigationController?.pushViewController(vc, animated: true)
     }

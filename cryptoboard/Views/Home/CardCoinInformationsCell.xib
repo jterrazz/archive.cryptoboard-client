@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CardCoinInformationsCell" customModule="cryptoboard" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="psB-1y-N79"/>
+                <outlet property="logoImageView" destination="cZB-z8-MWw" id="cyb-fk-R6S"/>
+                <outlet property="nameLabel" destination="kAw-Vp-d0d" id="kLT-8V-l1l"/>
+                <outlet property="priceLabel" destination="dxo-Pe-mMf" id="UjD-2D-VPh"/>
+                <outlet property="symbolLabel" destination="88L-TI-40a" id="jf6-vo-Q6q"/>
+                <outlet property="variationLabel" destination="QSt-92-9dv" id="iJe-bY-B37"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="452" height="155"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="BITCOIN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kAw-Vp-d0d">
+                    <rect key="frame" x="16" y="68" width="124" height="38.5"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="31"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cZB-z8-MWw">
+                    <rect key="frame" x="16" y="16" width="36" height="36"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="36" id="VMw-Tc-mxI"/>
+                        <constraint firstAttribute="height" constant="36" id="jFf-R7-BHW"/>
+                    </constraints>
+                </imageView>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="7FY-5A-5kd">
+                    <rect key="frame" x="321" y="13.5" width="113" height="41"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$ 20 000.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dxo-Pe-mMf">
+                            <rect key="frame" x="0.0" y="0.0" width="113" height="23"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+23%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QSt-92-9dv">
+                            <rect key="frame" x="72" y="23" width="41" height="18"/>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                </stackView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="BTC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="88L-TI-40a">
+                    <rect key="frame" x="16" y="114" width="32.5" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="88L-TI-40a" firstAttribute="top" secondItem="kAw-Vp-d0d" secondAttribute="bottom" id="4MN-QX-d13"/>
+                <constraint firstItem="7FY-5A-5kd" firstAttribute="centerY" secondItem="cZB-z8-MWw" secondAttribute="centerY" id="94f-Ot-jmG"/>
+                <constraint firstItem="kAw-Vp-d0d" firstAttribute="top" secondItem="cZB-z8-MWw" secondAttribute="bottom" constant="16" id="9Ab-PZ-UAn"/>
+                <constraint firstItem="cZB-z8-MWw" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="16" id="P80-te-JOp"/>
+                <constraint firstItem="88L-TI-40a" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="Qmd-rG-ZqG"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="7FY-5A-5kd" secondAttribute="trailing" constant="18" id="TGG-8n-y97"/>
+                <constraint firstItem="cZB-z8-MWw" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="VaI-xE-Ao8"/>
+                <constraint firstItem="kAw-Vp-d0d" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="WyS-ic-jF8"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="88L-TI-40a" secondAttribute="bottom" constant="16" id="diY-gc-3yF"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="72" y="189.5"/>
+        </view>
+    </objects>
+</document>

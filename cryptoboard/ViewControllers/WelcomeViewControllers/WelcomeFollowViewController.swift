@@ -11,16 +11,12 @@ import UIKit
 
 class WelcomeFollowViewController: UIViewController {
     
-    private let FOLLOW_COIN_CELL_ID = "follow-coin-cell-id"
-    
     let TABLEVIEW_TOP_CONSTRAINT: CGFloat = 32
     let TABLEVIEW_SIDE_CONSTRAINT: CGFloat = 32
     
     lazy var nextButton = RoundedButton()
     lazy var waveBackground = WaveView()
-    lazy var followTableView = UITableView()
-    lazy var followContainer = UIView()
-    lazy var searchBar = UITextField()
+    lazy var followContainer = FollowCoinView()
     lazy var titleLabel = UILabel()
     
     lazy var backButton: UIButton = {
@@ -34,17 +30,9 @@ class WelcomeFollowViewController: UIViewController {
         return button
     }()
     
-    var followedSymbols = [String]()
-    var coinList = [Currency]()
-    var coinResults = [Currency]() {
-        didSet {
-            followTableView.reloadData()
-        }
-    }
-    
-    var tableViewTopConstraint: NSLayoutConstraint?
-    var tableViewLeftConstraint: NSLayoutConstraint?
-    var tableViewRightConstraint: NSLayoutConstraint?
+    var followContainerTopConstraint: NSLayoutConstraint?
+    var followContainerLeftConstraint: NSLayoutConstraint?
+    var followContainerRightConstraint: NSLayoutConstraint?
     
     // TODO Add animation to say loading coin list
     override func viewDidLoad() {
@@ -53,38 +41,25 @@ class WelcomeFollowViewController: UIViewController {
         setupViews()
         
         CurrencyController.getList(limit: 999999) { (currencies) in
-            self.coinList = currencies
-            self.setDataForEmptySearch()
+            self.followContainer.coinList = currencies
+            self.followContainer.setDataForEmptySearch()
         }
         
-        searchBar.delegate = self
-        searchBar.placeholder = "Search any coin"
-        searchBar.autocorrectionType = .no
-        searchBar.addTarget(self, action: #selector(handleTextChange(_:)), for: .editingChanged)
-        followTableView.delegate = self
-        followTableView.dataSource = self
-        followTableView.register(FollowCoinCell.self, forCellReuseIdentifier: FOLLOW_COIN_CELL_ID)
         nextButton.addTarget(self, action: #selector(triggerNextButton(_:)), for: .touchUpInside)
         backButton.addTarget(self, action: #selector(triggerBackButton(_:)), for: .touchUpInside)
     }
     
     private func setupViews() {
         view.backgroundColor = UIColor.clear
+        view.clipsToBounds = true
         
         waveBackground.opposite = true
-        
-        followTableView.layer.cornerRadius = K.Design.CornerRadius
-        followTableView.separatorStyle = .none
-        followTableView.backgroundColor = UIColor.white
         followContainer.backgroundColor = UIColor.theme.bg.value
         followContainer.layer.cornerRadius = K.Design.CornerRadius
         followContainer.addShadow()
         followContainer.layer.borderWidth = 1
         followContainer.layer.borderColor = UIColor.theme.border.value.cgColor
-        searchBar.backgroundColor = UIColor.clear
-        searchBar.layer.addBorder(edge: .bottom, color: UIColor.theme.border.value, thickness: 1)
-        searchBar.addPadding(.left(16))
-        searchBar.font = UIFont.systemFont(ofSize: 15)
+        followContainer.delegate = self
         
         titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         titleLabel.text = "Pick your favorites coins"
@@ -94,32 +69,26 @@ class WelcomeFollowViewController: UIViewController {
         nextButton.setTitle("CONFIRM", for: .normal)
         
         view.addSubviewsAutoConstraints([nextButton, waveBackground, followContainer, titleLabel, backButton])
-        followContainer.addSubviewsAutoConstraints([followTableView, searchBar])
         setupConstraints()
     }
     
     private func setupConstraints() {
         let views = [
             "wave": waveBackground,
-            "FTV": followTableView,
-            "search": searchBar,
             "back": backButton
         ]
         let constraints = [
             "H:|[wave]|",
             "V:[wave(320)]",
-            "H:|[FTV]|",
-            "H:|[search]|",
-            "V:|[search(44)][FTV]|",
             "H:|-16-[back(20)]",
             "V:[back(20)]",
             ]
         
         NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)
         
-        tableViewTopConstraint = followContainer.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: TABLEVIEW_TOP_CONSTRAINT)
-        tableViewLeftConstraint = followContainer.leftAnchor.constraint(equalTo: view.leftAnchor, constant: TABLEVIEW_SIDE_CONSTRAINT)
-        tableViewRightConstraint = followContainer.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -TABLEVIEW_SIDE_CONSTRAINT)
+        followContainerTopConstraint = followContainer.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: TABLEVIEW_TOP_CONSTRAINT)
+        followContainerLeftConstraint = followContainer.leftAnchor.constraint(equalTo: view.leftAnchor, constant: TABLEVIEW_SIDE_CONSTRAINT)
+        followContainerRightConstraint = followContainer.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -TABLEVIEW_SIDE_CONSTRAINT)
         
         NSLayoutConstraint.activate([
             nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -130,16 +99,30 @@ class WelcomeFollowViewController: UIViewController {
             backButton.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 8),
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             titleLabel.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 16),
-            tableViewTopConstraint!,
-            tableViewRightConstraint!,
-            tableViewLeftConstraint!
+            followContainerTopConstraint!,
+            followContainerRightConstraint!,
+            followContainerLeftConstraint!
             ])
     }
     
     @objc private func triggerNextButton(_ sender: UIButton) {
         let parentVC = self.parent as? WelcomeViewController
+        let followed = self.followContainer.followedSymbols
+        let settingsController = UserSettingsController()
+        let settings = settingsController.get() != nil ? settingsController.get()! : UserSettings(localCurrency: .usd)
         
-        parentVC?.setViewController(2)
+        settings.emptyFollowedCurrency()
+        for follow in followed {
+            settings.followCurrency(follow)
+        }
+        
+        do {
+            try settingsController.set(settings)
+            
+            parentVC?.setViewController(2)
+        } catch {
+            // TODO
+        }
     }
     
     @objc private func triggerBackButton(_ sender: UIImageView) {
@@ -153,93 +136,26 @@ class WelcomeFollowViewController: UIViewController {
         guard let location = touch?.location(in: self.view) else { return }
         
         if (!followContainer.frame.contains(location)) {
-            searchBar.resignFirstResponder()
+            followContainer.searchBar.resignFirstResponder()
         }
     }
     
     
 }
 
-extension WelcomeFollowViewController: UITableViewDelegate, UITableViewDataSource {
+extension WelcomeFollowViewController: FollowCoinViewDelegate {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return coinResults.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: FOLLOW_COIN_CELL_ID, for: indexPath) as! FollowCoinCell
-        let currentCoin = coinResults[indexPath.row]
-        let isFollowed = (followedSymbols.index(of: currentCoin.diminutive) != nil) ? true : false
-        
-        cell.setup(currency: currentCoin, selected: isFollowed)
-        cell.followButton.tag = indexPath.row
-        cell.delegate = self
-        
-        return cell
-    }
-    
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        searchBar.resignFirstResponder()
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 42
-    }
-    
-    @objc private func handleTextChange(_ sender: UITextField) {
-        let results = Currency.filterList(searchBar.text, coinList: coinList)
-        
-        if let safeResults = results {
-            coinResults = safeResults
-        } else {
-            setDataForEmptySearch()
-        }
-    }
-    
-    private func setDataForEmptySearch() {
-        coinResults = Array(coinList.prefix(100))
-    }
-    
-    
-}
-
-extension WelcomeFollowViewController: FollowCoinDelegate {
-    
-    func didSelectButton(currency: Currency) {
-        followedSymbols.append(currency.diminutive)
-    }
-    
-    func didUnselectButton(currency: Currency) {
-        let symbol = currency.diminutive
-        
-        if let index = followedSymbols.index(of: symbol) {
-            followedSymbols.remove(at: index)
-        }
-    }
-    
-    
-}
-
-extension WelcomeFollowViewController: UITextFieldDelegate {
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        searchBar.resignFirstResponder()
-        return false
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        followTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-        tableViewTopConstraint?.constant = 16
-        tableViewRightConstraint?.constant = -16
-        tableViewLeftConstraint?.constant = 16
+    func textFieldDidStartEditing() {
+        followContainerTopConstraint?.constant = 16
+        followContainerRightConstraint?.constant = -16
+        followContainerLeftConstraint?.constant = 16
         animateChange()
-        
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        tableViewTopConstraint?.constant = TABLEVIEW_TOP_CONSTRAINT
-        tableViewRightConstraint?.constant = -TABLEVIEW_SIDE_CONSTRAINT
-        tableViewLeftConstraint?.constant = TABLEVIEW_SIDE_CONSTRAINT
+    func textFieldDidStopEditing() {
+        followContainerTopConstraint?.constant = TABLEVIEW_TOP_CONSTRAINT
+        followContainerRightConstraint?.constant = -TABLEVIEW_SIDE_CONSTRAINT
+        followContainerLeftConstraint?.constant = TABLEVIEW_SIDE_CONSTRAINT
         animateChange()
     }
     
@@ -248,5 +164,6 @@ extension WelcomeFollowViewController: UITextFieldDelegate {
             self.view.layoutIfNeeded()
         }
     }
+    
     
 }

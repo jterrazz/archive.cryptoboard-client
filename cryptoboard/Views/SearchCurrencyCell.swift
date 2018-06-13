@@ -11,7 +11,11 @@ import UIKit
 
 class SearchCurrencyCell: UITableViewCell {
     
-    var currency: Currency?
+    var currency: Currency? {
+        didSet {
+            showData()
+        }
+    }
     
     lazy var title: UILabel = {
         var label = UILabel()
@@ -86,7 +90,6 @@ class SearchCurrencyCell: UITableViewCell {
     
     public func setup(currency: Currency) {
         self.currency = currency
-        showData()
     }
     
     private func showData() {

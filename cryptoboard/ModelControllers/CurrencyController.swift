@@ -42,7 +42,12 @@ class CurrencyController {
         var toUpdate = [Currency]()
         var cachedCurrencies = [Currency]()
         var updatedCurrencies = [Currency]()
+        let userSettingsController = UserSettingsController()
+        let userLocalCurrency = userSettingsController.get()?.localCurrency
         
+        if (userLocalCurrency == nil) {
+           return
+        }
         
         // Check the update
         currencies.forEach { (currency) in
@@ -62,29 +67,56 @@ class CurrencyController {
                 cachedCurrencies.append(newCurrency)
             }
         }
-        callback(cachedCurrencies)
+        
+        var retCurrencies = mergeCurrencyArray(full: currencies, newArray: cachedCurrencies)
+        callback(retCurrencies)
         
         // 2: Return updated data
         if (toUpdate.count > 0) {
-            APIClient.getCurrenciesState(currenciesFrom: Currency.convertToSymbolArray(arr: toUpdate), currencyTo: "USD") { (updatedDictionary) in
-                for (symbol, currencyLiveData): (String, CurrencyLive) in updatedDictionary {
-                    if let currency = getCurrencyBase(symbol: symbol) {
-                        currency.liveData = currencyLiveData
-                        updatedCurrencies.append(currency)
-                    }
-                }
+            
+            APIClient.getCurrenciesState(currenciesFrom: Currency.convertToSymbolArray(arr: toUpdate), currencyTo: userLocalCurrency!.rawValue) { (updatedCurrencyDictionary) in
                 
-                callback(updatedCurrencies)
+                toUpdate.forEach({ (toUpdateBase) in
+                    if let liveData = updatedCurrencyDictionary[toUpdateBase.diminutive] {
+                        toUpdateBase.liveData = liveData
+                        updatedCurrencies.append(toUpdateBase)
+                    }
+                })
+                
+                retCurrencies = mergeCurrencyArray(full: retCurrencies, newArray: updatedCurrencies)
+                callback(retCurrencies)
+                
+                // 3: Cache data
+                for currency in updatedCurrencies {
+                    storageController.storeCurrencyState(currency: currency)
+                }
             }
-        }
-        
-        // 3: Cache data
-        for currency in updatedCurrencies {
-            storageController.storeCurrencyState(currency: currency)
         }
     }
     
-    public static func getCurrencyBase(symbol: String) -> Currency? {
+    private static func mergeCurrencyArray(full: [Currency], newArray: [Currency]) -> [Currency] {
+        var ret = [Currency]()
+        
+        ret.append(contentsOf: newArray)
+        
+        for old in full {
+            var alreadyInArray = false
+            
+            for retEl in ret {
+                if (retEl.diminutive == old.diminutive) {
+                    alreadyInArray = true
+                }
+            }
+            
+            if (!alreadyInArray) {
+                ret.append(old)
+            }
+        }
+        
+        return ret
+    }
+    
+    public static func getCurrencyBase(symbol: String, callback: @escaping (Currency?) -> Void) {
         
         var retCurrency: Currency? = nil
         
@@ -95,7 +127,30 @@ class CurrencyController {
             }
         }
         
-        return retCurrency
+        callback(retCurrency)
+    }
+    
+    public static func getCurrenciesBase(symbols: [String], callback: @escaping ([Currency]) -> Void) {
+        
+        let taskGroup = DispatchGroup()
+        var retCurrencies = [Currency]()
+        
+        symbols.forEach { (symbol) in
+            taskGroup.enter()
+            getCurrencyBase(symbol: symbol, callback: { (base) in
+                if let safeBase = base {
+                    retCurrencies.append(safeBase)
+                }
+                defer {
+                    taskGroup.leave()
+                }
+            })
+        }
+        
+        // TODO Put back in order if callback mess up order
+        taskGroup.notify(queue: DispatchQueue.main, work: DispatchWorkItem(block: {
+            callback(retCurrencies)
+        }))
     }
     
     public static func getCurrencyHistory(_ type: CurrencyHistoryType, currencyFrom: String, currencyTo: String, aggregate: UInt, points: UInt, callback: @escaping ([CurrencyPrice]) -> Void) {
