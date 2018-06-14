@@ -27,6 +27,12 @@ class GeneralCoinListCell: UITableViewCell {
         containerView.layer.cornerRadius = K.Design.CornerRadius
         containerView.backgroundColor = UIColor.theme.darkBgHover.value
         
+        setupViews()
+    }
+    
+    private func setupViews() {
+        selectionStyle = .none
+        
         for (index, borderView) in [marketBorder, volumeBorder, updateBorder].enumerated() {
             borderView?.layer.cornerRadius = 3
             

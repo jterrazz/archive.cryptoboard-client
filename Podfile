@@ -10,5 +10,6 @@ target 'cryptoboard' do
   pod 'Alamofire', '~> 4.7'
   pod 'SwiftyJSON'
   pod 'PinterestSegment'
+  pod 'NVActivityIndicatorView'
 
 end

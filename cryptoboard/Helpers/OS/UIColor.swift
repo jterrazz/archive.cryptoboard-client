@@ -70,7 +70,7 @@ extension UIColor {
     }
     
     enum gradients {
-        case purple, bluepurple, black
+        case purple, bluepurple, black, darkPurple
         
         var cgColors: [CGColor] {
             return self.value.map { $0.cgColor }
@@ -84,6 +84,12 @@ extension UIColor {
                 return [UIColor.init(hex: "#21d3fd"), UIColor.init(hex: "#b620ff")]
             case .black:
                 return [UIColor.init(hex: "#656d77"), UIColor.init(hex: "#2f363f")]
+            case .darkPurple:
+                return [
+                    UIColor.init(hex: "#0f0c29"),
+                    UIColor.init(hex: "#302b63"),
+                    UIColor.init(hex: "#24243e")
+                ]
             }
         }
     }

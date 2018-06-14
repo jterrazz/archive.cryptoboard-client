@@ -34,11 +34,17 @@ class HomeHeaderView: UIView {
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
         rightButton.addTarget(self, action: #selector(handleButtonClick(_:)), for: .touchUpInside)
+        
+        setupViews()
+    }
+    
+    private func setupViews() {
         rightButton.setTitle(nil, for: .normal)
         rightButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        rightButton.setTitleColor(UIColor.theme.textIntermediate.value, for: .normal)
         leftBorder.layer.cornerRadius = 2
-        titleLabel.textColor = UIColor.theme.textIntermediate.value
+        rightButton.setTitleColor(UIColor.theme.textDark.value, for: .normal)
+        titleLabel.textColor = UIColor.theme.textDark.value
+        titleLabel.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
     }
     
     public func setup(title: String, borderColor: UIColor = UIColor.theme.textDark.value, rightText: String?) {

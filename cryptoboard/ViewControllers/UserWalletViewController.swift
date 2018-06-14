@@ -13,6 +13,12 @@ class UserWalletViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupViews()
+    }
+    
+    private func setupViews() {
+        view.backgroundColor = UIColor.theme.bg.value
     }
     
     

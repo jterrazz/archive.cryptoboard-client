@@ -11,6 +11,8 @@ import UIKit
 class FollowCoinView: UIView {
     
     private let FOLLOW_COIN_CELL_ID = "follow-coin-cell-id"
+    private let EMPTY_FOLLOW_COIN_CELL_ID = "empty-follow-coin-cell-id"
+    private let ERROR_FOLLOW_COIN_CELL_ID = "error-follow-coin-cell-id"
     
     let userSettingsController = UserSettingsController()
     
@@ -18,12 +20,25 @@ class FollowCoinView: UIView {
     lazy var searchBar = UITextField()
     
     var delegate: FollowCoinViewDelegate?
+    var networkError = false {
+        didSet {
+            DispatchQueue.main.async {
+                self.followTableView.reloadData()
+            }
+        }
+    }
     
     var followedSymbols = [String]()
-    var coinList = [Currency]()
+    var coinList = [Currency]() {
+        didSet {
+            DispatchQueue.main.async {
+                self.setDataForEmptySearch()
+            }
+        }
+    }
     var coinResults = [Currency]() {
         didSet {
-            followTableView.reloadData()
+            self.followTableView.reloadData()
         }
     }
     
@@ -54,6 +69,8 @@ class FollowCoinView: UIView {
         followTableView.delegate = self
         followTableView.dataSource = self
         followTableView.register(FollowCoinCell.self, forCellReuseIdentifier: FOLLOW_COIN_CELL_ID)
+        followTableView.register(FollowCoinEmptyCell.self, forCellReuseIdentifier: EMPTY_FOLLOW_COIN_CELL_ID)
+        followTableView.register(FollowCoinErrorCell.self, forCellReuseIdentifier: ERROR_FOLLOW_COIN_CELL_ID)
         
         setupViews()
     }
@@ -82,16 +99,39 @@ class FollowCoinView: UIView {
         NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)
     }
     
+    func saveFollowedCurrencies() throws {
+        try UserSettingsController().update { (settings) in
+            for symbol in followedSymbols {
+                settings.followCurrency(symbol)
+            }
+        }
+    }
+    
 
 }
 
 extension FollowCoinView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if (coinResults.count == 0) {
+            return 1
+        }
+        
         return coinResults.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if (coinResults.count == 0 && networkError) {
+            let cell = tableView.dequeueReusableCell(withIdentifier: ERROR_FOLLOW_COIN_CELL_ID, for: indexPath) as! FollowCoinErrorCell
+            
+            cell.delegate = self
+            return cell
+        } else if (coinResults.count == 0) {
+            let cell = tableView.dequeueReusableCell(withIdentifier: EMPTY_FOLLOW_COIN_CELL_ID, for: indexPath) as! FollowCoinEmptyCell
+            
+            return cell
+        }
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: FOLLOW_COIN_CELL_ID, for: indexPath) as! FollowCoinCell
         let currentCoin = coinResults[indexPath.row]
         let isFollowed = (followedSymbols.index(of: currentCoin.diminutive) != nil) ? true : false
@@ -108,6 +148,10 @@ extension FollowCoinView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if (coinResults.count == 0) {
+            return tableView.frame.height
+        }
+        
         return 42
     }
     
@@ -154,20 +198,28 @@ extension FollowCoinView: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         followTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-        self.delegate?.textFieldDidStartEditing()
+        self.delegate?.textFieldDidStartEditing?()
         
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        self.delegate?.textFieldDidStartEditing()
+        self.delegate?.textFieldDidStartEditing?()
     }
     
 }
 
-protocol FollowCoinViewDelegate {
+extension FollowCoinView: FollowCoinErrorCellDelegate {
     
-    func textFieldDidStartEditing()
-    func textFieldDidStopEditing()
+    func didAskForReload() {
+        delegate?.askedToReloadData()
+    }
+}
+
+@objc protocol FollowCoinViewDelegate {
+    
+    @objc optional func textFieldDidStartEditing()
+    @objc optional func textFieldDidStopEditing()
+    func askedToReloadData()
     
     
 }

@@ -73,3 +73,19 @@ enum ThemeStatus {
 enum ChartVariation {
     case up, down
 }
+
+enum APIError: Error {
+    case unknownError
+    case connectionError
+    case notFound
+    case invalidResponse
+    case serverError
+    case serverUnavailable
+    case timeOut
+    case unsuppotedURL
+}
+
+enum StorageError: Error {
+    case saveError
+    case getError
+}

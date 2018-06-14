@@ -15,22 +15,45 @@ class MenuTitleCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 26, weight: UIFont.Weight.bold)
         label.textColor = UIColor.theme.textDark.value
-        label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
     }()
     
+    lazy var waveBackground = WaveView()
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        backgroundColor = UIColor.clear
-        selectionStyle = .none
-        contentView.addSubview(titleLabel)
-        NSLayoutConstraint.visualConstraints(views: ["title": titleLabel], visualConstraints: ["V:|-[title]-|", "H:[title]-|"])
+        commonInit()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        commonInit()
+    }
+    
+    private func commonInit() {
+        backgroundColor = UIColor.clear
+        selectionStyle = .none
+        titleLabel.textColor = UIColor.white
+        contentView.addSubviewsAutoConstraints([waveBackground, titleLabel])
+        waveBackground.fillColor = UIColor.theme.redDark.value
+        waveBackground.shadowColor = UIColor.white.cgColor
+        waveBackground.shadowBlurRadius = 0
+        waveBackground.heightMultiplier = 0.90
+        waveBackground.opposite = true
+        
+        let views = [
+            "title": titleLabel,
+            "wave": waveBackground
+        ]
+        let constraints = [
+            "V:|-32-[title]",
+            "H:[title]-|",
+            "V:|-(-210)-[wave(300)]-24-|",
+            "H:|[wave]|",
+        ]
+        
+        NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)
     }
     
     public func setup(title: String) {

@@ -19,7 +19,9 @@ class ListViewController: UIViewController {
     
     var currencyList = [Currency]() {
         didSet {
-            self.tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
     }
     
@@ -30,35 +32,42 @@ class ListViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
-        setViews()
+        setupViews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         navigationController?.setNavigationBarHidden(false, animated: true)
+        let bar = navigationController?.navigationBar
+        bar?.tintColor = UIColor.white
+        bar?.titleTextAttributes =  [NSAttributedStringKey.foregroundColor: UIColor.white]
+        bar?.topItem?.title = "Hot coins"
+        bar?.barStyle = .black
         
         DispatchQueue.main.async {
-            CurrencyController.getList(limit: 50) { (currencies) in
+            CurrencyController.getList(limit: 50) { (error, currencies) in
+                // TODO If error print message to reload
                 self.currencyList = currencies
             }
         }
         
     }
     
-    private func setViews() {
-        
-        let bar = navigationController?.navigationBar
-        bar?.tintColor = UIColor.white
-        bar?.titleTextAttributes =  [NSAttributedStringKey.foregroundColor: UIColor.white]
-        bar?.topItem?.title = "Coin list"
-        bar?.barStyle = .black
-        
-        view.setGradient(colors: UIColor.gradients.bluepurple.cgColors, angle: 45)
+    override func viewWillDisappear(_ animated: Bool) {
+        navigationController?.navigationBar.topItem?.title = ""
+    }
+    
+    private func setupViews() {
+        view.setGradient(colors: UIColor.gradients.darkPurple.cgColors, angle: 65)
         
         tableView.separatorStyle = .none
         tableView.backgroundColor = UIColor.clear
         
+        setupConstraints()
+    }
+    
+    private func setupConstraints() {
         view.addSubviewsAutoConstraints([tableView])
         
         let views = [
@@ -67,12 +76,12 @@ class ListViewController: UIViewController {
         let constraints = [
             "H:|[table]|",
             "V:[table]|",
-        ]
+            ]
         
         NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeTopAnchor)
-        ])
+            ])
     }
     
     
@@ -126,7 +135,10 @@ extension ListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+        if (indexPath.section == 0) {
+            return UITableViewAutomaticDimension
+        }
+        return 70
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

@@ -35,7 +35,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navBar.setBackgroundImage(UIImage(), for: .default)
         
         // Setting all main controllers
-        let iconInset = UIEdgeInsets(top: 9, left: 0, bottom: -9, right: 0)
+        let iconInset: UIEdgeInsets!
+            
+        if (UIDevice().type == .iPhoneX) {
+            iconInset = UIEdgeInsets(top: 9, left: 0, bottom: -9, right: 0)
+        } else {
+            iconInset = UIEdgeInsets(top: 4, left: 0, bottom: -4, right: 0)
+        }
         
         let homeController = HomeViewController()
         let homeIcon = UITabBarItem(title: nil, image: UIImage.init(named: "home"), tag: 0)
@@ -70,7 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if (settings == nil) { // TODO add logic
             navigationController.present(firstTimeController, animated: false, completion: nil)
         }
-        
+    
         return true
     }
 

@@ -10,12 +10,16 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
+// TODO All error handling
 class APIClient {
     
-    static func getCurrencyList(callback: @escaping ([Currency]) -> Void) {
-        Alamofire.request(APIRouter.currencyList()).responseJSON { (response) in
+    static let queue = DispatchQueue.global()
+    
+    static func getCurrencyList(callback: @escaping (APIError?, [Currency]) -> Void) {
+        
+        Alamofire.request(APIRouter.currencyList()).responseJSON(queue: queue) { (response) in
             guard (response.error == nil && response.result.value != nil) else {
-                return
+                return callback(APIError.connectionError, [])
             }
             
             var currencyList = [Currency]()
@@ -28,7 +32,7 @@ class APIClient {
                     }
                 }
             }
-            callback(currencyList)
+            callback(nil, currencyList)
         }
     }
     
@@ -44,7 +48,7 @@ class APIClient {
             router = APIRouter.histoMinute(currencyFrom: currencyFrom, currencyTo: currencyTo, aggregate: aggregate, points: points)
         }
         
-        Alamofire.request(router).responseJSON { (response) in
+        Alamofire.request(router).responseJSON(queue: queue) { (response) in
             guard response.error == nil else {
                 return
             }
@@ -70,7 +74,7 @@ class APIClient {
     }
     
     static func getCurrenciesState(currenciesFrom: [String], currencyTo: String, callback: @escaping ([String: CurrencyLive]) -> Void) {
-        Alamofire.request(APIRouter.currenciesState(currenciesFrom: currenciesFrom, currencyTo: currencyTo)).responseJSON { (response) in
+        Alamofire.request(APIRouter.currenciesState(currenciesFrom: currenciesFrom, currencyTo: currencyTo)).responseJSON(queue: queue) { (response) in
             guard response.error == nil else {
                 return
             }

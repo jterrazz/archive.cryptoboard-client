@@ -60,6 +60,12 @@ class CoinDetailController: UIViewController {
         
         topBarBg.backgroundColor = UIColor.white
         view.backgroundColor = UIColor.theme.bg.value
+        
+        
+        setupConstraints()
+    }
+    
+    private func setupConstraints() {
         view.addSubviewsAutoConstraints([tableView, topBarBg])
         
         let views = [
@@ -70,14 +76,14 @@ class CoinDetailController: UIViewController {
             "H:|[scroll]|",
             "V:[scroll]|",
             "H:|[barBg]|",
-        ]
+            ]
         
         NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeTopAnchor),
             topBarBg.topAnchor.constraint(equalTo: view.topAnchor),
             topBarBg.bottomAnchor.constraint(equalTo: view.safeTopAnchor)
-        ])
+            ])
     }
     
     

@@ -16,6 +16,7 @@ class CardCoinInformationsCell: UIView {
     @IBOutlet var priceLabel: UILabel!
     @IBOutlet var symbolLabel: UILabel!
     @IBOutlet var variationLabel: UILabel!
+    @IBOutlet var exploreLabel: UILabel!
     @IBOutlet var logoImageView: UIImageView!
     
     override init(frame: CGRect) {
@@ -37,9 +38,10 @@ class CardCoinInformationsCell: UIView {
         contentView.backgroundColor = UIColor.white
         contentView.layer.cornerRadius = K.Design.CornerRadius
         
-        [nameLabel, priceLabel, symbolLabel, variationLabel].forEach { (label) in
+        [nameLabel, priceLabel, variationLabel, exploreLabel].forEach { (label) in
             label?.textColor = UIColor.theme.textDark.value
         }
+        symbolLabel.textColor = UIColor.theme.textIntermediate.value
     }
     
     func setup(currency: Currency) {

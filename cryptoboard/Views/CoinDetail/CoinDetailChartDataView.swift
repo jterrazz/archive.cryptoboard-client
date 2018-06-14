@@ -81,22 +81,26 @@ class CoinDetailChartDataView: UIView {
     }
     
     @objc private func handleFollowClick(_ sender: FollowButton) {
-        if (sender.isSelected) {
-            sender.deselect()
-            userSettingsController.update { (settings) in
-                if let safeCurrency = currency {
-                    settings.unfollowCurrency(safeCurrency.diminutive)
+        if let safeCurrency = currency {
+            do {
+                if (sender.isSelected) {
+                    try userSettingsController.update { (settings) in
+                        sender.deselect()
+                        settings.unfollowCurrency(safeCurrency.diminutive)
+                    }
+                    
+                } else {
+                    try userSettingsController.update { (settings) in
+                        sender.select()
+                        settings.followCurrency(safeCurrency.diminutive)
+                    }
+                    
                 }
-            }
-        } else {
-            sender.select()
-            userSettingsController.update { (settings) in
-                if let safeCurrency = currency {
-                    settings.followCurrency(safeCurrency.diminutive)
-                }
+                AudioServicesPlaySystemSound(1519)
+            } catch {
+                // TODO Show error popup
             }
         }
-        AudioServicesPlaySystemSound(1519)
     }
     
 

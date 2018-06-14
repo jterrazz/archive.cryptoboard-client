@@ -19,7 +19,11 @@ class WaveView: UIView {
         }
     }
     
-    var shadowColor = UIColor.black.cgColor
+    var shadowColor = UIColor.black.cgColor {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
     var shadowOffset = CGSize(width: 1, height: 0)
     var shadowBlurRadius: CGFloat = 20
 

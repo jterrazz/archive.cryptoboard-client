@@ -25,7 +25,6 @@
                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="Unk-65-22i" secondAttribute="height" multiplier="16:9" id="5Yp-Ql-FxU"/>
-                                <constraint firstAttribute="height" constant="54" id="HSD-aG-cDF"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hxm-8v-zKV">

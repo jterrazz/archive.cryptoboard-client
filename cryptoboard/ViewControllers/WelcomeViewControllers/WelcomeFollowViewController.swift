@@ -40,18 +40,32 @@ class WelcomeFollowViewController: UIViewController {
         
         setupViews()
         
-        CurrencyController.getList(limit: 999999) { (currencies) in
-            self.followContainer.coinList = currencies
-            self.followContainer.setDataForEmptySearch()
-        }
-        
         nextButton.addTarget(self, action: #selector(triggerNextButton(_:)), for: .touchUpInside)
         backButton.addTarget(self, action: #selector(triggerBackButton(_:)), for: .touchUpInside)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        loadData()
+    }
+    
+    private func loadData() {
+        CurrencyController.getList(limit: 999999) { (error, currencies) in
+            if (error != nil) {
+                self.followContainer.networkError = true
+            } else {
+                self.followContainer.networkError = false
+                self.followContainer.coinList = currencies
+            }
+        }
     }
     
     private func setupViews() {
         view.backgroundColor = UIColor.clear
         view.clipsToBounds = true
+        
+        self.followContainer.delegate = self
         
         waveBackground.opposite = true
         followContainer.backgroundColor = UIColor.theme.bg.value
@@ -69,6 +83,7 @@ class WelcomeFollowViewController: UIViewController {
         nextButton.setTitle("CONFIRM", for: .normal)
         
         view.addSubviewsAutoConstraints([nextButton, waveBackground, followContainer, titleLabel, backButton])
+        
         setupConstraints()
     }
     
@@ -137,6 +152,7 @@ class WelcomeFollowViewController: UIViewController {
         
         if (!followContainer.frame.contains(location)) {
             followContainer.searchBar.resignFirstResponder()
+            textFieldDidStopEditing()
         }
     }
     
@@ -157,6 +173,10 @@ extension WelcomeFollowViewController: FollowCoinViewDelegate {
         followContainerRightConstraint?.constant = -TABLEVIEW_SIDE_CONSTRAINT
         followContainerLeftConstraint?.constant = TABLEVIEW_SIDE_CONSTRAINT
         animateChange()
+    }
+    
+    func askedToReloadData() {
+        loadData()
     }
     
     private func animateChange() {

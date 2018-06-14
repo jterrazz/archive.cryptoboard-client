@@ -31,12 +31,11 @@ class StorageController {
         return nil
     }
     
-    public func storeCurrencyList(list: [Currency]) {
+    public func storeCurrencyList(list: [Currency]) throws {
         let listObj = CurrencyList.init(list: list)
+        let encoded = try encoder.encode(listObj)
         
-        if let encoded = try? encoder.encode(listObj) {
-            userDefaults.set(encoded, forKey: CURRENCY_LIST_KEY)
-        }
+        userDefaults.set(encoded, forKey: CURRENCY_LIST_KEY)
     }
     
     // CURRENCY PRICE HISTORY
@@ -50,7 +49,8 @@ class StorageController {
     }
     
     public func storeCurrencyHistory(symbol: String, prices: [CurrencyPrice], aggregate: UInt, points: UInt) {
-        CurrencyController.getCurrencyBase(symbol: symbol) { (currency) in
+        CurrencyController.getCurrencyBase(symbol: symbol) { (error, currency) in
+            // handle error
             if let safeCurrency = currency {
                 safeCurrency.historyPrice = prices
                 

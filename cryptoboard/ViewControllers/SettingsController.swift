@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 // Powered by News API : I promise to add an attribution link on my website or app to NewsAPI.org.
 class SettingsController: UIViewController {
     
@@ -20,18 +19,28 @@ class SettingsController: UIViewController {
         case title, wallet, preferences, other, total
     }
     
-    var sectionCells: [Sections: [String]] = [
-        .title: ["Settings"],
-        .wallet: ["My follow list", "List all currencies"],
-        .preferences: ["My currency"],
-        .other: ["About", "Developer", "Leave a review"]
-    ]
+    class SettingsCell {
+        
+        var name: String
+        var ft: (() -> Void)?
+        
+        init(_ name: String) {
+            self.name = name
+        }
+        
+        init(_ name: String, ft: @escaping () -> Void) {
+            self.name = name
+            self.ft = ft
+        }
+        
+    }
+    
+    var sectionCells = [Sections: [SettingsCell]]()
     
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.separatorStyle = .none
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = UIColor.clear
+        tableView.backgroundColor = UIColor.theme.bg.value
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(MenuTitleCell.self, forCellReuseIdentifier: MENU_TITLE_CELL_ID)
@@ -41,57 +50,42 @@ class SettingsController: UIViewController {
         return tableView
     }()
     
-    lazy var gradientBorder: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    lazy var closeBtn: UIButton = {
-        let image = UIImage.init(named: "cross")?.withRenderingMode(UIImageRenderingMode.alwaysTemplate)
-        let button = UIButton(type: UIButtonType.custom)
-
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(image, for: UIControlState.normal)
-        button.tintColor = UIColor.theme.textIntermediate.value
-        button.addTarget(self, action: #selector(handleClose(_:)), for: .touchUpInside)
-        
-        return button
-    }()
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = UIColor.theme.bg.value
-        view.addSubview(tableView)
-        view.addSubview(gradientBorder)
-        view.addSubview(closeBtn)
         
+        sectionCells = [
+            .title: [SettingsCell("Settings")],
+            .wallet: [SettingsCell("My follow list"), SettingsCell("List all currencies")],
+            .preferences: [SettingsCell("My local currency")],
+            .other: [SettingsCell("About"), SettingsCell("Developer"), SettingsCell("Leave a review", ft: handleReviewButton), SettingsCell("Reset app", ft: handleResetButton)]
+        ]
+
+        view.backgroundColor = UIColor.theme.redDark.value
+        view.addSubviewsAutoConstraints([tableView])
+        
+        setupConstraints()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    private func setupConstraints() {
         let views: [String: Any] = [
             "tableView": tableView,
-            "close": closeBtn,
-            "gradient": gradientBorder
-        ]
+            ]
         let constraints = [
             "H:|[tableView]|",
-            "H:|[gradient]|",
-            "H:|-18-[close(26)]",
-            "V:[close(26)]-[tableView]|",
-        ]
+            "V:[tableView]|",
+            ]
+        
         NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)
         NSLayoutConstraint.activate([
-            closeBtn.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 9),
-            gradientBorder.topAnchor.constraint(equalTo: tableView.topAnchor),
-            gradientBorder.heightAnchor.constraint(equalToConstant: 14)
-        ])
+            tableView.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 8)])
     }
     
-    override func viewDidLayoutSubviews() {
-        gradientBorder.applyGradient(colours: [UIColor.theme.bg.value, UIColor.theme.bg.withAlpha(0)])
-    }
-    
-    @objc private func handleClose(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
     }
     
 
@@ -108,12 +102,12 @@ extension SettingsController: UITableViewDelegate, UITableViewDataSource {
         
         if let tableSection = Sections(rawValue: section) {
             switch tableSection {
-            case .wallet:
-                cell.setup(title: "Wallet")
-            case .preferences:
-                cell.setup(title: "Preferences")
-            case .other:
-                cell.setup(title: "Other")
+//            case .wallet:
+//                cell.setup(title: "Wallet")
+//            case .preferences:
+//                cell.setup(title: "Preferences")
+//            case .other:
+//                cell.setup(title: "Other")
             default:
                 break
             }
@@ -137,19 +131,65 @@ extension SettingsController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let tableSection = Sections(rawValue: indexPath.section), let cellTitles = sectionCells[tableSection] {
+            let currentCell = cellTitles[indexPath.row]
+            
             if (tableSection == .title) {
                 let cell = tableView.dequeueReusableCell(withIdentifier: MENU_TITLE_CELL_ID, for: indexPath) as! MenuTitleCell
                 
-                cell.setup(title: cellTitles[indexPath.row])
+                cell.setup(title: currentCell.name)
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: MENU_CELL_ID, for: indexPath) as! MenuContentCell
                 
-                cell.setup(title: cellTitles[indexPath.row])
+                cell.setup(title: currentCell.name)
                 return cell
             }
         }
         return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let tableSection = Sections(rawValue: indexPath.section), let cellTitles = sectionCells[tableSection] {
+            let currentCell = cellTitles[indexPath.row]
+            
+            if let ft = currentCell.ft {
+                ft()
+            }
+        }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    private func handleResetButton() {
+        let alert = UIAlertController(title: "Reset application", message: "All settings will be deleted", preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) in
+            UserSettingsController().reset()
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (acton) in
+
+        }))
+
+        present(alert, animated: true, completion: nil)
+    }
+    
+    private func handleReviewButton() {
+        let appId = "1382998431"
+        
+        guard let url = URL(string : "itms-apps://itunes.apple.com/app/" + appId) else {
+            return
+        }
+        
+        let alert = UIAlertController(title: "Review the app", message: "Help us by giving your advice", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Lets go !", style: .default, handler: { (action) in
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: { (acton) in
+            
+        }))
+        
+        present(alert, animated: true, completion: nil)
     }
     
 }

@@ -69,7 +69,8 @@ class SearchController: UIViewController, UIGestureRecognizerDelegate {
         NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)
         
         searchResults.removeAll()
-        CurrencyController.getList(limit: 999999) { (currencies) in
+        CurrencyController.getList(limit: 999999) { (error, currencies) in
+            // TODO User error
             self.allCurrencies = currencies
             // TODO Update list
         }

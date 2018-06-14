@@ -16,7 +16,6 @@ class UserSettingsController {
     private let decoder = JSONDecoder()
     
     func get() -> UserSettings? {
-        
         var settings: UserSettings?
         
         if let data = userDefaults.data(forKey: SETTINGS_KEY) {
@@ -27,23 +26,22 @@ class UserSettingsController {
     }
     
     func set(_ settings: UserSettings) throws {
-        
         let encoded = try encoder.encode(settings)
         
         userDefaults.set(encoded, forKey: SETTINGS_KEY)
     }
     
-    func update(ft: (UserSettings) -> Void) {
-        
+    func reset() {
+        userDefaults.removeObject(forKey: SETTINGS_KEY)
+    }
+    
+    func update(ft: (UserSettings) -> Void) throws {
         if let settings = get() {
             ft(settings)
             
-            // TODO handle error
-            do {
-                try self.set(settings)
-            } catch {
-                
-            }
+            try self.set(settings)
+        } else {
+            throw StorageError.getError
         }
     }
     

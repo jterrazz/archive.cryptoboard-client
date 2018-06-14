@@ -17,8 +17,9 @@ class HomeViewController: UIViewController {
     var userSettingsController = UserSettingsController()
     var followedCurrencies = [Currency]() {
         didSet {
-            print("FOLLOED : ", followedCurrencies)
-            cardCollectionView.reloadData()
+            DispatchQueue.main.async {
+                self.cardCollectionView.reloadData()
+            }
         }
     }
     
@@ -52,7 +53,6 @@ class HomeViewController: UIViewController {
     lazy var myWallet = WalletView()
     lazy var underWallet = UnderWalletView()
     lazy var firstHeader = HomeHeaderView()
-    lazy var secondeHeader = HomeHeaderView()
     lazy var scrollView = UIScrollView()
     lazy var topBackgroundWithAngle = BackgroundAngleView(frame: CGRect.init(x: 0, y: 0, width: 300, height: 300))
 
@@ -68,6 +68,7 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         setUserData()
         if (followedCurrencies.count > 0) {
             cardCollectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredHorizontally, animated: true)
@@ -79,21 +80,24 @@ class HomeViewController: UIViewController {
     private func setUserData() {
         if let settings = userSettingsController.get() {
             let symbols = settings.followedCurrencies
-            print(symbols)
-            CurrencyController.getCurrenciesBase(symbols: symbols) { (currencies) in
-                CurrencyController.getCurrencyState(currencies: currencies, callback: { (currenciesStates) in
+            
+            CurrencyController.getCurrenciesBase(symbols: symbols) { (error, currencies) in
+                // handle error
+                CurrencyController.getCurrencyState(currencies: currencies, callback: { (error, currenciesStates) in
+                    // TODO Handle Error
                     self.followedCurrencies = currenciesStates
                 })
             }
+        } else {
+            self.followedCurrencies.removeAll(keepingCapacity: true)
         }
     }
     
     private func setupViews() {
         view.backgroundColor = UIColor.theme.bg.value
         
-        firstHeader.setup(title: "Personnal", borderColor: UIColor.theme.blue.value, rightText: nil)
-        secondeHeader.setup(title: "Coins", borderColor: UIColor.theme.blue.value, rightText: "modify")
-        secondeHeader.delegate = self
+        firstHeader.setup(title: "MY COINS", borderColor: UIColor.theme.textDark.value, rightText: "modify")
+        firstHeader.delegate = self
         myWallet.addShadow()
         
         topBackgroundWithAngle.gradientColors = [UIColor.white.cgColor]
@@ -102,7 +106,6 @@ class HomeViewController: UIViewController {
         view.addSubviewAutoConstraints(searchBar)
         view.addSubviewAutoConstraints(scrollView)
         scrollView.addSubviewAutoConstraints(firstHeader)
-        scrollView.addSubviewAutoConstraints(secondeHeader)
         scrollView.addSubviewAutoConstraints(cardCollectionView)
         scrollView.addSubviewAutoConstraints(myWallet)
         scrollView.addSubviewAutoConstraints(underWallet)
@@ -111,7 +114,6 @@ class HomeViewController: UIViewController {
             "scroll": scrollView,
             "search": searchBar,
             "header1": firstHeader,
-            "header2": secondeHeader,
             "cards": cardCollectionView,
             "wallet": myWallet,
             "underWallet": underWallet,
@@ -126,9 +128,8 @@ class HomeViewController: UIViewController {
             "H:|[cards]|",
             "H:|-16-[search]-16-|",
             "H:|-16-[header1]-16-|",
-            "H:|-16-[header2]-16-|",
             "V:[search]-16-[scroll]|",
-            "V:|-16-[header1]-16-[wallet]-16-[underWallet]-32-[header2][cards]-12-|",
+            "V:|[wallet]-16-[underWallet]-32-[header1][cards]-12-|",
         ]
         
         NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)

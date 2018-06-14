@@ -27,13 +27,7 @@ class WalletView: UIView {
     }
     
     override func layoutSubviews() {
-        let walletGradient = [
-            UIColor.theme.custom(hexString: "#0f0c29").value.cgColor,
-            UIColor.theme.custom(hexString: "#302b63").value.cgColor,
-            UIColor.theme.custom(hexString: "#24243e").value.cgColor
-        ]
-        
-        contentView.setGradient(colors: walletGradient, angle: 65)
+        contentView.setGradient(colors: UIColor.gradients.darkPurple.cgColors, angle: 65)
     }
     
     private func commonInit() {

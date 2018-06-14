@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CardCoinInformationsCell" customModule="cryptoboard" customModuleProvider="target">
             <connections>
                 <outlet property="contentView" destination="iN0-l3-epB" id="psB-1y-N79"/>
+                <outlet property="exploreLabel" destination="F09-on-SPM" id="aP0-zI-TaA"/>
                 <outlet property="logoImageView" destination="cZB-z8-MWw" id="cyb-fk-R6S"/>
                 <outlet property="nameLabel" destination="kAw-Vp-d0d" id="kLT-8V-l1l"/>
                 <outlet property="priceLabel" destination="dxo-Pe-mMf" id="UjD-2D-VPh"/>
@@ -26,8 +27,8 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="BITCOIN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kAw-Vp-d0d">
-                    <rect key="frame" x="16" y="68" width="124" height="38.5"/>
-                    <fontDescription key="fontDescription" type="boldSystem" pointSize="31"/>
+                    <rect key="frame" x="16" y="68" width="114" height="38.5"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="29"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -38,6 +39,12 @@
                         <constraint firstAttribute="height" constant="36" id="jFf-R7-BHW"/>
                     </constraints>
                 </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="BTC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="88L-TI-40a">
+                    <rect key="frame" x="16" y="114" width="29" height="20.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="7FY-5A-5kd">
                     <rect key="frame" x="321" y="13.5" width="113" height="41"/>
                     <subviews>
@@ -55,9 +62,9 @@
                         </label>
                     </subviews>
                 </stackView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="BTC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="88L-TI-40a">
-                    <rect key="frame" x="16" y="114" width="32.5" height="20.5"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EXPLORE -&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F09-on-SPM">
+                    <rect key="frame" x="362" y="124.5" width="74" height="14.5"/>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -67,11 +74,13 @@
                 <constraint firstItem="88L-TI-40a" firstAttribute="top" secondItem="kAw-Vp-d0d" secondAttribute="bottom" id="4MN-QX-d13"/>
                 <constraint firstItem="7FY-5A-5kd" firstAttribute="centerY" secondItem="cZB-z8-MWw" secondAttribute="centerY" id="94f-Ot-jmG"/>
                 <constraint firstItem="kAw-Vp-d0d" firstAttribute="top" secondItem="cZB-z8-MWw" secondAttribute="bottom" constant="16" id="9Ab-PZ-UAn"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="F09-on-SPM" secondAttribute="trailing" constant="16" id="O4b-AA-1Eq"/>
                 <constraint firstItem="cZB-z8-MWw" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="16" id="P80-te-JOp"/>
                 <constraint firstItem="88L-TI-40a" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="Qmd-rG-ZqG"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="7FY-5A-5kd" secondAttribute="trailing" constant="18" id="TGG-8n-y97"/>
                 <constraint firstItem="cZB-z8-MWw" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="VaI-xE-Ao8"/>
                 <constraint firstItem="kAw-Vp-d0d" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="WyS-ic-jF8"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="F09-on-SPM" secondAttribute="bottom" constant="16" id="cWq-6v-8RN"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="88L-TI-40a" secondAttribute="bottom" constant="16" id="diY-gc-3yF"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

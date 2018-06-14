@@ -13,7 +13,13 @@ class FollowCoinCell: UITableViewCell {
     let followImage = UIImage(named: "heart", in: Bundle.main, compatibleWith: nil)
     
     var delegate: FollowCoinCellDelegate?
-    var currency: Currency?
+    var currency: Currency? {
+        didSet {
+            if let safeCurrency = currency {
+                leftLabel.text = safeCurrency.name
+            }
+        }
+    }
     
     lazy var leftLabel = UILabel()
     lazy var followButton = FollowButton(frame: CGRect.init(x: 0, y: 0, width: 50, height: 50), image: followImage)
@@ -55,14 +61,9 @@ class FollowCoinCell: UITableViewCell {
     }
     
     public func setup(currency: Currency, selected: Bool) {
-        leftLabel.text = currency.name
         self.currency = currency
         
-        if (selected) {
-            followButton.select()
-        } else {
-            followButton.deselect()
-        }
+        followButton.isSelected = selected
     }
     
     @objc private func handleFollowClick(_ sender: FollowButton) {
