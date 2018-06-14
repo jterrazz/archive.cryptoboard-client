@@ -39,7 +39,7 @@ class MenuTitleCell: UITableViewCell {
         waveBackground.fillColor = UIColor.theme.redDark.value
         waveBackground.shadowColor = UIColor.white.cgColor
         waveBackground.shadowBlurRadius = 0
-        waveBackground.heightMultiplier = 0.90
+        waveBackground.heightMultiplier = 0.93
         waveBackground.opposite = true
         
         let views = [
@@ -47,13 +47,18 @@ class MenuTitleCell: UITableViewCell {
             "wave": waveBackground
         ]
         let constraints = [
-            "V:|-32-[title]",
+            "V:[title]",
             "H:[title]-|",
-            "V:|-(-210)-[wave(300)]-24-|",
+            "V:[wave]-24-|",
             "H:|[wave]|",
         ]
         
         NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)
+        NSLayoutConstraint.activate([
+            waveBackground.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -300),
+            waveBackground.bottomAnchor.constraint(equalTo: contentView.topAnchor, constant: 64),
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16)
+            ])
     }
     
     public func setup(title: String) {

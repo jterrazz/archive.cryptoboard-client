@@ -49,7 +49,7 @@ class StorageController {
     }
     
     public func storeCurrencyHistory(symbol: String, prices: [CurrencyPrice], aggregate: UInt, points: UInt) {
-        CurrencyController.getCurrencyBase(symbol: symbol) { (error, currency) in
+        CurrencyController().getCurrencyBase(symbol: symbol) { (error, currency) in
             // handle error
             if let safeCurrency = currency {
                 safeCurrency.historyPrice = prices

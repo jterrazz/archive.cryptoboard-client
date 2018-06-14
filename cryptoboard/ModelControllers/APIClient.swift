@@ -13,6 +13,8 @@ import SwiftyJSON
 // TODO All error handling
 class APIClient {
     
+    // No static TODO ?
+    
     static let queue = DispatchQueue.global()
     
     static func getCurrencyList(callback: @escaping (APIError?, [Currency]) -> Void) {
@@ -28,7 +30,10 @@ class APIClient {
             if let currencies = json["Data"].dictionary {
                 for (_, currency) in currencies {
                     if let stringId = currency["SortOrder"].string, let id = UInt(stringId), let name = currency["CoinName"].string, let diminutive = currency["Name"].string, let imageUrl = currency["ImageUrl"].string {
-                        currencyList.append(Currency(id: id, name: name, diminutive: diminutive, imageName: nil))
+                        let currencyRet = Currency(id: id, name: name, diminutive: diminutive, imageName: nil)
+                        
+                        currencyRet.imageUrl = imageUrl
+                        currencyList.append(currencyRet)
                     }
                 }
             }
@@ -72,7 +77,7 @@ class APIClient {
             callback(ret)
         }
     }
-    
+    // Handle Errors
     static func getCurrenciesState(currenciesFrom: [String], currencyTo: String, callback: @escaping ([String: CurrencyLive]) -> Void) {
         Alamofire.request(APIRouter.currenciesState(currenciesFrom: currenciesFrom, currencyTo: currencyTo)).responseJSON(queue: queue) { (response) in
             guard response.error == nil else {
@@ -89,9 +94,10 @@ class APIClient {
                         let d = toArr[currencyTo]
                         
                         if let price = d["PRICE"].double, let volume = d["VOLUME24HOURTO"].double, let high = d["HIGHDAY"].double,
-                            let low = d["LOWDAY"].double, let marketCap = d["MKTCAP"].double, let supply = d["SUPPLY"].double {
+                            let low = d["LOWDAY"].double, let marketCap = d["MKTCAP"].double, let supply = d["SUPPLY"].double,
+                            let variationDay = d["CHANGE24HOUR"].double , let variationDayPercent = d["CHANGEPCT24HOUR"].double {
                             
-                            ret[symbol] = CurrencyLive.init(price: price, volumeDay: volume, highDay: high, lowDay: low, marketCap: marketCap, supply: supply)
+                            ret[symbol] = CurrencyLive.init(price: price, volumeDay: volume, highDay: high, lowDay: low, marketCap: marketCap, supply: supply, variationDay: variationDay, variationDayPercent: variationDayPercent)
                         }
                     }
                 }

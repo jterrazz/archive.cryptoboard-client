@@ -51,6 +51,10 @@
 		8694FC5420D1AD54000E904C /* CardCoinEmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694FC5320D1AD54000E904C /* CardCoinEmptyCell.swift */; };
 		8694FC5620D1BEE9000E904C /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694FC5520D1BEE9000E904C /* UIDevice.swift */; };
 		8694FC5820D1E1F0000E904C /* FollowCoinErrorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694FC5720D1E1F0000E904C /* FollowCoinErrorCell.swift */; };
+		8694FC5B20D21FA1000E904C /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694FC5A20D21FA1000E904C /* UIImageView.swift */; };
+		8694FC5E20D2AEC2000E904C /* UserWalletHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694FC5D20D2AEC2000E904C /* UserWalletHeaderView.swift */; };
+		8694FC6020D2AEF3000E904C /* UserWalletHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8694FC5F20D2AEF3000E904C /* UserWalletHeaderView.xib */; };
+		8694FC6220D2BC1D000E904C /* UserWalletChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694FC6120D2BC1D000E904C /* UserWalletChartView.swift */; };
 		869E84DE20CD9A54008AB1EC /* CoinWithChartHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869E84DD20CD9A54008AB1EC /* CoinWithChartHeader.swift */; };
 		869E84E020CE853A008AB1EC /* UserWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869E84DF20CE853A008AB1EC /* UserWalletViewController.swift */; };
 		869E84E220CE8806008AB1EC /* CurrencyLive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 869E84E120CE8806008AB1EC /* CurrencyLive.swift */; };
@@ -131,6 +135,10 @@
 		8694FC5320D1AD54000E904C /* CardCoinEmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCoinEmptyCell.swift; sourceTree = "<group>"; };
 		8694FC5520D1BEE9000E904C /* UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
 		8694FC5720D1E1F0000E904C /* FollowCoinErrorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowCoinErrorCell.swift; sourceTree = "<group>"; };
+		8694FC5A20D21FA1000E904C /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
+		8694FC5D20D2AEC2000E904C /* UserWalletHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserWalletHeaderView.swift; sourceTree = "<group>"; };
+		8694FC5F20D2AEF3000E904C /* UserWalletHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserWalletHeaderView.xib; sourceTree = "<group>"; };
+		8694FC6120D2BC1D000E904C /* UserWalletChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserWalletChartView.swift; sourceTree = "<group>"; };
 		869E84DD20CD9A54008AB1EC /* CoinWithChartHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinWithChartHeader.swift; sourceTree = "<group>"; };
 		869E84DF20CE853A008AB1EC /* UserWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserWalletViewController.swift; sourceTree = "<group>"; };
 		869E84E120CE8806008AB1EC /* CurrencyLive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyLive.swift; sourceTree = "<group>"; };
@@ -215,9 +223,9 @@
 			isa = PBXGroup;
 			children = (
 				862319C820B4171E00C6E46E /* Currency.swift */,
+				869E84E520CE8852008AB1EC /* CurrencyList.swift */,
 				869E84E120CE8806008AB1EC /* CurrencyLive.swift */,
 				869E84E320CE8838008AB1EC /* CurrencyPrice.swift */,
-				869E84E520CE8852008AB1EC /* CurrencyList.swift */,
 				86BD018220BC5DD70065CC8B /* UserSettings.swift */,
 			);
 			path = Models;
@@ -226,12 +234,13 @@
 		862319A520AFD84C00C6E46E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				862319CA20B41A7D00C6E46E /* SearchCurrencyCell.swift */,
+				8694FC5C20D2AE86000E904C /* UserWallet */,
 				86DD9E6620C6AE1F00EEC20F /* CoinDetail */,
+				8694FC5920D1ED8D000E904C /* FollowCoinView */,
 				86DD9E5620C53E1D00EEC20F /* Home */,
 				86DD9E4F20C3909E00EEC20F /* ListCells */,
 				8694FC4720D130E7000E904C /* Settings */,
-				8694FC5920D1ED8D000E904C /* FollowCoinView */,
-				862319CA20B41A7D00C6E46E /* SearchCurrencyCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -239,15 +248,15 @@
 		862319A620AFD85100C6E46E /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				8694FC4820D14BC5000E904C /* Pop-up */,
-				8694FC3620D034F9000E904C /* WelcomeViewControllers */,
-				8694FC3420D03371000E904C /* WelcomeViewController.swift */,
 				86BD017020B8BB770065CC8B /* CoinDetailController.swift */,
 				86614CF020C29AD9001A0DEB /* HomeViewController.swift */,
 				86614CF720C38AC4001A0DEB /* ListViewController.swift */,
 				862319C020B2889100C6E46E /* SearchController.swift */,
 				862319C420B28B8F00C6E46E /* SettingsController.swift */,
 				869E84DF20CE853A008AB1EC /* UserWalletViewController.swift */,
+				8694FC3420D03371000E904C /* WelcomeViewController.swift */,
+				8694FC4820D14BC5000E904C /* Pop-ups */,
+				8694FC3620D034F9000E904C /* WelcomeViewControllers */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -258,8 +267,8 @@
 				86BD017A20B91B4D0065CC8B /* APIClient.swift */,
 				86BD017820B91B330065CC8B /* APIRouter.swift */,
 				86BD017C20B91C020065CC8B /* CurrencyController.swift */,
-				86BD018820BC6D630065CC8B /* UserSettingsController.swift */,
 				86BD018020B9C27B0065CC8B /* StorageController.swift */,
+				86BD018820BC6D630065CC8B /* UserSettingsController.swift */,
 			);
 			path = ModelControllers;
 			sourceTree = "<group>";
@@ -267,15 +276,15 @@
 		862319A820AFD88800C6E46E /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				865017AB20CD2BDD00EF5403 /* BackgroundAngleView.swift */,
+				8694FC4320D094DC000E904C /* FollowButton.swift */,
+				866A030920C80BF800784938 /* ProgressView.swift */,
+				8694FC3F20D04315000E904C /* RoundedButton.swift */,
+				869E84EB20CEC005008AB1EC /* RoundedContainerView.swift */,
+				865E1B0B20C83FBC000B3092 /* RoundSegmentedControl.swift */,
+				8694FC3D20D03D63000E904C /* WaveView.swift */,
 				86DD9E6320C6A01000EEC20F /* Chart */,
 				866A030820C80B9700784938 /* OS */,
-				865E1B0B20C83FBC000B3092 /* RoundSegmentedControl.swift */,
-				869E84EB20CEC005008AB1EC /* RoundedContainerView.swift */,
-				866A030920C80BF800784938 /* ProgressView.swift */,
-				8694FC4320D094DC000E904C /* FollowButton.swift */,
-				8694FC3F20D04315000E904C /* RoundedButton.swift */,
-				865017AB20CD2BDD00EF5403 /* BackgroundAngleView.swift */,
-				8694FC3D20D03D63000E904C /* WaveView.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -289,6 +298,7 @@
 				86BD017E20B9A8180065CC8B /* Double.swift */,
 				862319A920AFD9A100C6E46E /* UIColor.swift */,
 				869E84ED20CED5E0008AB1EC /* UITextField.swift */,
+				8694FC5A20D21FA1000E904C /* UIImageView.swift */,
 				862319AB20AFDC3100C6E46E /* UIImage.swift */,
 				8694FC5520D1BEE9000E904C /* UIDevice.swift */,
 				862319AD20AFDD2C00C6E46E /* UIView.swift */,
@@ -310,31 +320,41 @@
 		8694FC4720D130E7000E904C /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				862319C220B28A5200C6E46E /* MenuHeaderCell.swift */,
 				862319CC20B44FDD00C6E46E /* MenuContentCell.swift */,
+				862319C220B28A5200C6E46E /* MenuHeaderCell.swift */,
 				862319CE20B4503800C6E46E /* MenuTitleCell.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
 		};
-		8694FC4820D14BC5000E904C /* Pop-up */ = {
+		8694FC4820D14BC5000E904C /* Pop-ups */ = {
 			isa = PBXGroup;
 			children = (
 				8694FC4920D14C8A000E904C /* FollowedCoinsPopUpViewController.swift */,
 				8694FC4B20D1541A000E904C /* PopUpViewController.swift */,
 			);
-			path = "Pop-up";
+			path = "Pop-ups";
 			sourceTree = "<group>";
 		};
 		8694FC5920D1ED8D000E904C /* FollowCoinView */ = {
 			isa = PBXGroup;
 			children = (
-				8694FC4520D12C25000E904C /* FollowCoinView.swift */,
 				8694FC4120D06FB6000E904C /* FollowCoinCell.swift */,
 				8694FC5120D1A709000E904C /* FollowCoinEmptyCell.swift */,
 				8694FC5720D1E1F0000E904C /* FollowCoinErrorCell.swift */,
+				8694FC4520D12C25000E904C /* FollowCoinView.swift */,
 			);
 			path = FollowCoinView;
+			sourceTree = "<group>";
+		};
+		8694FC5C20D2AE86000E904C /* UserWallet */ = {
+			isa = PBXGroup;
+			children = (
+				8694FC5D20D2AEC2000E904C /* UserWalletHeaderView.swift */,
+				8694FC5F20D2AEF3000E904C /* UserWalletHeaderView.xib */,
+				8694FC6120D2BC1D000E904C /* UserWalletChartView.swift */,
+			);
+			path = UserWallet;
 			sourceTree = "<group>";
 		};
 		86DD9E4F20C3909E00EEC20F /* ListCells */ = {
@@ -352,16 +372,16 @@
 		86DD9E5620C53E1D00EEC20F /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				86DD9E5720C53E2F00EEC20F /* UnderWalletView.xib */,
-				86DD9E5920C540F400EEC20F /* UnderWalletView.swift */,
-				86DD9E5B20C6017700EEC20F /* WalletView.xib */,
-				86DD9E5D20C6018000EEC20F /* WalletView.swift */,
 				86614CF520C35EE5001A0DEB /* CardCoinCell.swift */,
 				8694FC5320D1AD54000E904C /* CardCoinEmptyCell.swift */,
-				8694FC4D20D15912000E904C /* CardCoinInformationsCell.xib */,
 				8694FC4F20D15BE2000E904C /* CardCoinInformationsCell.swift */,
-				86DD9E5F20C6068E00EEC20F /* HomeHeaderView.xib */,
+				8694FC4D20D15912000E904C /* CardCoinInformationsCell.xib */,
 				86DD9E6120C606A000EEC20F /* HomeHeaderView.swift */,
+				86DD9E5F20C6068E00EEC20F /* HomeHeaderView.xib */,
+				86DD9E5920C540F400EEC20F /* UnderWalletView.swift */,
+				86DD9E5720C53E2F00EEC20F /* UnderWalletView.xib */,
+				86DD9E5D20C6018000EEC20F /* WalletView.swift */,
+				86DD9E5B20C6017700EEC20F /* WalletView.xib */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -467,6 +487,7 @@
 				8623199D20AFD64100C6E46E /* LaunchScreen.storyboard in Resources */,
 				86DD9E5820C53E2F00EEC20F /* UnderWalletView.xib in Resources */,
 				86306E3720CD1B8400FFAFC3 /* CoinWithChartCell.xib in Resources */,
+				8694FC6020D2AEF3000E904C /* UserWalletHeaderView.xib in Resources */,
 				86DD9E6020C6068E00EEC20F /* HomeHeaderView.xib in Resources */,
 				86DD9E5C20C6017700EEC20F /* WalletView.xib in Resources */,
 				8623199A20AFD64100C6E46E /* Assets.xcassets in Resources */,
@@ -535,6 +556,7 @@
 				86DD9E5520C3A49400EEC20F /* LineChartView.swift in Sources */,
 				869E84EA20CEB9B4008AB1EC /* CoinDetailInformationsCell.swift in Sources */,
 				86BD018320BC5DD70065CC8B /* UserSettings.swift in Sources */,
+				8694FC5E20D2AEC2000E904C /* UserWalletHeaderView.swift in Sources */,
 				862319C320B28A5200C6E46E /* MenuHeaderCell.swift in Sources */,
 				86BD017920B91B330065CC8B /* APIRouter.swift in Sources */,
 				86614CF120C29AD9001A0DEB /* HomeViewController.swift in Sources */,
@@ -546,6 +568,7 @@
 				8694FC4420D094DC000E904C /* FollowButton.swift in Sources */,
 				869E84E820CEAF83008AB1EC /* CoinDetailTitleHeader.swift in Sources */,
 				8694FC3C20D03AE4000E904C /* WelcomeWalletViewController.swift in Sources */,
+				8694FC5B20D21FA1000E904C /* UIImageView.swift in Sources */,
 				8694FC5420D1AD54000E904C /* CardCoinEmptyCell.swift in Sources */,
 				8694FC4020D04315000E904C /* RoundedButton.swift in Sources */,
 				86BD017120B8BB770065CC8B /* CoinDetailController.swift in Sources */,
@@ -564,6 +587,7 @@
 				86DD9E6820C6AE4300EEC20F /* CoinDetailChartCell.swift in Sources */,
 				869E84E620CE8852008AB1EC /* CurrencyList.swift in Sources */,
 				8694FC3A20D03AB2000E904C /* WelcomeFollowViewController.swift in Sources */,
+				8694FC6220D2BC1D000E904C /* UserWalletChartView.swift in Sources */,
 				86BD017D20B91C020065CC8B /* CurrencyController.swift in Sources */,
 				862319BB20B0030C00C6E46E /* CALayer.swift in Sources */,
 				862319C720B28DB500C6E46E /* NSLayoutConstraint.swift in Sources */,

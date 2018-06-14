@@ -11,6 +11,9 @@ import UIKit
 
 class UserWalletViewController: UIViewController {
     
+    lazy var headerView = UserWalletHeaderView()
+    lazy var chartView = UserWalletChartView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -19,6 +22,25 @@ class UserWalletViewController: UIViewController {
     
     private func setupViews() {
         view.backgroundColor = UIColor.theme.bg.value
+        
+        view.addSubviewsAutoConstraints([headerView, chartView])
+        NSLayoutConstraint.activate([
+            headerView.topAnchor.constraint(equalTo: view.topAnchor),
+            headerView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            headerView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            chartView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16),
+            chartView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -16),
+            chartView.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: 16),
+            ])
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     

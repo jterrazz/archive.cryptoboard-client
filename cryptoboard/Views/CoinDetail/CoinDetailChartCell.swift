@@ -10,8 +10,14 @@ import Foundation
 import UIKit
 import Charts
 
+// TODO Check all setView setConstraint
+// TODO String language
+// TODO Check all actions named handle...
+// TODO Make number formatter
+
 class CoinDetailChartCell: UITableViewCell {
     
+    // MARK: - Views
     lazy var containerView = UIView()
     lazy var chartView = LineChartView()
     lazy var hoverInformations = CoinDetailChartDataView()
@@ -20,26 +26,35 @@ class CoinDetailChartCell: UITableViewCell {
     lazy var priceLabel = UILabel()
     lazy var percentLabel = UILabel()
     
-    lazy var bottomArrowView: UIImageView = {
+    lazy var bottomArrowView: UIButton = {
         let image = UIImage(named: "arrow-filled", in: Bundle.main, compatibleWith: nil)?.withRenderingMode(.alwaysTemplate)
-        let imageView = UIImageView()
+        let button = UIButton(type: .custom)
         
-        imageView.image = image
-        imageView.tintColor = UIColor.white
-        imageView.contentMode = .scaleAspectFit
-        imageView.transform = imageView.transform.rotated(by: CGFloat.pi / 2)
+        button.setImage(image, for: .normal)
+        button.tintColor = UIColor.white
+        button.contentMode = .scaleAspectFit
+        button.transform = button.transform.rotated(by: CGFloat.pi / 2)
         
-        return imageView
+        return button
     }()
     
+    // MARK: - Constraints
     var topContainerConstraint: NSLayoutConstraint?
     var leftContainerConstraint: NSLayoutConstraint?
     var rightContainerConstraint: NSLayoutConstraint?
-    var showingChart: Bool = true
+    var delegate: CoinDetailChartCellDelegate?
     
+    var bottomArrowDirection: VerticalPosition = .down
+    
+    // MARK: - Data
     var currency: Currency? {
+        didSet { setCurrencyData() }
+    }
+    var currencyLive: CurrencyLive? {
         didSet {
-            hoverInformations.currency = self.currency
+            DispatchQueue.main.async {
+                self.setCurrencyLiveData()
+            }
         }
     }
     
@@ -52,6 +67,23 @@ class CoinDetailChartCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupViews()
+    }
+    
+    private func setCurrencyData() {
+        if (currency == nil) { return }
+        
+        hoverInformations.currency = self.currency
+        CurrencyController().getCurrencyState(currencies: [currency!]) { (error, currencies) in
+            if (currencies.count == 1) {
+                self.currencyLive = currencies[0].liveData
+            }
+        }
+    }
+    
+    private func setCurrencyLiveData() {
+        if let liveData = self.currencyLive {
+            priceLabel.text = String(liveData.variationDay)
+        }
     }
     
     private func setupViews() {
@@ -70,15 +102,22 @@ class CoinDetailChartCell: UITableViewCell {
         addSubviewAutoConstraints(containerView)
         containerView.addSubviewsAutoConstraints([chartView, hoverInformations, chartSegmentedControll, headerLabel, priceLabel, percentLabel, bottomArrowView])
         
-        headerLabel.text = "Historical data"
+        bottomArrowView.addTarget(self, action: #selector(handleArrowButtonPressed(_:)), for: .touchUpInside)
+        
+        headerLabel.text = "Live data"
         headerLabel.textColor = UIColor.theme.textOnDark.value
         headerLabel.font = UIFont.systemFont(ofSize: 14)
         priceLabel.text = "28,570"
         priceLabel.textColor = UIColor.white
-        priceLabel.font = UIFont.systemFont(ofSize: 28, weight: .medium)
+        priceLabel.font = UIFont.systemFont(ofSize: 29, weight: .regular)
         percentLabel.text = "+5.8%"
         percentLabel.textColor = UIColor.theme.green.value
+        percentLabel.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
         
+        setupConstraints()
+    }
+    
+    private func setupConstraints() {
         topContainerConstraint = containerView.topAnchor.constraint(equalTo: topAnchor)
         rightContainerConstraint = containerView.rightAnchor.constraint(equalTo: rightAnchor)
         leftContainerConstraint = containerView.leftAnchor.constraint(equalTo: leftAnchor)
@@ -126,30 +165,50 @@ class CoinDetailChartCell: UITableViewCell {
             topContainerConstraint?.constant = offset / 3
             return
         } else if (offset < trigger) {
-            changedState = !showingChart ? true : false
+            changedState = bottomArrowDirection == .up ? true : false
             
             topContainerConstraint?.constant = offset
-            self.layoutIfNeeded()
             leftContainerConstraint?.constant = 0
             rightContainerConstraint?.constant = 0
             containerView.layer.cornerRadius = 0
         } else {
-            changedState = showingChart ? true : false
+            changedState = bottomArrowDirection == .down ? true : false
             
-            leftContainerConstraint?.constant = 8
-            rightContainerConstraint?.constant = -8
+            let diff = (offset - trigger) / 3
+            let constant = diff > 8 ? 8 : diff
+            
+            leftContainerConstraint?.constant = constant
+            rightContainerConstraint?.constant = -constant
             containerView.layer.cornerRadius = K.Design.CornerRadius
         }
+        // Add if trigger top to reload and trigger bottom change top bar color
         if (changedState) {
-            showingChart = !showingChart
-            UIView.animate(withDuration: K.Design.AnimationTime) {
-                self.bottomArrowView.transform = self.bottomArrowView.transform.rotated(by: CGFloat.pi)
-            }
+            inversedMainState()
         }
+        self.layoutIfNeeded()
+        
+    }
+    
+    private func inversedMainState() {
+        bottomArrowDirection = bottomArrowDirection == .down ? .up : .down
         UIView.animate(withDuration: K.Design.AnimationTime) {
-            self.layoutIfNeeded()
+            self.bottomArrowView.transform = self.bottomArrowView.transform.rotated(by: CGFloat.pi)
         }
     }
     
     
+}
+
+extension CoinDetailChartCell {
+    
+    @objc private func handleArrowButtonPressed(_ sender: UIButton) {
+        self.delegate?.didAskToChangePosition(side: bottomArrowDirection)
+        inversedMainState()
+    }
+    
+    
+}
+
+protocol CoinDetailChartCellDelegate {
+    func didAskToChangePosition(side: VerticalPosition)
 }

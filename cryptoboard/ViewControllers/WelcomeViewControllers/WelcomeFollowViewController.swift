@@ -51,7 +51,7 @@ class WelcomeFollowViewController: UIViewController {
     }
     
     private func loadData() {
-        CurrencyController.getList(limit: 999999) { (error, currencies) in
+        CurrencyController().getList(limit: 999999) { (error, currencies) in
             if (error != nil) {
                 self.followContainer.networkError = true
             } else {

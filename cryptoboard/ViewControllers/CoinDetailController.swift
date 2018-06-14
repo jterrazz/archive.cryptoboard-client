@@ -9,18 +9,29 @@
 import Foundation
 import UIKit
 
+// TODO Remove all public
+// check if didSet can be used
+// TODO Set all labels to 0
+
 class CoinDetailController: UIViewController {
     
     private let COIN_DETAIL_CHART_CELL_ID = "coin-detail-chart-cell-id"
     private let COIN_DETAIL_HEADER_ID = "coin-detail-header-id"
     private let COIN_INFORMATIONS_CELL_ID = "coin-informations-cell-id"
+    private let NETWORK_ERROR_CELL_ID = "network-error-cell-id"
     
     lazy var tableView = UITableView()
     lazy var topBarBg = UIView() // Using this because of iphone X doing a bad UIImage()
     
     var currentTheme: ThemeStatus = .white
-    var currency: Currency?
     var tapGesture: UITapGestureRecognizer!
+    var currency: Currency?
+    var networkError = false {
+        didSet {
+            tableView.reloadData()
+            tableView.isScrollEnabled = !networkError
+        }
+    }
     
     convenience init(currency: Currency) {
         self.init()
@@ -34,17 +45,27 @@ class CoinDetailController: UIViewController {
         tableView.register(CoinDetailChartCell.self, forCellReuseIdentifier: COIN_DETAIL_CHART_CELL_ID)
         tableView.register(CoinDetailTitleHeader.self, forHeaderFooterViewReuseIdentifier: COIN_DETAIL_HEADER_ID)
         tableView.register(CoinDetailInformationsCell.self, forCellReuseIdentifier: COIN_INFORMATIONS_CELL_ID)
+        tableView.register(FollowCoinErrorCell.self, forCellReuseIdentifier: NETWORK_ERROR_CELL_ID)
         
         setupViews()
         
         let bar = navigationController?.navigationBar
         
-        navigationController?.setNavigationBarHidden(false, animated: false)
         bar?.backgroundColor = UIColor.clear
         view.backgroundColor = UIColor.theme.darkBg.value
         setTheme(.clear)
         
         view.layoutIfNeeded()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     public func setup(currency: Currency) {
@@ -58,9 +79,11 @@ class CoinDetailController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         
-        topBarBg.backgroundColor = UIColor.white
+        topBarBg.backgroundColor = UIColor.clear
         view.backgroundColor = UIColor.theme.bg.value
         
+        navigationController?.navigationBar.barTintColor = UIColor.theme.darkBg.value
+        navigationController?.navigationBar.backgroundColor = UIColor.theme.darkBg.value
         
         setupConstraints()
     }
@@ -117,24 +140,32 @@ extension CoinDetailController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.section {
-        case 0:
-            let cell = tableView.dequeueReusableCell(withIdentifier: COIN_DETAIL_CHART_CELL_ID, for: indexPath) as! CoinDetailChartCell
-            cell.currency = currency
+        // If Error
+        if (networkError) {
+            let cell = tableView.dequeueReusableCell(withIdentifier: NETWORK_ERROR_CELL_ID, for: indexPath)
             
             return cell
-        default:
-            let cell = tableView.dequeueReusableCell(withIdentifier: COIN_INFORMATIONS_CELL_ID, for: indexPath) as! CoinDetailInformationsCell
-            var corners: UIRectCorner?
-            
-            if (indexPath.row == 0) {
-                corners = [.topLeft, .topRight]
-            } else if (indexPath.row == 1) {
-                corners = [.bottomRight, .bottomLeft]
+        } else {
+            switch indexPath.section {
+            case 0:
+                let cell = tableView.dequeueReusableCell(withIdentifier: COIN_DETAIL_CHART_CELL_ID, for: indexPath) as! CoinDetailChartCell
+                cell.currency = currency
+                cell.delegate = self
+                
+                return cell
+            default:
+                let cell = tableView.dequeueReusableCell(withIdentifier: COIN_INFORMATIONS_CELL_ID, for: indexPath) as! CoinDetailInformationsCell
+                var corners: UIRectCorner?
+                
+                if (indexPath.row == 0) {
+                    corners = [.topLeft, .topRight]
+                } else if (indexPath.row == 1) {
+                    corners = [.bottomRight, .bottomLeft]
+                }
+                cell.setup(leftText: "Market cap", subLeftText: nil, rightText: "20,420,420,420", subRightText: nil, corners: corners)
+                
+                return cell
             }
-            cell.setup(leftText: "Market cap", subLeftText: nil, rightText: "20,420,420,420", subRightText: nil, corners: corners)
-            
-            return cell
         }
     }
     
@@ -160,7 +191,9 @@ extension CoinDetailController: UITableViewDelegate, UITableViewDataSource {
             cell.setOffset(offset: scrolledDistance, trigger: trigger)
         }
         
-        if (scrolledDistance > trigger) {
+        if (scrolledDistance > tableView.frame.height) {
+            setTheme(.darkBlue)
+        } else if (scrolledDistance > trigger) {
             setTheme(.white)
         } else {
             setTheme(.clear)
@@ -171,18 +204,36 @@ extension CoinDetailController: UITableViewDelegate, UITableViewDataSource {
         let bar = self.navigationController?.navigationBar
         
         UIView.animate(withDuration: K.Design.AnimationTime) {
-            if (status == .clear && self.currentTheme == .white) {
+            if (status == .clear && self.currentTheme != .clear) {
                 bar?.tintColor = UIColor.white
                 self.topBarBg.backgroundColor = UIColor.clear
                 bar?.barStyle = .black
-            } else if (status == .white && self.currentTheme == .clear) {
+                self.title = ""
+            } else if (status == .white && self.currentTheme != .white) {
                 bar?.tintColor = UIColor.theme.textDark.value
                 self.topBarBg.backgroundColor = UIColor.white
                 bar?.barStyle = .default
+                self.title = ""
+            } else if (status == .darkBlue && self.currentTheme != .darkBlue) {
+                bar?.tintColor = UIColor.white
+                self.topBarBg.backgroundColor = UIColor.theme.blue.value
+                bar?.barStyle = .black
+                self.title = self.currency?.name
             }
         }
         
         currentTheme = status
+    }
+    
+    
+}
+
+extension CoinDetailController: CoinDetailChartCellDelegate {
+    
+    func didAskToChangePosition(side: VerticalPosition) {
+        let indexPath = side == .up ? IndexPath(row: 0, section: 0) : IndexPath(row: 0, section: 1)
+        
+        tableView.scrollToRow(at: indexPath, at: .top, animated: true)
     }
     
     

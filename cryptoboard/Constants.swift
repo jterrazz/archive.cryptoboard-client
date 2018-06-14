@@ -13,6 +13,7 @@ struct K {
     
     struct APIServer {
         static let baseURL = "https://min-api.cryptocompare.com"
+        static let cdn = "https://www.cryptocompare.com"
     }
     
     struct APIParamsKeys {
@@ -67,7 +68,7 @@ enum TableViewStatus {
 }
 
 enum ThemeStatus {
-    case clear, white
+    case clear, white, darkBlue
 }
 
 enum ChartVariation {
@@ -82,10 +83,15 @@ enum APIError: Error {
     case serverError
     case serverUnavailable
     case timeOut
-    case unsuppotedURL
+    case unsupportedURL
 }
 
 enum StorageError: Error {
     case saveError
     case getError
+}
+
+enum VerticalPosition {
+    case up
+    case down
 }

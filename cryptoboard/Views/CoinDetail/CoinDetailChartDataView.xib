@@ -16,6 +16,7 @@
                 <outlet property="containerProgress" destination="J0z-rm-HsO" id="goe-vg-4BS"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="MHv-DC-VEl"/>
                 <outlet property="logoImageView" destination="Eay-6q-cUI" id="omA-NE-f7D"/>
+                <outlet property="nameLabel" destination="e6m-Af-90D" id="VHI-x5-ar0"/>
                 <outlet property="progressDay" destination="zcx-H5-4nu" id="8R2-yi-HOU"/>
                 <outlet property="progressHour" destination="ef3-ra-gj2" id="bJY-Uh-yJB"/>
                 <outlet property="progressMonth" destination="ULV-iI-k0n" id="oRU-Js-dMe"/>
@@ -33,7 +34,7 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" alpha="0.34999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BTC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sVr-7Y-0Kr">
+                <label opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BTC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sVr-7Y-0Kr">
                     <rect key="frame" x="50" y="57" width="27.5" height="17"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

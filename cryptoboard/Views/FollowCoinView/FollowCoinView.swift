@@ -156,7 +156,7 @@ extension FollowCoinView: UITableViewDelegate, UITableViewDataSource {
     }
     
     @objc private func handleTextChange(_ sender: UITextField) {
-        let results = Currency.filterList(searchBar.text, coinList: coinList)
+        let results = coinList.filterList(searchBar.text)
         
         if let safeResults = results {
             coinResults = safeResults

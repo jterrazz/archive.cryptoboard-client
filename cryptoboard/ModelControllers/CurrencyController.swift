@@ -13,11 +13,14 @@ import Foundation
 
 
 // TODO Handle all errors
+// Dispatch main here and not in views
 class CurrencyController {
     
-    public static func getList(limit: Int, callback: @escaping (Error?, [Currency]) -> Void) {
+    let storageController = StorageController()
+    let userSettingsController = UserSettingsController()
+    
+    func getList(limit: Int, callback: @escaping (Error?, [Currency]) -> Void) {
         
-        let storageController = StorageController()
         var needUpdate = true
         
         if let cachedCurrencies = storageController.retrieveCurrencyList() {
@@ -31,30 +34,28 @@ class CurrencyController {
             }
         }
         
-        // Get called if needUpdate
-        APIClient.getCurrencyList { (error, updatedCurrencies) in
-            if (error != nil) {
-                print("Not ok")
-                return callback(APIError.connectionError, [])
-            }
-            let sortedCurrencies = updatedCurrencies.sorted(by: { $0.id <= $1.id })
-            
-            do {
-                try storageController.storeCurrencyList(list: sortedCurrencies)
-                callback(nil, Array(sortedCurrencies.prefix(limit)))
-            } catch {
-                callback(StorageError.saveError, [])
+        if (needUpdate) {
+            APIClient.getCurrencyList { (error, updatedCurrencies) in
+                if (error != nil) {
+                    return callback(APIError.connectionError, [])
+                }
+                let sortedCurrencies = updatedCurrencies.sorted(by: { $0.id <= $1.id })
+                
+                do {
+                    try self.storageController.storeCurrencyList(list: sortedCurrencies)
+                    callback(nil, Array(sortedCurrencies.prefix(limit)))
+                } catch {
+                    callback(StorageError.saveError, [])
+                }
             }
         }
     }
     
-    public static func getCurrencyState(currencies: [Currency], callback: @escaping (Error?, [Currency]) -> Void) {
+    func getCurrencyState(currencies: [Currency], callback: @escaping (Error?, [Currency]) -> Void) {
         
-        let storageController = StorageController()
         var toUpdate = [Currency]()
         var cachedCurrencies = [Currency]()
         var updatedCurrencies = [Currency]()
-        let userSettingsController = UserSettingsController()
         let userLocalCurrency = userSettingsController.get()?.localCurrency
         
         if (userLocalCurrency == nil) {
@@ -63,7 +64,7 @@ class CurrencyController {
         
         // Check the update
         currencies.forEach { (currency) in
-            let dateLimit = currency.liveData?.updateTime?.addingTimeInterval(20)
+            let dateLimit = currency.liveData?.updateTime.addingTimeInterval(20)
             let now = Date()
             
             if (dateLimit == nil || now > dateLimit!) {
@@ -95,18 +96,19 @@ class CurrencyController {
                     }
                 })
                 
-                retCurrencies = mergeCurrencyArray(full: retCurrencies, newArray: updatedCurrencies)
+                retCurrencies = self.mergeCurrencyArray(full: retCurrencies, newArray: updatedCurrencies)
                 callback(nil, retCurrencies)
                 
                 // 3: Cache data
                 for currency in updatedCurrencies {
-                    storageController.storeCurrencyState(currency: currency)
+                    self.storageController.storeCurrencyState(currency: currency)
                 }
             }
         }
     }
     
-    private static func mergeCurrencyArray(full: [Currency], newArray: [Currency]) -> [Currency] {
+    // Add in Currency not controller
+    func mergeCurrencyArray(full: [Currency], newArray: [Currency]) -> [Currency] {
         var ret = [Currency]()
         
         ret.append(contentsOf: newArray)
@@ -129,7 +131,7 @@ class CurrencyController {
     }
     
     // TODO Use cache + add error
-    public static func getCurrencyBase(symbol: String, callback: @escaping (Error?, Currency?) -> Void) {
+    func getCurrencyBase(symbol: String, callback: @escaping (Error?, Currency?) -> Void) {
         
         var retCurrency: Currency? = nil
         
@@ -143,7 +145,7 @@ class CurrencyController {
         if (retCurrency != nil) {
             callback(nil, retCurrency)
         } else {
-            getList(limit: 99999) { (error, currencies) in
+            self.getList(limit: 99999) { (error, currencies) in
                 // if error ...
                 
                 for (currency): (Currency) in currencies {
@@ -158,7 +160,7 @@ class CurrencyController {
         }
     }
     
-    public static func getCurrenciesBase(symbols: [String], callback: @escaping (Error?, [Currency]) -> Void) {
+    func getCurrenciesBase(symbols: [String], callback: @escaping (Error?, [Currency]) -> Void) {
         
         let taskGroup = DispatchGroup()
         var retCurrencies = [Currency]()
@@ -183,8 +185,7 @@ class CurrencyController {
         }))
     }
     
-    public static func getCurrencyHistory(_ type: CurrencyHistoryType, currencyFrom: String, currencyTo: String, aggregate: UInt, points: UInt, callback: @escaping (Error?, [CurrencyPrice]) -> Void) {
-        let storageController = StorageController()
+    func getCurrencyHistory(_ type: CurrencyHistoryType, currencyFrom: String, currencyTo: String, aggregate: UInt, points: UInt, callback: @escaping (Error?, [CurrencyPrice]) -> Void) {
         
         let prices = storageController.retrieveCurrencyHistory(symbol: currencyFrom, aggregate: aggregate, points: points)
         if let safePrices = prices {
@@ -194,7 +195,7 @@ class CurrencyController {
         APIClient.getCurrencyHistory(type, currencyFrom: currencyFrom, currencyTo: currencyTo, aggregate: aggregate, points: points) { (newPrices) in
             callback(nil, newPrices)
             // TODO error
-            storageController.storeCurrencyHistory(symbol: currencyFrom, prices: newPrices, aggregate: aggregate, points: points)
+            self.storageController.storeCurrencyHistory(symbol: currencyFrom, prices: newPrices, aggregate: aggregate, points: points)
         }
     }
     

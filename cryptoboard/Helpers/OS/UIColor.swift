@@ -34,7 +34,7 @@ extension UIColor {
             case .textOnDark:
                 return UIColor(hex: "#636da3")
             case .inputBg:
-                return UIColor(hex: "#F3F6FB")
+                return UIColor(hex: "#ebeef4")
             case .border:
                 return UIColor(hex: "#ECECEC")
             case .borderClear:

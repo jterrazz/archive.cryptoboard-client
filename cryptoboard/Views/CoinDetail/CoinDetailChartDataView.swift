@@ -17,17 +17,14 @@ class CoinDetailChartDataView: UIView {
     @IBOutlet weak var progressMonth: ProgressView!
     @IBOutlet weak var containerProgress: UIView!
     @IBOutlet weak var symbolLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var logoImageView: UIImageView!
     
     let followImage = UIImage(named: "heart", in: Bundle.main, compatibleWith: nil)
     let userSettingsController = UserSettingsController()
     
     var currency: Currency? {
-        didSet {
-            if let symbol = currency?.diminutive {
-                UserSettingsController().isFollowingCurrency(symbol) ? followButton.select() : followButton.deselect()
-            }
-        }
+        didSet { setCurrencyData() }
     }
     
     lazy var followButton = FollowButton(frame: CGRect.init(x: 0, y: 0, width: 50, height: 50), image: followImage)
@@ -40,6 +37,18 @@ class CoinDetailChartDataView: UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
+    }
+    
+    private func setCurrencyData() {
+        if let safeCurrency = currency {
+            safeCurrency.isFollowing ? followButton.select() : followButton.deselect()
+            symbolLabel.text = safeCurrency.diminutive
+            nameLabel.text = safeCurrency.name
+            
+            if let url = safeCurrency.completeImageUrl {
+                logoImageView.imageFromServerURL(urlString: url)
+            }
+        }
     }
     
     private func commonInit() {

@@ -6,6 +6,8 @@
 //  Copyright © 2018 terrazzoni. All rights reserved.
 //
 
+// TODO Better currency list getter and parser for lists (too long)
+
 import Foundation
 
 class Currency: Codable, CustomStringConvertible {
@@ -15,9 +17,21 @@ class Currency: Codable, CustomStringConvertible {
     var diminutive: String
     var imageName: String?
     var imageUrl: String?
+    
+    var completeImageUrl: String? {
+        get {
+            return imageUrl == nil ? nil : K.APIServer.cdn + imageUrl!
+        }
+    }
+    
     var liveData: CurrencyLive?
     var historyPrice: [CurrencyPrice]?
     var createdAt: Date
+    var isFollowing: Bool {
+        get {
+            return UserSettingsController().isFollowingCurrency(self.diminutive)
+        }
+    }
     
     var description: String {
         return "ID: \(id), name: \(name), diminutive: \(diminutive), imageName: \(String(describing: imageName)), liveData: \(String(describing: liveData))"
@@ -41,11 +55,16 @@ class Currency: Codable, CustomStringConvertible {
         self.createdAt = Date()
     }
     
-    static func filterList(_ searched: String?, coinList: [Currency]) -> [Currency]? {
+    
+}
+
+extension Array where Element:Currency {
+    
+    func filterList(_ searched: String?) -> [Currency]? {
         var results = [Currency]()
         
         if let searched = searched?.lowercased() {
-            results = coinList.filter({ (currency) -> Bool in
+            results = self.filter({ (currency) -> Bool in
                 let nameMatch = currency.name.lowercased().range(of: searched)
                 let symbolMatch = currency.diminutive.lowercased().range(of: searched)
                 

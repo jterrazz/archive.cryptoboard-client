@@ -9,6 +9,7 @@
 import UIKit
 import Charts
 
+// TODO Limit add labels width
 class HomeViewController: UIViewController {
     
     private let CARD_COIN_CELL_ID = "card-coin-cell-id"
@@ -73,7 +74,9 @@ class HomeViewController: UIViewController {
         if (followedCurrencies.count > 0) {
             cardCollectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .centeredHorizontally, animated: true)
         }
-        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
@@ -81,9 +84,9 @@ class HomeViewController: UIViewController {
         if let settings = userSettingsController.get() {
             let symbols = settings.followedCurrencies
             
-            CurrencyController.getCurrenciesBase(symbols: symbols) { (error, currencies) in
+            CurrencyController().getCurrenciesBase(symbols: symbols) { (error, currencies) in
                 // handle error
-                CurrencyController.getCurrencyState(currencies: currencies, callback: { (error, currenciesStates) in
+                CurrencyController().getCurrencyState(currencies: currencies, callback: { (error, currenciesStates) in
                     // TODO Handle Error
                     self.followedCurrencies = currenciesStates
                 })
@@ -151,17 +154,35 @@ class HomeViewController: UIViewController {
         
         let allCoinsTap = UITapGestureRecognizer(target: self, action: #selector(self.handleAllCoinsTap(_:)))
         underWallet.coinsCell.addGestureRecognizer(allCoinsTap)
+        let settingsTap = UITapGestureRecognizer(target: self, action: #selector(self.handleSettingsTap(_:)))
+        underWallet.settingsCell.addGestureRecognizer(settingsTap)
+        let walletTap = UITapGestureRecognizer(target: self, action: #selector(self.handleWalletTap(_:)))
+        myWallet.addGestureRecognizer(walletTap)
     }
     
-    @objc private func handleAllCoinsTap(_ sender: UITapGestureRecognizer?) {
+    lazy var fillTranfition: CATransition = {
         let transition = CATransition()
         
-        transition.duration = K.Design.AnimationTime
+        transition.duration = K.Design.AnimationTime / 2
         transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         transition.type = kCAFillModeForwards
         
-        tabBarController?.view.layer.add(transition, forKey: nil)
+        return transition
+    }()
+    
+    @objc private func handleAllCoinsTap(_ sender: UITapGestureRecognizer?) {
+        tabBarController?.view.layer.add(fillTranfition, forKey: nil)
         self.tabBarController?.selectedIndex = 1
+    }
+    
+    @objc private func handleWalletTap(_ sender: UITapGestureRecognizer?) {
+        tabBarController?.view.layer.add(fillTranfition, forKey: nil)
+        self.tabBarController?.selectedIndex = 2
+    }
+    
+    @objc private func handleSettingsTap(_ sender: UITapGestureRecognizer?) {
+        tabBarController?.view.layer.add(fillTranfition, forKey: nil)
+        self.tabBarController?.selectedIndex = 3
     }
     
     @objc private func handleSearchBarTouch(_ sender: UITapGestureRecognizer) {

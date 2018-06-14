@@ -66,7 +66,8 @@ class SettingsController: UIViewController {
         setupConstraints()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
@@ -81,7 +82,7 @@ class SettingsController: UIViewController {
         
         NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeTopAnchor, constant: 8)])
+            tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0)])
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -102,12 +103,12 @@ extension SettingsController: UITableViewDelegate, UITableViewDataSource {
         
         if let tableSection = Sections(rawValue: section) {
             switch tableSection {
-//            case .wallet:
-//                cell.setup(title: "Wallet")
-//            case .preferences:
-//                cell.setup(title: "Preferences")
-//            case .other:
-//                cell.setup(title: "Other")
+            case .wallet:
+                cell.setup(title: "Wallet")
+            case .preferences:
+                cell.setup(title: "Preferences")
+            case .other:
+                cell.setup(title: "Other")
             default:
                 break
             }
@@ -165,10 +166,14 @@ extension SettingsController: UITableViewDelegate, UITableViewDataSource {
 
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action) in
             UserSettingsController().reset()
+            
+            let vc = WelcomeViewController()
+            
+            self.navigationController?.present(vc, animated: true) {
+                self.tabBarController?.selectedIndex = 0
+            }
         }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (acton) in
-
-        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in }))
 
         present(alert, animated: true, completion: nil)
     }
@@ -185,9 +190,7 @@ extension SettingsController: UITableViewDelegate, UITableViewDataSource {
         alert.addAction(UIAlertAction(title: "Lets go !", style: .default, handler: { (action) in
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }))
-        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: { (acton) in
-            
-        }))
+        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: { (action) in }))
         
         present(alert, animated: true, completion: nil)
     }

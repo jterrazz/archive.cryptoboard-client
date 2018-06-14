@@ -69,14 +69,16 @@ class SearchController: UIViewController, UIGestureRecognizerDelegate {
         NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)
         
         searchResults.removeAll()
-        CurrencyController.getList(limit: 999999) { (error, currencies) in
+        CurrencyController().getList(limit: 999999) { (error, currencies) in
             // TODO User error
             self.allCurrencies = currencies
             // TODO Update list
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
         navigationController?.setNavigationBarHidden(true, animated: true)
         navigationController?.interactivePopGestureRecognizer?.delegate = self
         
