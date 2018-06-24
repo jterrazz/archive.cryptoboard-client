@@ -9,9 +9,10 @@
 import Foundation
 import UIKit
 
-// TODO Remove all public
-// check if didSet can be used
-// TODO Set all labels to 0
+// TODO Remove all public keywords
+// TODO Use didSet everywhere
+// TODO Add default values for labels and images (in all files)
+// TODO Check label width
 
 class CoinDetailController: UIViewController {
     
@@ -140,7 +141,7 @@ extension CoinDetailController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // If Error
+        // TODO If Error
         if (networkError) {
             let cell = tableView.dequeueReusableCell(withIdentifier: NETWORK_ERROR_CELL_ID, for: indexPath)
             

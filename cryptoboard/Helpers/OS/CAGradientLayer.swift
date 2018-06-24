@@ -59,4 +59,5 @@ extension CAGradientLayer {
         return CGPoint(x: CGFloat(endPointX),y: CGFloat(endPointY))
     }
     
+    
 }

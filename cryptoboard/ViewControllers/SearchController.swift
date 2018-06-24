@@ -108,6 +108,8 @@ class SearchController: UIViewController, UIGestureRecognizerDelegate {
         navigationController?.view.layer.add(transition, forKey: nil)
         self.navigationController?.popViewController(animated: false)
     }
+    
+    
 }
 
 extension SearchController: UITableViewDelegate, UITableViewDataSource {

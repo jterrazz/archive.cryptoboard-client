@@ -9,7 +9,9 @@
 import Foundation
 import UIKit
 
-// rename to angleview
+// TODO rename to AngleView
+// TODO make generic function
+
 class BackgroundAngleView: UIView {
     
     var gradientColors: [CGColor] = [UIColor.white.cgColor, UIColor.black.cgColor]

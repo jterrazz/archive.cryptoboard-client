@@ -206,6 +206,7 @@ extension FollowCoinView: UITextFieldDelegate {
         self.delegate?.textFieldDidStartEditing?()
     }
     
+    
 }
 
 extension FollowCoinView: FollowCoinErrorCellDelegate {
@@ -213,6 +214,8 @@ extension FollowCoinView: FollowCoinErrorCellDelegate {
     func didAskForReload() {
         delegate?.askedToReloadData()
     }
+    
+    
 }
 
 @objc protocol FollowCoinViewDelegate {

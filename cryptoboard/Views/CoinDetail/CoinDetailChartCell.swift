@@ -10,10 +10,9 @@ import Foundation
 import UIKit
 import Charts
 
-// TODO Check all setView setConstraint
-// TODO String language
-// TODO Check all actions named handle...
-// TODO Make number formatter
+// TODO Add extension to String for currency formating ($ 100,42.00)
+// TODO Rename all actions methods with handleXXX
+// TODO Add MARK in big files
 
 class CoinDetailChartCell: UITableViewCell {
     
@@ -58,7 +57,6 @@ class CoinDetailChartCell: UITableViewCell {
         }
     }
     
-    // do commoninit everywhere
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
@@ -181,7 +179,8 @@ class CoinDetailChartCell: UITableViewCell {
             rightContainerConstraint?.constant = -constant
             containerView.layer.cornerRadius = K.Design.CornerRadius
         }
-        // Add if trigger top to reload and trigger bottom change top bar color
+        
+        // TODO Reload if tableView scrolled beyond top
         if (changedState) {
             inversedMainState()
         }

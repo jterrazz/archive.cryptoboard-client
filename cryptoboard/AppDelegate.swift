@@ -73,7 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let settings = UserSettingsController().get()
         
-        if (settings == nil) { // TODO add logic
+        if (settings == nil) {
             navigationController.present(firstTimeController, animated: false, completion: nil)
         }
     

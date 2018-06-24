@@ -9,7 +9,7 @@
 import Foundation
 import Charts
 
-// TODO Better remake all functions
+// TODO Make a clean code
 
 extension LineChartView {
     

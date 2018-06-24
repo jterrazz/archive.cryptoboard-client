@@ -9,6 +9,8 @@
 import UIKit
 import Charts
 
+// TODO Make clean code
+
 extension PieChartView {
     
     func setupForVariation(_ variation: Double) {

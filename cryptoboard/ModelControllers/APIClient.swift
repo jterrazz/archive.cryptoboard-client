@@ -13,8 +13,6 @@ import SwiftyJSON
 // TODO All error handling
 class APIClient {
     
-    // No static TODO ?
-    
     static let queue = DispatchQueue.global()
     
     static func getCurrencyList(callback: @escaping (APIError?, [Currency]) -> Void) {
@@ -77,6 +75,7 @@ class APIClient {
             callback(ret)
         }
     }
+    
     // Handle Errors
     static func getCurrenciesState(currenciesFrom: [String], currencyTo: String, callback: @escaping ([String: CurrencyLive]) -> Void) {
         Alamofire.request(APIRouter.currenciesState(currenciesFrom: currenciesFrom, currencyTo: currencyTo)).responseJSON(queue: queue) { (response) in

@@ -11,9 +11,9 @@ import Foundation
 // triggers a first time the callback from cached data
 // update the data if needed
 
-
 // TODO Handle all errors
-// Dispatch main here and not in views
+// TODO Make the dispatch.main here and not in views
+
 class CurrencyController {
     
     let storageController = StorageController()
@@ -62,7 +62,7 @@ class CurrencyController {
            return
         }
         
-        // Check the update
+        // TODO Check this is working as expected
         currencies.forEach { (currency) in
             let dateLimit = currency.liveData?.updateTime.addingTimeInterval(20)
             let now = Date()
@@ -86,6 +86,7 @@ class CurrencyController {
         
         // 2: Return updated data
         if (toUpdate.count > 0) {
+            
             // TODO Handle errors
             APIClient.getCurrenciesState(currenciesFrom: Currency.convertToSymbolArray(arr: toUpdate), currencyTo: userLocalCurrency!.rawValue) { (updatedCurrencyDictionary) in
                 
@@ -107,7 +108,7 @@ class CurrencyController {
         }
     }
     
-    // Add in Currency not controller
+    // Transfert in Currency.swift
     func mergeCurrencyArray(full: [Currency], newArray: [Currency]) -> [Currency] {
         var ret = [Currency]()
         
@@ -130,12 +131,13 @@ class CurrencyController {
         return ret
     }
     
-    // TODO Use cache + add error
+    // TODO Use cache + add error handling
     func getCurrencyBase(symbol: String, callback: @escaping (Error?, Currency?) -> Void) {
         
         var retCurrency: Currency? = nil
         
-        // Search static base else search online
+        // Search hardcoded db else search online
+        // TODO: Maybe remove for only online data ?
         for (currency): (Currency) in K.Currencies {
             if (currency.diminutive == symbol) {
                 retCurrency = currency
@@ -146,7 +148,7 @@ class CurrencyController {
             callback(nil, retCurrency)
         } else {
             self.getList(limit: 99999) { (error, currencies) in
-                // if error ...
+                // TODO Handle error
                 
                 for (currency): (Currency) in currencies {
                     if (currency.diminutive == symbol) {
@@ -168,7 +170,7 @@ class CurrencyController {
         symbols.forEach { (symbol) in
             taskGroup.enter()
             getCurrencyBase(symbol: symbol, callback: { (error, base) in
-                // todo handle error
+                // TODO handle error
                 if let safeBase = base {
                     retCurrencies.append(safeBase)
                 }
@@ -180,7 +182,7 @@ class CurrencyController {
         
         // TODO Put back in order if callback mess up order
         taskGroup.notify(queue: DispatchQueue.main, work: DispatchWorkItem(block: {
-            // handle error
+            // TODO Handle error
             callback(nil, retCurrencies)
         }))
     }
@@ -189,12 +191,14 @@ class CurrencyController {
         
         let prices = storageController.retrieveCurrencyHistory(symbol: currencyFrom, aggregate: aggregate, points: points)
         if let safePrices = prices {
-            // TODO error
+            // TODO handle error
             callback(nil, safePrices)
         }
+        
         APIClient.getCurrencyHistory(type, currencyFrom: currencyFrom, currencyTo: currencyTo, aggregate: aggregate, points: points) { (newPrices) in
             callback(nil, newPrices)
-            // TODO error
+            
+            // TODO handle error
             self.storageController.storeCurrencyHistory(symbol: currencyFrom, prices: newPrices, aggregate: aggregate, points: points)
         }
     }

@@ -48,7 +48,6 @@
 		8694FC4E20D15912000E904C /* CardCoinInformationsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8694FC4D20D15912000E904C /* CardCoinInformationsCell.xib */; };
 		8694FC5020D15BE2000E904C /* CardCoinInformationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694FC4F20D15BE2000E904C /* CardCoinInformationsCell.swift */; };
 		8694FC5220D1A709000E904C /* FollowCoinEmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694FC5120D1A709000E904C /* FollowCoinEmptyCell.swift */; };
-		8694FC5420D1AD54000E904C /* CardCoinEmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694FC5320D1AD54000E904C /* CardCoinEmptyCell.swift */; };
 		8694FC5620D1BEE9000E904C /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694FC5520D1BEE9000E904C /* UIDevice.swift */; };
 		8694FC5820D1E1F0000E904C /* FollowCoinErrorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694FC5720D1E1F0000E904C /* FollowCoinErrorCell.swift */; };
 		8694FC5B20D21FA1000E904C /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8694FC5A20D21FA1000E904C /* UIImageView.swift */; };
@@ -132,7 +131,6 @@
 		8694FC4D20D15912000E904C /* CardCoinInformationsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CardCoinInformationsCell.xib; sourceTree = "<group>"; };
 		8694FC4F20D15BE2000E904C /* CardCoinInformationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCoinInformationsCell.swift; sourceTree = "<group>"; };
 		8694FC5120D1A709000E904C /* FollowCoinEmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowCoinEmptyCell.swift; sourceTree = "<group>"; };
-		8694FC5320D1AD54000E904C /* CardCoinEmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCoinEmptyCell.swift; sourceTree = "<group>"; };
 		8694FC5520D1BEE9000E904C /* UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
 		8694FC5720D1E1F0000E904C /* FollowCoinErrorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowCoinErrorCell.swift; sourceTree = "<group>"; };
 		8694FC5A20D21FA1000E904C /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
@@ -373,7 +371,6 @@
 			isa = PBXGroup;
 			children = (
 				86614CF520C35EE5001A0DEB /* CardCoinCell.swift */,
-				8694FC5320D1AD54000E904C /* CardCoinEmptyCell.swift */,
 				8694FC4F20D15BE2000E904C /* CardCoinInformationsCell.swift */,
 				8694FC4D20D15912000E904C /* CardCoinInformationsCell.xib */,
 				86DD9E6120C606A000EEC20F /* HomeHeaderView.swift */,
@@ -569,7 +566,6 @@
 				869E84E820CEAF83008AB1EC /* CoinDetailTitleHeader.swift in Sources */,
 				8694FC3C20D03AE4000E904C /* WelcomeWalletViewController.swift in Sources */,
 				8694FC5B20D21FA1000E904C /* UIImageView.swift in Sources */,
-				8694FC5420D1AD54000E904C /* CardCoinEmptyCell.swift in Sources */,
 				8694FC4020D04315000E904C /* RoundedButton.swift in Sources */,
 				86BD017120B8BB770065CC8B /* CoinDetailController.swift in Sources */,
 				86614CF820C38AC4001A0DEB /* ListViewController.swift in Sources */,

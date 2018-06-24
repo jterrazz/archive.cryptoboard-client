@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-// TODO Make language translations
+// TODO Add french language
 
 class ListViewController: UIViewController {
     
@@ -22,6 +22,7 @@ class ListViewController: UIViewController {
     
     lazy var tableView = UITableView()
     lazy var topBarBg = UIView() // Using this because of iphone X doing a bad UIImage()
+    // TODO Check for an alternative
     
     var networkError = false {
         didSet {
@@ -88,7 +89,6 @@ class ListViewController: UIViewController {
         navigationController?.navigationBar.barStyle = .black
     }
     
-    // Add global variable for constraints wave
     private func setupViews() {
         view.backgroundColor = UIColor.theme.grayBg.value
         

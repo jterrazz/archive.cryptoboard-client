@@ -21,5 +21,6 @@ class RoundedButton: UIButton {
         self.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         self.contentEdgeInsets = UIEdgeInsets.init(top: 12, left: 12, bottom: 12, right: 12)
     }
+    
 
 }

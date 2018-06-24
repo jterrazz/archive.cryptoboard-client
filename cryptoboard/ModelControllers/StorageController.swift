@@ -9,7 +9,7 @@
 import Foundation
 
 // when the user change their CurrencyTo settings, we clean all Storage data
-// so we don't need to store the currencyTo param
+// so we don't need to store the currencyTo param in all our cached data
 
 class StorageController {
     
@@ -50,7 +50,8 @@ class StorageController {
     
     public func storeCurrencyHistory(symbol: String, prices: [CurrencyPrice], aggregate: UInt, points: UInt) {
         CurrencyController().getCurrencyBase(symbol: symbol) { (error, currency) in
-            // handle error
+            
+            // TODO handle error
             if let safeCurrency = currency {
                 safeCurrency.historyPrice = prices
                 

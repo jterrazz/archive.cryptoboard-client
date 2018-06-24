@@ -10,8 +10,9 @@ import Foundation
 import UIKit
 import Charts
 
-//TODO Check common init everywhere
-// TODO Limit to 50 coins followed + requested for live data
+// TODO Limit to 50 coins followed + add infinite scroll ?
+// TODO Limit to 50 coins the max asked to currenctPriceAPI
+
 class UserWalletChartView: UIView {
     
     lazy var titleLabel = UILabel()

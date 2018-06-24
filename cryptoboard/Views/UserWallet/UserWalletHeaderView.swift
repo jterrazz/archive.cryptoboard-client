@@ -26,7 +26,7 @@ class UserWalletHeaderView: UIView {
         commonInit()
     }
     
-    // Maybe do an extension for xib loading
+    // TODO Add an extension to UIView for Xib loading ? (no mone commonInit with loadNibNamed ...)
     private func commonInit() {
         Bundle.main.loadNibNamed("UserWalletHeaderView", owner: self, options: nil)
         addSubview(contentView)

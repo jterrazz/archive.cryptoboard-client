@@ -9,7 +9,6 @@
 import UIKit
 import Charts
 
-// TODO Limit add labels width
 class HomeViewController: UIViewController {
     
     private let CARD_COIN_CELL_ID = "card-coin-cell-id"
@@ -103,8 +102,24 @@ class HomeViewController: UIViewController {
         firstHeader.delegate = self
         myWallet.addShadow()
         
-        topBackgroundWithAngle.gradientColors = [UIColor.white.cgColor]
+        setConstraints()
         
+        let coinsCellGradient = [UIColor.theme.custom(hexString: "fe6972").value.cgColor, UIColor.theme.custom(hexString: "d85862").value.cgColor]
+        let settingsCellGradient = [UIColor.theme.custom(hexString: "#b08efb").value.cgColor, UIColor.theme.custom(hexString: "6377fa").value.cgColor]
+        
+        topBackgroundWithAngle.gradientColors = [UIColor.white.cgColor]
+        underWallet.coinsCell.setGradient(colors: coinsCellGradient, angle: 65)
+        underWallet.settingsCell.setGradient(colors: settingsCellGradient, angle: 65)
+        
+        let allCoinsTap = UITapGestureRecognizer(target: self, action: #selector(self.handleAllCoinsTap(_:)))
+        underWallet.coinsCell.addGestureRecognizer(allCoinsTap)
+        let settingsTap = UITapGestureRecognizer(target: self, action: #selector(self.handleSettingsTap(_:)))
+        underWallet.settingsCell.addGestureRecognizer(settingsTap)
+        let walletTap = UITapGestureRecognizer(target: self, action: #selector(self.handleWalletTap(_:)))
+        myWallet.addGestureRecognizer(walletTap)
+    }
+    
+    private func setConstraints() {
         view.addSubviewsAutoConstraints([topBackgroundWithAngle])
         view.addSubviewAutoConstraints(searchBar)
         view.addSubviewAutoConstraints(scrollView)
@@ -133,7 +148,7 @@ class HomeViewController: UIViewController {
             "H:|-16-[header1]-16-|",
             "V:[search]-16-[scroll]|",
             "V:|[wallet]-16-[underWallet]-32-[header1][cards]-12-|",
-        ]
+            ]
         
         NSLayoutConstraint.visualConstraints(views: views, visualConstraints: constraints)
         NSLayoutConstraint.activate([
@@ -141,23 +156,10 @@ class HomeViewController: UIViewController {
             searchBar.heightAnchor.constraint(equalToConstant: SEARCH_BAR_HEIGHT),
             cardCollectionView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             cardCollectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.57),
-        ])
+            ])
         
         view.layoutIfNeeded()
         cardCollectionView.reloadData()
-        
-        let coinsCellGradient = [UIColor.theme.custom(hexString: "fe6972").value.cgColor, UIColor.theme.custom(hexString: "d85862").value.cgColor]
-        let settingsCellGradient = [UIColor.theme.custom(hexString: "#b08efb").value.cgColor, UIColor.theme.custom(hexString: "6377fa").value.cgColor]
-        
-        underWallet.coinsCell.setGradient(colors: coinsCellGradient, angle: 65)
-        underWallet.settingsCell.setGradient(colors: settingsCellGradient, angle: 65)
-        
-        let allCoinsTap = UITapGestureRecognizer(target: self, action: #selector(self.handleAllCoinsTap(_:)))
-        underWallet.coinsCell.addGestureRecognizer(allCoinsTap)
-        let settingsTap = UITapGestureRecognizer(target: self, action: #selector(self.handleSettingsTap(_:)))
-        underWallet.settingsCell.addGestureRecognizer(settingsTap)
-        let walletTap = UITapGestureRecognizer(target: self, action: #selector(self.handleWalletTap(_:)))
-        myWallet.addGestureRecognizer(walletTap)
     }
     
     lazy var fillTranfition: CATransition = {
