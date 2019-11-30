@@ -1,6 +1,6 @@
 # Cryptoboard - Mobile cryptocurreny tracker
 
-A beautiful iOS cryptocurrency wallet dashboard. Track your cryptocurrency holding with the latest prices. Made for learning purposes.
+A beautiful iOS cryptocurrency wallet dashboard. Track your cryptocurrency holding with the latest prices. Made for learning purposes. Made in June 2018
 
 ![screens-1.png](./doc/screens-1.png)
 
