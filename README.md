@@ -2,7 +2,7 @@
 
 A beautiful iOS cryptocurrency wallet dashboard. Track your cryptocurrency holding with the latest prices. Made for learning purposes.
 
-![screens-1.png](/Users/jterrazz/Projects/cryptoboard/doc/screens-1.png)
+![screens-1.png](./doc/screens-1.png)
 
 ![screens-2.png](./doc/screens-2.png)
 
